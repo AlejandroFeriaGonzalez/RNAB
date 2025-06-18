@@ -1,0 +1,14 @@
+[project]
+name = "rnab"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12.10"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "ipython>=9.3.0",
+    "jupyter>=1.1.1",
+    "jupyter-cache>=1.0.1",
+    "matplotlib>=3.10.3",
+    "numpy>=2.3.0",
+]
