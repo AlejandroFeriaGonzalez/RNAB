@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Redes Neuronales y Algoritmos Bioinspirados.</title>
+<link>https://alejandroferiagonzalez.github.io/RNAB/</link>
+<atom:link href="https://alejandroferiagonzalez.github.io/RNAB/index.xml" rel="self" type="application/rss+xml"/>
+<description>Un blog sobre redes neuronales y algoritmos bioinspirados.</description>
+<generator>quarto-1.7.32</generator>
+<lastBuildDate>Wed, 18 Jun 2025 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte</title>
+  <dc:creator>Harlow Malloc</dc:creator>
+  <link>https://alejandroferiagonzalez.github.io/RNAB/posts/post-with-code/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Hola que tal</p>
+
+
+
+ ]]></description>
+  <category>Redes Neuronales</category>
+  <category>Algoritmos bioinspirados</category>
+  <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/post-with-code/</guid>
+  <pubDate>Wed, 18 Jun 2025 05:00:00 GMT</pubDate>
+  <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/post-with-code/image.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Bienvenida</title>
+  <dc:creator>Alejandro Feria Gonzalez</dc:creator>
+  <link>https://alejandroferiagonzalez.github.io/RNAB/posts/welcome/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>This is the first post in a Quarto blog. Welcome!</p>
+<p><img src="https://alejandroferiagonzalez.github.io/RNAB/posts/welcome/thumbnail.jpg" class="img-fluid"></p>
+<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+
+
+
+ ]]></description>
+  <category>Redes Neuronales</category>
+  <category>Algoritmos bioinspirados</category>
+  <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/welcome/</guid>
+  <pubDate>Sun, 15 Jun 2025 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
