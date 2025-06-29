@@ -2,7 +2,9 @@ project:
   type: website
 
 website:
-  title: "blog"
+  title: "Redes Neuronales y Algoritmos Bioinspirados."
+  site-url: https://alejandroferiagonzalez.github.io/RNAB/
+  description: "Un blog sobre redes neuronales y algoritmos bioinspirados."
   navbar:
     right:
       - about.qmd
@@ -13,7 +15,7 @@ website:
 format:
   html:
     theme:
-      - cosmo
+      - solar
       - brand
     css: styles.css
 
