@@ -1,8 +1,8 @@
 ---
-title: "Welcome To My Blog"
-author: "Tristan O'Malley"
+title: "Bienvenida"
+author: "Alejandro Feria Gonzalez"
 date: "2025-06-15"
-categories: [news]
+categories: [Redes Neuronales, Algoritmos bioinspirados]
 ---
 
 This is the first post in a Quarto blog. Welcome!

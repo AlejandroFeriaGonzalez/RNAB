@@ -1,9 +1,9 @@
 ---
-title: "Post With Code"
+title: "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte"
 author: "Harlow Malloc"
 date: "2025-06-18"
-categories: [news, code, analysis]
+categories: [Redes Neuronales, Algoritmos bioinspirados]
 image: "image.jpg"
 ---
 
-This is a post with executable code.
+Hola que tal
