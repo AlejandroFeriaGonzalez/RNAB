@@ -1,12 +1,13 @@
 ---
-title: "Bienvenida"
-author: "Alejandro Feria Gonzalez"
+title: "Bienvenidos"
+author:
+  - name: "Diego Fernando Chávez Henao, dfchavez@unal.edu.co"
+  - name: "Alejandro Feria González, aferiag@unal.edu.co"
+  - name: "Santiago Molina Muñoz, smolinam@unal.edu.co"
+  - name: "Juan Manuel Teherán Machado, jteheranm@unal.edu.co"
 date: "2025-06-15"
 categories: [Redes Neuronales, Algoritmos bioinspirados]
+image: "thumbnail.jpg"
 ---
 
-This is the first post in a Quarto blog. Welcome!
-
-![](thumbnail.jpg)
-
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+En este espacio se publicarán los trabajos de la materia Redes Neuronales y Algoritmos Bioinspirados. Podrás encontrar diferentes proyectos prácticos donde se explican algoritmos famosos inspirados en la naturaleza.

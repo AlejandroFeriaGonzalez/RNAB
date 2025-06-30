@@ -4,6 +4,78 @@ author: "Harlow Malloc"
 date: "2025-06-18"
 categories: [Redes Neuronales, Algoritmos bioinspirados]
 image: "image.jpg"
+format:
+  html:
+    number-sections: true
+    code-fold: true
+    toc: true
+    toc-title: "Tabla de contenido"
+    toc-location: left-body
+reference-location: margin
+jupyter: python3
 ---
 
-Hola que tal
+# **Introducción**
+
+El Problema del Viajante de Comercio (*Traveling Salesman Problem*, TSP) es uno de los problemas más clásicos y estudiados en el campo de la optimización combinatoria (Goodfellow et al., 2016; Zhang et al., 2020). Plantea el reto de encontrar la ruta de menor costo que permita a un vendedor visitar exactamente una vez cada ciudad de un conjunto y retornar al punto de partida. En el contexto colombiano, la optimización de rutas es especialmente relevante debido a la complejidad de la red vial, la alta densidad de peajes y los elevados costos logísticos (Infobae, 2025).
+
+Este trabajo busca determinar la ruta óptima para un vendedor que debe recorrer las 13 ciudades principales del país, minimizando el costo total que incluye costos de salario, peajes y combustible. Para ello se implementan dos enfoques bioinspirados: *algoritmos genéticos* (GA) y *algoritmos de colonia de hormigas* (ACO), comparando su desempeño, analizando la calidad de las soluciones y visualizando los recorridos óptimos sobre el mapa de Colombia.
+
+# **Marco Teórico**
+
+## **El Problema del Viajante de Comercio (TSP)**
+
+El Problema del Viajante de Comercio (TSP, por sus siglas en inglés) es uno de los problemas más emblemáticos de la optimización combinatoria y de la investigación de operaciones. Consiste en encontrar la ruta de menor costo que permita a un viajante visitar una vez cada ciudad de un conjunto dado y regresar al punto de partida (Zhang et al., 2020). Este problema es *NP-hard*, lo que significa que el número de posibles rutas crece factorialmente con el número de ciudades, volviendo inviable la búsqueda exhaustiva para instancias de tamaño moderado (Goodfellow et al., 2016).
+
+Matemáticamente, el TSP se modela mediante un grafo completo donde cada nodo representa una ciudad y cada arista tiene un costo asociado (Goodfellow et al., 2016). Como ejemplo de costo asociado tenemos distancia, tiempo, dinero, etc. El objetivo es encontrar el ciclo hamiltoniano de menor costo, es decir, un camino que pase una única vez por cada ciudad, retorne al origen, y minimice la suma de los costos (Zhang et al., 2020).
+
+## Placing Colorbars
+
+Colorbars indicate the quantitative extent of image data.
+Placing in a figure is non-trivial because room needs to
+be made for them. The simplest case is just attaching a 
+colorbar to each axes:^[See the [Matplotlib Gallery](https://matplotlib.org/stable/gallery/subplots_axes_and_figures/colorbar_placement.html) to explore colorbars further].
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig, axs = plt.subplots(2, 2)
+fig.set_size_inches(20, 8)
+cmaps = ['RdBu_r', 'viridis']
+for col in range(2):
+    for row in range(2):
+        ax = axs[row, col]
+        pcm = ax.pcolormesh(
+          np.random.random((20, 20)) * (col + 1),
+          cmap=cmaps[col]
+        )
+        fig.colorbar(pcm, ax=ax)
+plt.show()
+```
+
+### Supuestos para el Salario
+
+**Se asume un valor monetario por hora de trabajo de \$25.000 COP/hora**, definido según parámetros del mercado laboral colombiano, Con este valor se puede estimar el costo del salario que debe pagarse al viajante por ir desde la ciudad $i$ a la ciudad $j$, mediante la siguiente expresión:
+
+$\text{Costo del salario del viajante}_{ij} = V_h \cdot T_{ij} \tag{1}$
+
+For a demonstration of a line plot on a polar axis, see @fig-polar.
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
