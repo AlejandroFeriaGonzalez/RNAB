@@ -1,0 +1,12 @@
+{
+  "hash": "8cd0440811ea4a1e5f133362c03158a2",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte\"\nauthor:\n  - name: \"Alejandro Feria González, aferiag@unal.edu.co\"\n  - name: \"Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co\"\n  - name: \"Abraham David Miguel Cardenas, amiguel@unal.edu.co\"\n  - name: \"Santiago Molina Munoz, smolinam@unal.edu.co\"\ndate: \"2025-06-30\"\ncategories: [Redes Neuronales, Algoritmos bioinspirados]\nimage: \"image.png\"\nformat:\n  html:\n    number-sections: true\n    code-fold: true\n    toc: true\n    toc-title: \"Tabla de contenido\"\n    toc-location: left-body\nreference-location: margin\njupyter: python3\n---\n\nHola\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

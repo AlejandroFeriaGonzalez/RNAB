@@ -1,0 +1,22 @@
+---
+title: "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte"
+author:
+  - name: "Alejandro Feria González, aferiag@unal.edu.co"
+  - name: "Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co"
+  - name: "Abraham David Miguel Cardenas, amiguel@unal.edu.co"
+  - name: "Santiago Molina Munoz, smolinam@unal.edu.co"
+date: "2025-06-30"
+categories: [Redes Neuronales, Algoritmos bioinspirados]
+image: "image.png"
+format:
+  html:
+    number-sections: true
+    code-fold: true
+    toc: true
+    toc-title: "Tabla de contenido"
+    toc-location: left-body
+reference-location: margin
+jupyter: python3
+---
+
+Hola
