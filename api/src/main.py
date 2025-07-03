@@ -1,14 +1,19 @@
 import pathlib
 
 from fastapi import FastAPI, File, Request, UploadFile
-from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src.services.driving_classification import predict_image, PredictionResult
-from src.services.travel_recommendations import recomendar_por_usuario_y_preguntas
+from src.services.travel_recommendations import (
+    get_travel_recommendation_api,
+    submit_feedback_api,
+    get_available_options,
+    TravelRecommendationRequest,
+    FeedbackRequest,
+)
 
 SRC = pathlib.Path(__file__).parent
 
@@ -56,6 +61,45 @@ async def api_driving_classification(file: UploadFile = File(...)):
     prediction = predict_image(image_bytes)
     return JSONResponse(content=prediction)
 
+
 @app.post("/api/travel-recommendations")
-async def api_travel_recommendations():
-    pass
+async def api_travel_recommendations(request: TravelRecommendationRequest):
+    """
+    Endpoint para obtener recomendaciones de viaje personalizadas.
+    """
+    try:
+        recommendations = get_travel_recommendation_api(request)
+        return JSONResponse(content=recommendations.dict())
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Error al generar recomendaciones: {str(e)}"},
+        )
+
+
+@app.post("/api/travel-recommendations/feedback")
+async def api_travel_feedback(feedback: FeedbackRequest):
+    """
+    Endpoint para enviar feedback sobre las recomendaciones.
+    """
+    try:
+        result = submit_feedback_api(feedback)
+        return JSONResponse(content=result)
+    except Exception as e:
+        return JSONResponse(
+            status_code=500, content={"error": f"Error al procesar feedback: {str(e)}"}
+        )
+
+
+@app.get("/api/travel-recommendations/options")
+async def api_travel_options():
+    """
+    Endpoint para obtener las opciones disponibles para el formulario.
+    """
+    try:
+        options = get_available_options()
+        return JSONResponse(content=options)
+    except Exception as e:
+        return JSONResponse(
+            status_code=500, content={"error": f"Error al obtener opciones: {str(e)}"}
+        )
