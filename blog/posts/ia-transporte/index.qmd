@@ -616,3 +616,7 @@ La creatividad del proyecto reside en la integración de tres problemas distinto
 # Anexos
 
 * Codigo fuente del proyecto: [Repositorio en GitHub](https://github.com/AlejandroFeriaGonzalez/RNAB)
+
+* Multi-Class Driver Behavior Image Dataset: [https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1](https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1)
+
+* Travel Recommendation Dataset: [https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1](https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1)
