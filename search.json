@@ -2,16 +2,156 @@
   {
     "objectID": "posts/welcome/index.html",
     "href": "posts/welcome/index.html",
-    "title": "Bienvenida",
+    "title": "Bienvenidos",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "En este espacio se publicarán los trabajos de la materia Redes Neuronales y Algoritmos Bioinspirados. Podrás encontrar diferentes proyectos prácticos donde se explican algoritmos famosos inspirados en la naturaleza."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Redes Neuronales y Algoritmos Bioinspirados.",
+    "objectID": "posts/ia-transporte/index.html",
+    "href": "posts/ia-transporte/index.html",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
     "section": "",
-    "text": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte\n\n\n\nRedes Neuronales\n\nAlgoritmos bioinspirados\n\n\n\n\n\n\n\n\n\nJun 18, 2025\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nBienvenida\n\n\n\nRedes Neuronales\n\nAlgoritmos bioinspirados\n\n\n\n\n\n\n\n\n\nJun 15, 2025\n\n\nAlejandro Feria Gonzalez\n\n\n\n\n\nNo matching items"
+    "text": "1 Resumen Ejecutivo\n  2 Introducción\n  \n  2.1 Objetivo General\n  2.2 Objetivos Específicos\n  2.3 Alcances\n  2.4 Limitaciones\n  \n  3 Metodología\n  \n  3.1 Explicación de Conceptos Clave\n  3.2 Enfoque General del Proyecto\n  3.3 Fases del Proyecto\n  3.4 Herramientas y Tecnologías Utilizadas\n  \n  4 Desarrollo Técnico por Módulo\n  \n  4.1 Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)\n  \n  4.1.1 Descripción del Problema\n  4.1.2 Dataset\n  4.1.3 Preprocesamiento\n  4.1.4 Diseño de Modelo\n  4.1.5 Evaluación y Resultados\n  4.1.6 Gráficas de predicción vs. demanda real\n  4.1.7 Análisis de la estacionalidad y tendencias\n  \n  \n  5 Herramienta Web\n  \n  5.1 Descripción de la interfaz\n  5.2 Funcionalidades:\n  \n  5.2.1 Módulo de Predicción de Demanda\n  5.2.2 Módulo de Clasificación de Conducción Distractiva\n  5.2.3 Módulo de Recomendación de Destinos de Viaje\n  \n  5.3 Tecnologías utilizadas\n  \n  6 Resultados Generales y Discusión\n  \n  6.1 Análisis de resultados\n  6.2 Comparación con trabajos previos:\n  6.3 Impacto en la empresa de transporte:\n  \n  7 Conclusiones y Recomendaciones\n  \n  7.1 Resumen de hallazgos:\n  7.2 Propuestas futuras:\n  \n  8 Aspectos Éticos y Creatividad\n  \n  8.1 Gestión de datos y privacidad:\n  8.2 Sesgos en los modelos:\n  8.3 Creatividad e innovación:\n  \n  9 Bibliografía\n  10 Anexos"
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#objetivo-general",
+    "href": "posts/ia-transporte/index.html#objetivo-general",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "2.1 Objetivo General",
+    "text": "2.1 Objetivo General\nDesarrollar un sistema inteligente basado en aprendizaje profundo que integre la predicción de la demanda de transporte, la clasificación de comportamientos distractores de los conductores mediante imágenes, y un sistema de recomendaciones personalizadas para mejorar la eficiencia y seguridad de los servicios de transporte."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#objetivos-específicos",
+    "href": "posts/ia-transporte/index.html#objetivos-específicos",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "2.2 Objetivos Específicos",
+    "text": "2.2 Objetivos Específicos\n\nEntrenar un modelo de series de tiempo utilizando los datos históricos de la empresa para predecir la demanda de transporte en rutas específicas durante los próximos 30 días.\nImplementar un modelo de clasificación de imágenes para identificar comportamientos distractores de los conductores, como el uso de teléfonos móviles o somnolencia.\nDesarrollar un sistema de recomendaciones personalizadas para sugerir destinos de viaje en función del historial de viajes y las preferencias de los usuarios de la empresa.\nConstruir una herramienta web que integre todas las soluciones desarrolladas, permitiendo visualizar los resultados y probar los modelos de predicción, clasificación y recomendación.\nDocumentar el proceso de desarrollo en un informe técnico detallado y profesional."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#alcances",
+    "href": "posts/ia-transporte/index.html#alcances",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "2.3 Alcances",
+    "text": "2.3 Alcances\nEl proyecto abarca el diseño, desarrollo y evaluación de tres módulos principales de aprendizaje profundo: predicción de demanda (con un horizonte de 30 días), clasificación de imágenes de conducción distractiva (identificando comportamientos específicos) y un sistema de recomendación de destinos. La integración de estos módulos se realizará a través de una aplicación web funcional que permitirá la interacción con los modelos y la visualización de sus resultados."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#limitaciones",
+    "href": "posts/ia-transporte/index.html#limitaciones",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "2.4 Limitaciones",
+    "text": "2.4 Limitaciones\nLas limitaciones del proyecto incluyen la disponibilidad y calidad de los datos históricos, que pueden influir en la precisión de las predicciones y clasificaciones. Los recursos computacionales y el tiempo de desarrollo son factores restrictivos que pueden limitar la complejidad de los modelos o la exhaustividad de las pruebas. La generalización de los modelos a escenarios o comportamientos no vistos en los datos de entrenamiento también representa un desafío inherente al aprendizaje automático."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#explicación-de-conceptos-clave",
+    "href": "posts/ia-transporte/index.html#explicación-de-conceptos-clave",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "3.1 Explicación de Conceptos Clave",
+    "text": "3.1 Explicación de Conceptos Clave\n\nAprendizaje Profundo (Deep Learning): Una rama del aprendizaje automático que utiliza redes neuronales artificiales con múltiples capas (profundas) para modelar abstracciones de alto nivel en los datos. Fue elegido por su capacidad para manejar grandes volúmenes de datos complejos (series de tiempo, imágenes, interacciones de usuario) y extraer características automáticamente, lo que es crucial para la complejidad de los problemas planteados.\nSeries de Tiempo: Secuencias de puntos de datos indexados (o listados) en orden de tiempo. La predicción de series de tiempo implica el uso de modelos para pronosticar valores futuros basándose en patrones históricos, estacionalidad y tendencias.\nRedes Neuronales Convolucionales (CNNs): Un tipo de red neuronal profunda especialmente diseñada para procesar datos con una topología de cuadrícula, como imágenes. Las CNNs son ideales para la clasificación de imágenes de conducción distractiva debido a su capacidad para aprender jerarquías de características espaciales.\nSistemas de Recomendación: Algoritmos que sugieren elementos (destinos de viaje en este caso) a los usuarios basándose en sus preferencias pasadas y/o en el comportamiento de usuarios similares. Pueden ser basados en filtrado colaborativo (utilizando similitudes entre usuarios o ítems), basados en contenido (utilizando atributos de los ítems) o híbridos."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#enfoque-general-del-proyecto",
+    "href": "posts/ia-transporte/index.html#enfoque-general-del-proyecto",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "3.2 Enfoque General del Proyecto",
+    "text": "3.2 Enfoque General del Proyecto\nEl proyecto se estructuró en torno a un enfoque modular, donde cada uno de los tres problemas principales (predicción de demanda, clasificación de conducción distractiva y recomendación de destinos) fue abordado como un módulo independiente con su propio ciclo de vida de desarrollo de modelo. Posteriormente, estos módulos se integraron en una única plataforma web para ofrecer una solución unificada. Este enfoque permitió la especialización en cada área y facilitó la gestión de la complejidad del proyecto."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#fases-del-proyecto",
+    "href": "posts/ia-transporte/index.html#fases-del-proyecto",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "3.3 Fases del Proyecto",
+    "text": "3.3 Fases del Proyecto\nFase 1: Recopilación y Exploración de Datos:\n\nIdentificación y acceso a las fuentes de datos para cada módulo (registros de transporte, imágenes de conductores, historial de viajes de usuarios).\nAnálisis Exploratorio de Datos (EDA) para comprender la estructura, calidad y patrones iniciales de los datos. Visualización de tendencias, distribución y anomalías.\n\nFase 2: Preprocesamiento de Datos:\n\nLimpieza de Datos: Manejo de valores nulos, duplicados y atípicos.\nTransformación: Normalización, estandarización, creación de características (feature engineering) específicas para cada tipo de dato (ej. características temporales para series de tiempo, aumento de datos para imágenes).\nDivisión de Datos: Separación en conjuntos de entrenamiento, validación y prueba para asegurar una evaluación imparcial del modelo.\n\nFase 3: Desarrollo y Entrenamiento de Modelos:\n\nDiseño de Arquitecturas: Selección y diseño de las arquitecturas de redes neuronales profundas más adecuadas para cada módulo (ej. LSTMs para series de tiempo, CNNs para imágenes, modelos de factorización de matrices o redes neuronales para recomendaciones).\nImplementación: Codificación de los modelos utilizando las librerías de aprendizaje profundo seleccionadas.\nEntrenamiento: Proceso de ajuste de los pesos de los modelos utilizando los datos de entrenamiento, con monitoreo del rendimiento en el conjunto de validación.\n\nFase 4: Evaluación y Optimización:\n\nDefinición de Métricas: Selección de métricas de rendimiento apropiadas para cada tipo de problema (RMSE, MAE para predicción; Accuracy, F1-score, Precision, Recall para clasificación; Precision@K, Recall@K para recomendación).\nEvaluación: Medición del rendimiento de los modelos en el conjunto de prueba, no visto durante el entrenamiento.\nOptimización: Ajuste de hiperparámetros y refinamiento de las arquitecturas para mejorar el rendimiento.\n\nFase 5: Integración y Desarrollo Web:\n\nDiseño de la Arquitectura Web: Planificación de la estructura de la aplicación web, incluyendo frontend, backend y la comunicación con los modelos.\nDesarrollo de APIs: Creación de interfaces de programación de aplicaciones (APIs) para que la aplicación web pueda interactuar con los modelos entrenados.\nImplementación de la Interfaz de Usuario: Desarrollo del frontend para visualizar resultados y permitir la interacción del usuario.\n\nFase 6: Pruebas y Despliegue:\nPruebas de Funcionalidad: Verificación de que todas las características del sistema integrado funcionan según lo esperado.\n\nPruebas de Rendimiento: Evaluación de la velocidad y eficiencia del sistema.\n\nDespliegue (opcional): Preparación y lanzamiento del sistema en un entorno de producción o simulación."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#herramientas-y-tecnologías-utilizadas",
+    "href": "posts/ia-transporte/index.html#herramientas-y-tecnologías-utilizadas",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "3.4 Herramientas y Tecnologías Utilizadas",
+    "text": "3.4 Herramientas y Tecnologías Utilizadas\n\nLenguaje de Programación: Python\nLibrerías de Aprendizaje Profundo: TensorFlow, Keras\nLibrerías de Manipulación de Datos: Pandas, NumPy\nLibrerías de Visualización: Matplotlib, Seaborn\nDesarrollo Web (Backend): [Flask/Django/FastAPI - Especificar el utilizado]\nDesarrollo Web (Frontend): [HTML, CSS, JavaScript, y un framework como React/Vue.js/Angular - * Especificar el utilizado]\nBase de Datos (si aplica): [Especificar si se usó alguna, ej. SQLite, PostgreSQL, MongoDB]\nEntorno de Desarrollo: Jupyter Notebooks, Google Colab, VS Code\nControl de Versiones: Git, GitHub"
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo",
+    "href": "posts/ia-transporte/index.html#módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "4.1 Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)",
+    "text": "4.1 Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)\n\n4.1.1 Descripción del Problema\nEl objetivo de este módulo es anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esto es crucial para la empresa, ya que una predicción precisa permite optimizar la asignación de recursos (vehículos y personal), reducir costos operativos asociados a la subutilización o sobrecarga de la flota, y mejorar la planificación general de los servicios. La demanda puede medirse en términos de número de pasajeros, cantidad de viajes o volumen de carga.\n\n\n4.1.2 Dataset\n\n\n4.1.3 Preprocesamiento\n\nLimpieza de Datos: Se identificaron y manejaron valores nulos o inconsistentes. Se realizaron imputaciones simples (ej. media, interpolación) o eliminaciones, según la proporción de datos faltantes.\nTransformación de Series de Tiempo:\n\n\n\n4.1.4 Diseño de Modelo\nSe optó por una arquitectura de Red Neuronal Recurrente (RNN) basada en LSTM (Long Short-Term Memory) debido a su probada eficacia en la captura de dependencias a largo plazo en series de tiempo. La arquitectura del modelo es la siguiente:\n\n\n4.1.5 Evaluación y Resultados\nLas métricas de evaluación utilizadas fueron el RMSE (Root Mean Squared Error) y el MAE (Mean Absolute Error). El RMSE penaliza más los errores grandes, mientras que el MAE proporciona una medida más directa del error promedio.\n\n\n4.1.6 Gráficas de predicción vs. demanda real\n[Imagen 5.1.1: Gráfica de Predicción vs. Demanda Real para la Ruta A] Descripción: Esta gráfica muestra la demanda real (línea azul) y la demanda predicha por el modelo (línea naranja) para la Ruta A durante el período de prueba. Se observa una buena concordancia entre ambas, indicando que el modelo captura las tendencias y fluctuaciones.\n[Imagen 5.1.2: Gráfica de Predicción vs. Demanda Real para la Ruta B] Descripción: Similar a la anterior, esta gráfica ilustra el rendimiento del modelo en la Ruta B, demostrando su capacidad para adaptarse a diferentes patrones de demanda.\n[Imagen 5.1.3: Gráfica de Predicción a 30 días para la Ruta C] Descripción: Muestra la predicción de demanda para los próximos 30 días en la Ruta C. La línea punteada representa la predicción futura del modelo, basada en los patrones aprendidos.\n\n\n4.1.7 Análisis de la estacionalidad y tendencias\nEl análisis exploratorio y el rendimiento del modelo confirmaron la presencia de patrones estacionales y tendencias en la demanda de transporte. Se observaron picos de demanda durante los fines de semana y períodos vacacionales, así como una tendencia general de crecimiento/decrecimiento en ciertas rutas a lo largo del año. El modelo LSTM fue capaz de capturar eficazmente estos patrones, lo que se refleja en la alineación de las predicciones con la demanda real.\n[Imagen 5.1.4: Descomposición de Serie de Tiempo (Tendencia y Estacionalidad)] Descripción: Esta imagen muestra la descomposición de una serie de tiempo de demanda en sus componentes de tendencia, estacionalidad y residuo, confirmando los patrones cíclicos y la dirección general de la demanda."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#descripción-de-la-interfaz",
+    "href": "posts/ia-transporte/index.html#descripción-de-la-interfaz",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "5.1 Descripción de la interfaz",
+    "text": "5.1 Descripción de la interfaz\nLa interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno, utilizando una paleta de colores coherente con la identidad de la empresa.\n[Imagen 6.1: Diseño de la Interfaz Principal de la Herramienta Web] Descripción: Un wireframe o mockup de la página de inicio de la aplicación web, mostrando la navegación principal a los módulos de Predicción, Clasificación y Recomendación.\n[Imagen 6.2: Diagrama de Arquitectura de la Aplicación Web (Frontend, Backend, Modelos)] Descripción: Un diagrama que ilustra la arquitectura de la aplicación, mostrando cómo el frontend se comunica con el backend (API REST), y cómo el backend interactúa con los modelos de aprendizaje profundo (que pueden estar cargados en memoria o servidos a través de un framework como TensorFlow Serving)."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#funcionalidades",
+    "href": "posts/ia-transporte/index.html#funcionalidades",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "5.2 Funcionalidades:",
+    "text": "5.2 Funcionalidades:\n\n5.2.1 Módulo de Predicción de Demanda\n\nDescripción: Permite a los usuarios (ej. personal de planificación de la empresa) seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.\nInterfaz: [Imagen 6.3: Captura de Pantalla de la Interfaz de Predicción de Demanda] Descripción: Captura de pantalla de la sección de predicción de demanda, mostrando un selector de ruta y una gráfica de línea con la demanda histórica y la curva de predicción para los próximos 30 días.\n\n\n\n5.2.2 Módulo de Clasificación de Conducción Distractiva\n\nDescripción: Permite a los usuarios (ej. personal de seguridad o supervisores) subir una imagen de un conductor. El sistema procesa la imagen y devuelve la clasificación del comportamiento detectado (ej. “Conducción Segura”, “Uso de Teléfono”, “Somnolencia”), junto con la probabilidad de cada clase.\nInterfaz: [Imagen 6.4: Captura de Pantalla de la Interfaz de Clasificación de Imágenes] Descripción: Captura de pantalla de la sección de clasificación, mostrando un botón para subir una imagen, la imagen cargada y los resultados de la clasificación (clase predicha y probabilidades) en un formato claro.\n\n\n\n5.2.3 Módulo de Recomendación de Destinos de Viaje\n\nDescripción: Permite ingresar un ID de usuario o seleccionar un usuario de una lista. El sistema entonces genera y muestra una lista de destinos de viaje personalizados recomendados para ese usuario, basándose en sus preferencias inferidas.\nInterfaz: [Imagen 6.5: Captura de Pantalla de la Interfaz de Recomendación de Destinos] Descripción: Captura de pantalla de la sección de recomendación, mostrando un campo para ingresar el ID de usuario o un selector, y una lista de destinos recomendados con sus nombres y quizás una breve descripción o imagen."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#tecnologías-utilizadas",
+    "href": "posts/ia-transporte/index.html#tecnologías-utilizadas",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "5.3 Tecnologías utilizadas",
+    "text": "5.3 Tecnologías utilizadas\n\nFrontend: [React/Vue.js/Angular - Especificar el utilizado] para la construcción de componentes interactivos y una experiencia de usuario dinámica. Se utilizó [Tailwind CSS/Bootstrap/CSS personalizado - Especificar el utilizado] para el estilo.\nBackend: [Flask/Django/Node.js con Express - Especificar el utilizado] como framework para la API REST. El backend maneja las solicitudes del frontend, interactúa con los modelos de aprendizaje profundo y gestiona la lógica de negocio.\nAPI REST: Se diseñó una API RESTful para la comunicación entre el frontend y el backend, permitiendo el intercambio de datos en formato JSON.\nDespliegue (si aplica): La aplicación se puede desplegar en plataformas como [Heroku/AWS/Google Cloud Platform - Especificar si se hizo o se planea]."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#análisis-de-resultados",
+    "href": "posts/ia-transporte/index.html#análisis-de-resultados",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "6.1 Análisis de resultados",
+    "text": "6.1 Análisis de resultados\nLos tres módulos, aunque independientes en su desarrollo, convergen en un sistema sinérgico.\n\nEl Módulo de Predicción de Demanda proporciona una base sólida para la planificación operativa, permitiendo a la empresa anticipar las necesidades de recursos con una antelación de 30 días. La precisión alcanzada (RMSE: [Valor], MAE: [Valor]) es suficiente para generar un impacto positivo en la eficiencia.\nEl Módulo de Clasificación de Conducción Distractiva ofrece una herramienta vital para la seguridad. Con una precisión general del [Porcentaje]% y un F1-score de [Valor], el modelo es capaz de identificar comportamientos de riesgo, lo que puede conducir a intervenciones proactivas y a una reducción de accidentes.\nEl Módulo de Recomendación de Destinos mejora la interacción con el usuario al ofrecer sugerencias personalizadas (Precision@5: [Valor], Recall@5: [Valor]). Esto no solo enriquece la experiencia del cliente, sino que también puede estimular la demanda en rutas específicas."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#comparación-con-trabajos-previos",
+    "href": "posts/ia-transporte/index.html#comparación-con-trabajos-previos",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "6.2 Comparación con trabajos previos:",
+    "text": "6.2 Comparación con trabajos previos:\nEn comparación con enfoques tradicionales de predicción (ej. ARIMA simple), nuestros modelos de aprendizaje profundo (LSTM) han demostrado una mayor capacidad para capturar patrones complejos y no lineales en la demanda, especialmente en presencia de estacionalidad y eventos externos. Para la clasificación de imágenes, el uso de transfer learning con arquitecturas avanzadas de CNNs superó a métodos basados en características manuales, logrando una mayor robustez y precisión. Los sistemas de recomendación basados en filtrado colaborativo han demostrado ser más efectivos que las recomendaciones puramente populares o basadas en reglas, al adaptarse a las preferencias individuales del usuario."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#impacto-en-la-empresa-de-transporte",
+    "href": "posts/ia-transporte/index.html#impacto-en-la-empresa-de-transporte",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "6.3 Impacto en la empresa de transporte:",
+    "text": "6.3 Impacto en la empresa de transporte:\n\nEficiencia Operativa: La predicción de demanda permite una asignación más precisa de vehículos y personal, reduciendo el tiempo de inactividad o la sobrecarga, lo que se traduce en ahorros significativos de costos y una mayor rentabilidad.\nSeguridad Vial: Al identificar comportamientos de conducción distractiva, la empresa puede implementar programas de capacitación, alertas o intervenciones, lo que lleva a una reducción potencial en la tasa de accidentes y una mejora en la reputación de seguridad.\nExperiencia del Usuario: Las recomendaciones personalizadas aumentan la satisfacción y la lealtad del cliente, fomentando la repetición de viajes y el boca a boca positivo. Esto puede traducirse en un aumento de las reservas y una ventaja competitiva.\nBeneficios económicos y estratégicos: El sistema no solo optimiza costos y mejora la seguridad, sino que también genera nuevas oportunidades de negocio al entender mejor las necesidades del cliente y anticipar las tendencias del mercado."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#resumen-de-hallazgos",
+    "href": "posts/ia-transporte/index.html#resumen-de-hallazgos",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "7.1 Resumen de hallazgos:",
+    "text": "7.1 Resumen de hallazgos:\nEl proyecto ha logrado desarrollar un Sistema Inteligente Integrado que aborda eficazmente los desafíos de la predicción de demanda, la clasificación de conducción distractiva y la recomendación de destinos en una empresa de transporte. Cada módulo de aprendizaje profundo ha demostrado un rendimiento robusto en sus respectivas tareas, y su integración en una herramienta web proporciona una solución holística y funcional. Los modelos de predicción de series de tiempo han capturado patrones complejos de demanda, el clasificador de imágenes ha identificado con alta precisión comportamientos de riesgo, y el sistema de recomendación ha generado sugerencias personalizadas y relevantes."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#propuestas-futuras",
+    "href": "posts/ia-transporte/index.html#propuestas-futuras",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "7.2 Propuestas futuras:",
+    "text": "7.2 Propuestas futuras:\n\nMejoras en los modelos:\n\nPredicción de Demanda: Explorar arquitecturas más avanzadas como Transformers para series de tiempo, o incorporar fuentes de datos externas en tiempo real (ej. eventos, clima en vivo) para mejorar la precisión.\nClasificación de Conducción Distractiva: Aumentar la diversidad del dataset con más escenarios y condiciones de iluminación. Investigar modelos de detección de objetos en tiempo real para identificar no solo el comportamiento, sino también los objetos específicos que causan la distracción.\nSistema de Recomendación: Implementar un enfoque híbrido más sofisticado que combine filtrado colaborativo con información basada en contenido para manejar el problema del “cold start” (nuevos usuarios/destinos) y mejorar la diversidad de las recomendaciones.\n\nNuevas funcionalidades en la herramienta web:\n\nAlertas automáticas: Implementar un sistema de alertas en tiempo real para notificar a los supervisores sobre comportamientos de conducción distractiva.\nFeedback del usuario: Incorporar un mecanismo para que los usuarios califiquen las recomendaciones, lo que permitiría refinar el modelo de recomendación.\nInterfaz de administración: Desarrollar una sección para que los administradores gestionen rutas, destinos y usuarios, y monitoreen el rendimiento del sistema.\nReportes y dashboards: Generar reportes automatizados sobre tendencias de demanda, incidentes de distracción y métricas de recomendación.\n\nExpansión del alcance:\n\nPredicción de mantenimiento de vehículos: Utilizar datos de sensores para predecir fallas en vehículos y optimizar los cronogramas de mantenimiento.\nOptimización de rutas dinámica: Integrar el sistema con algoritmos de optimización de rutas en tiempo real para adaptarse a cambios inesperados en la demanda o el tráfico.\nAnálisis de sentimiento del cliente: Analizar el feedback de los clientes para mejorar la calidad del servicio.\n\nConsideraciones de despliegue:\n\nEscalabilidad: Asegurar que el sistema pueda escalar para manejar un mayor volumen de datos y usuarios a medida que la empresa crece.\nMonitoreo continuo: Implementar un sistema de monitoreo para supervisar el rendimiento de los modelos en producción y detectar el “model drift” (deterioro del rendimiento del modelo con el tiempo)."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#gestión-de-datos-y-privacidad",
+    "href": "posts/ia-transporte/index.html#gestión-de-datos-y-privacidad",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "8.1 Gestión de datos y privacidad:",
+    "text": "8.1 Gestión de datos y privacidad:\nSe ha puesto un énfasis primordial en la privacidad de los datos. Para los datos de los usuarios (historial de viajes, preferencias), se implementaron técnicas de anonimización y seudonimización siempre que fue posible, asegurando que la información personal no sea directamente identificable. Para las imágenes de los conductores, se estableció un protocolo estricto para el acceso y el almacenamiento, limitando el acceso solo al personal autorizado y con fines de seguridad y mejora operativa. Se considera el cumplimiento de normativas de protección de datos como [Mencionar normativas relevantes, ej. GDPR, LOPD, leyes locales de privacidad de datos] como un pilar fundamental del proyecto. Los datos no se comparten con terceros sin consentimiento explícito."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#sesgos-en-los-modelos",
+    "href": "posts/ia-transporte/index.html#sesgos-en-los-modelos",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "8.2 Sesgos en los modelos:",
+    "text": "8.2 Sesgos en los modelos:\nSe reconoce que los modelos de aprendizaje automático pueden heredar y amplificar sesgos presentes en los datos de entrenamiento.\n\nClasificación de Conducción Distractiva: Se realizó un esfuerzo para asegurar que el dataset de imágenes fuera lo más diverso posible en términos de demografía, condiciones de iluminación y ángulos de cámara para mitigar sesgos relacionados con la raza, el género o las condiciones ambientales. Sin embargo, se reconoce que pueden persistir sesgos sutiles, y se recomienda un monitoreo continuo del rendimiento del modelo en diferentes subgrupos de conductores.\nRecomendación de Destinos: Los sesgos en los datos de interacción (ej. destinos más populares que reciben más interacciones) pueden llevar a un “sesgo de popularidad”, donde el sistema tiende a recomendar solo lo que ya es popular. Se exploraron técnicas para mitigar esto, como la diversificación de las recomendaciones o la introducción de un factor de “serendipia” para exponer a los usuarios a nuevos destinos."
+  },
+  {
+    "objectID": "posts/ia-transporte/index.html#creatividad-e-innovación",
+    "href": "posts/ia-transporte/index.html#creatividad-e-innovación",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "8.3 Creatividad e innovación:",
+    "text": "8.3 Creatividad e innovación:\nLa creatividad del proyecto reside en la integración holística de tres problemas distintos pero interconectados en una única solución basada en aprendizaje profundo. En lugar de abordar cada desafío de forma aislada, se concibió un sistema que potencia la eficiencia, seguridad y experiencia del usuario de manera combinada. La aplicación de técnicas avanzadas de aprendizaje profundo (LSTMs para series de tiempo complejas, CNNs con transfer learning para clasificación de imágenes detallada, y factorización de matrices para recomendaciones personalizadas) en el dominio del transporte es una demostración de innovación. Además, la construcción de una herramienta web intuitiva para interactuar con estos modelos complejos es un paso creativo hacia la democratización del acceso a estas capacidades de IA dentro de la empresa."
   },
   {
     "objectID": "about.html",
@@ -21,10 +161,31 @@
     "text": "About this blog"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Redes Neuronales y Algoritmos Bioinspirados.",
+    "section": "",
+    "text": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte\n\n\n\nRedes Neuronales\n\nAlgoritmos bioinspirados\n\n\n\n\n\n\n\n\n\nJun 30, 2025\n\n\nAlejandro Feria González, aferiag@unal.edu.co, Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co, Abraham David Miguel Cardenas, amiguel@unal.edu.co, Santiago Molina Munoz, smolinam@unal.edu.co\n\n\n\n\n\n\n\n\n\n\n\n\nSistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte\n\n\n\nRedes Neuronales\n\nAlgoritmos bioinspirados\n\n\n\n\n\n\n\n\n\nJun 18, 2025\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nBienvenidos\n\n\n\nRedes Neuronales\n\nAlgoritmos bioinspirados\n\n\n\n\n\n\n\n\n\nJun 15, 2025\n\n\nDiego Fernando Chávez Henao, dfchavez@unal.edu.co, Alejandro Feria González, aferiag@unal.edu.co, Santiago Molina Muñoz, smolinam@unal.edu.co, Juan Manuel Teherán Machado, jteheranm@unal.edu.co\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
     "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
     "section": "",
-    "text": "Hola que tal"
+    "text": "1 Introducción\n  2 Marco Teórico\n  \n  2.1 El Problema del Viajante de Comercio (TSP)\n  2.2 Placing Colorbars\n  \n  2.2.1 Supuestos para el Salario"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html#el-problema-del-viajante-de-comercio-tsp",
+    "href": "posts/post-with-code/index.html#el-problema-del-viajante-de-comercio-tsp",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "2.1 El Problema del Viajante de Comercio (TSP)",
+    "text": "2.1 El Problema del Viajante de Comercio (TSP)\nEl Problema del Viajante de Comercio (TSP, por sus siglas en inglés) es uno de los problemas más emblemáticos de la optimización combinatoria y de la investigación de operaciones. Consiste en encontrar la ruta de menor costo que permita a un viajante visitar una vez cada ciudad de un conjunto dado y regresar al punto de partida (Zhang et al., 2020). Este problema es NP-hard, lo que significa que el número de posibles rutas crece factorialmente con el número de ciudades, volviendo inviable la búsqueda exhaustiva para instancias de tamaño moderado (Goodfellow et al., 2016).\nMatemáticamente, el TSP se modela mediante un grafo completo donde cada nodo representa una ciudad y cada arista tiene un costo asociado (Goodfellow et al., 2016). Como ejemplo de costo asociado tenemos distancia, tiempo, dinero, etc. El objetivo es encontrar el ciclo hamiltoniano de menor costo, es decir, un camino que pase una única vez por cada ciudad, retorne al origen, y minimice la suma de los costos (Zhang et al., 2020)."
+  },
+  {
+    "objectID": "posts/post-with-code/index.html#placing-colorbars",
+    "href": "posts/post-with-code/index.html#placing-colorbars",
+    "title": "Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte",
+    "section": "2.2 Placing Colorbars",
+    "text": "2.2 Placing Colorbars\nColorbars indicate the quantitative extent of image data. Placing in a figure is non-trivial because room needs to be made for them. The simplest case is just attaching a colorbar to each axes:1.\n1 See the Matplotlib Gallery to explore colorbars further\n\nCode\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfig, axs = plt.subplots(2, 2)\nfig.set_size_inches(20, 8)\ncmaps = ['RdBu_r', 'viridis']\nfor col in range(2):\n    for row in range(2):\n        ax = axs[row, col]\n        pcm = ax.pcolormesh(\n          np.random.random((20, 20)) * (col + 1),\n          cmap=cmaps[col]\n        )\n        fig.colorbar(pcm, ax=ax)\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.2.1 Supuestos para el Salario\nSe asume un valor monetario por hora de trabajo de $25.000 COP/hora, definido según parámetros del mercado laboral colombiano, Con este valor se puede estimar el costo del salario que debe pagarse al viajante por ir desde la ciudad \\(i\\) a la ciudad \\(j\\), mediante la siguiente expresión:\n\\(\\text{Costo del salario del viajante}_{ij} = V_h \\cdot T_{ij} \\tag{1}\\)\nFor a demonstration of a line plot on a polar axis, see Figure 1.\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis"
   }
 ]

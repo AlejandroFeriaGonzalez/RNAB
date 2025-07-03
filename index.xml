@@ -10,7 +10,303 @@
 <atom:link href="https://alejandroferiagonzalez.github.io/RNAB/index.xml" rel="self" type="application/rss+xml"/>
 <description>Un blog sobre redes neuronales y algoritmos bioinspirados.</description>
 <generator>quarto-1.7.32</generator>
-<lastBuildDate>Wed, 18 Jun 2025 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 30 Jun 2025 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte</title>
+  <dc:creator>Alejandro Feria González, aferiag@unal.edu.co</dc:creator>
+  <dc:creator>Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co</dc:creator>
+  <dc:creator>Abraham David Miguel Cardenas, amiguel@unal.edu.co</dc:creator>
+  <dc:creator>Santiago Molina Munoz, smolinam@unal.edu.co</dc:creator>
+  <link>https://alejandroferiagonzalez.github.io/RNAB/posts/ia-transporte/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="resumen-ejecutivo" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Resumen Ejecutivo</h1>
+<p>Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.</p>
+<p>El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos se uso tensorflow y keras, ademas de sklearn.</p>
+<p>Los resultados preliminares demuestran la viabilidad y el potencial impacto del sistema. El modelo de predicción de demanda alcanzó un RMSE de [Valor de RMSE] y un MAE de [Valor de MAE], lo que permite una planificación más precisa de la asignación de vehículos y personal. El clasificador de conducción distractiva logró una precisión del [Porcentaje de Precisión]% en la detección de comportamientos de riesgo, contribuyendo significativamente a la seguridad. Finalmente, el sistema de recomendación generó recomendaciones pertinentes, con una Precision de [Valor de Precision] y Recall de [Valor de Recall].</p>
+<p>En conclusión, este sistema inteligente representa un avance significativo en la eficiencia operativa, la seguridad vial y la experiencia del cliente para la empresa de transporte, sentando las bases para futuras optimizaciones y expansiones.</p>
+</section>
+<section id="introducción" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Introducción</h1>
+<p>La industria del transporte se encuentra en una constante evolución, enfrentando desafíos como la fluctuación impredecible de la demanda, la imperante necesidad de garantizar la seguridad vial y la creciente expectativa de los usuarios por servicios personalizados. En este contexto, las empresas buscan soluciones innovadoras que les permitan optimizar sus operaciones, mitigar riesgos y fidelizar a sus clientes. El aprendizaje profundo (Deep Learning) emerge como una tecnología clave, capaz de procesar grandes volúmenes de datos complejos para extraer patrones y tomar decisiones inteligentes.</p>
+<p>El presente proyecto aborda estas problemáticas mediante el desarrollo de un Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación. Este sistema busca transformar la manera en que la empresa de transporte gestiona sus recursos, monitorea la seguridad de sus operaciones y se relaciona con sus usuarios.</p>
+<section id="objetivo-general" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="objetivo-general"><span class="header-section-number">2.1</span> Objetivo General</h2>
+<p>Desarrollar un sistema inteligente basado en aprendizaje profundo que integre la predicción de la demanda de transporte, la clasificación de comportamientos distractores de los conductores mediante imágenes, y un sistema de recomendaciones personalizadas para mejorar la eficiencia y seguridad de los servicios de transporte.</p>
+</section>
+<section id="objetivos-específicos" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="objetivos-específicos"><span class="header-section-number">2.2</span> Objetivos Específicos</h2>
+<ul>
+<li><p>Entrenar un modelo de series de tiempo utilizando los datos históricos de la empresa para predecir la demanda de transporte en rutas específicas durante los próximos 30 días.</p></li>
+<li><p>Implementar un modelo de clasificación de imágenes para identificar comportamientos distractores de los conductores, como el uso de teléfonos móviles o somnolencia.</p></li>
+<li><p>Desarrollar un sistema de recomendaciones personalizadas para sugerir destinos de viaje en función del historial de viajes y las preferencias de los usuarios de la empresa.</p></li>
+<li><p>Construir una herramienta web que integre todas las soluciones desarrolladas, permitiendo visualizar los resultados y probar los modelos de predicción, clasificación y recomendación.</p></li>
+<li><p>Documentar el proceso de desarrollo en un informe técnico detallado y profesional.</p></li>
+</ul>
+</section>
+<section id="alcances" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="alcances"><span class="header-section-number">2.3</span> Alcances</h2>
+<p>El proyecto abarca el diseño, desarrollo y evaluación de tres módulos principales de aprendizaje profundo: predicción de demanda (con un horizonte de 30 días), clasificación de imágenes de conducción distractiva (identificando comportamientos específicos) y un sistema de recomendación de destinos. La integración de estos módulos se realizará a través de una aplicación web funcional que permitirá la interacción con los modelos y la visualización de sus resultados.</p>
+</section>
+<section id="limitaciones" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="limitaciones"><span class="header-section-number">2.4</span> Limitaciones</h2>
+<p>Las limitaciones del proyecto incluyen la disponibilidad y calidad de los datos históricos, que pueden influir en la precisión de las predicciones y clasificaciones. Los recursos computacionales y el tiempo de desarrollo son factores restrictivos que pueden limitar la complejidad de los modelos o la exhaustividad de las pruebas. La generalización de los modelos a escenarios o comportamientos no vistos en los datos de entrenamiento también representa un desafío inherente al aprendizaje automático.</p>
+</section>
+</section>
+<section id="metodología" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Metodología</h1>
+<p>La metodología adoptada para el desarrollo de este sistema inteligente se basa en un enfoque modular y iterativo, siguiendo las mejores prácticas en el campo del aprendizaje automático y la ingeniería de software.</p>
+<section id="explicación-de-conceptos-clave" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="explicación-de-conceptos-clave"><span class="header-section-number">3.1</span> Explicación de Conceptos Clave</h2>
+<ul>
+<li><p>Aprendizaje Profundo (Deep Learning): Una rama del aprendizaje automático que utiliza redes neuronales artificiales con múltiples capas (profundas) para modelar abstracciones de alto nivel en los datos. Fue elegido por su capacidad para manejar grandes volúmenes de datos complejos (series de tiempo, imágenes, interacciones de usuario) y extraer características automáticamente, lo que es crucial para la complejidad de los problemas planteados.</p></li>
+<li><p>Series de Tiempo: Secuencias de puntos de datos indexados (o listados) en orden de tiempo. La predicción de series de tiempo implica el uso de modelos para pronosticar valores futuros basándose en patrones históricos, estacionalidad y tendencias.</p></li>
+<li><p>Redes Neuronales Convolucionales (CNNs): Un tipo de red neuronal profunda especialmente diseñada para procesar datos con una topología de cuadrícula, como imágenes. Las CNNs son ideales para la clasificación de imágenes de conducción distractiva debido a su capacidad para aprender jerarquías de características espaciales.</p></li>
+<li><p>Sistemas de Recomendación: Algoritmos que sugieren elementos (destinos de viaje en este caso) a los usuarios basándose en sus preferencias pasadas y/o en el comportamiento de usuarios similares. Pueden ser basados en filtrado colaborativo (utilizando similitudes entre usuarios o ítems), basados en contenido (utilizando atributos de los ítems) o híbridos.</p></li>
+</ul>
+</section>
+<section id="enfoque-general-del-proyecto" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="enfoque-general-del-proyecto"><span class="header-section-number">3.2</span> Enfoque General del Proyecto</h2>
+<p>El proyecto se estructuró en torno a un enfoque modular, donde cada uno de los tres problemas principales (predicción de demanda, clasificación de conducción distractiva y recomendación de destinos) fue abordado como un módulo independiente con su propio ciclo de vida de desarrollo de modelo. Posteriormente, estos módulos se integraron en una única plataforma web para ofrecer una solución unificada. Este enfoque permitió la especialización en cada área y facilitó la gestión de la complejidad del proyecto.</p>
+</section>
+<section id="fases-del-proyecto" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="fases-del-proyecto"><span class="header-section-number">3.3</span> Fases del Proyecto</h2>
+<p>Fase 1: Recopilación y Exploración de Datos:</p>
+<ul>
+<li><p>Identificación y acceso a las fuentes de datos para cada módulo (registros de transporte, imágenes de conductores, historial de viajes de usuarios).</p></li>
+<li><p>Análisis Exploratorio de Datos (EDA) para comprender la estructura, calidad y patrones iniciales de los datos. Visualización de tendencias, distribución y anomalías.</p></li>
+</ul>
+<p>Fase 2: Preprocesamiento de Datos:</p>
+<ul>
+<li><p>Limpieza de Datos: Manejo de valores nulos, duplicados y atípicos.</p></li>
+<li><p>Transformación: Normalización, estandarización, creación de características (feature engineering) específicas para cada tipo de dato (ej. características temporales para series de tiempo, aumento de datos para imágenes).</p></li>
+<li><p>División de Datos: Separación en conjuntos de entrenamiento, validación y prueba para asegurar una evaluación imparcial del modelo.</p></li>
+</ul>
+<p>Fase 3: Desarrollo y Entrenamiento de Modelos:</p>
+<ul>
+<li><p>Diseño de Arquitecturas: Selección y diseño de las arquitecturas de redes neuronales profundas más adecuadas para cada módulo (ej. LSTMs para series de tiempo, CNNs para imágenes, modelos de factorización de matrices o redes neuronales para recomendaciones).</p></li>
+<li><p>Implementación: Codificación de los modelos utilizando las librerías de aprendizaje profundo seleccionadas.</p></li>
+<li><p>Entrenamiento: Proceso de ajuste de los pesos de los modelos utilizando los datos de entrenamiento, con monitoreo del rendimiento en el conjunto de validación.</p></li>
+</ul>
+<p>Fase 4: Evaluación y Optimización:</p>
+<ul>
+<li><p>Definición de Métricas: Selección de métricas de rendimiento apropiadas para cada tipo de problema (RMSE, MAE para predicción; Accuracy, F1-score, Precision, Recall para clasificación; Precision@K, Recall@K para recomendación).</p></li>
+<li><p>Evaluación: Medición del rendimiento de los modelos en el conjunto de prueba, no visto durante el entrenamiento.</p></li>
+<li><p>Optimización: Ajuste de hiperparámetros y refinamiento de las arquitecturas para mejorar el rendimiento.</p></li>
+</ul>
+<p>Fase 5: Integración y Desarrollo Web:</p>
+<ul>
+<li><p>Diseño de la Arquitectura Web: Planificación de la estructura de la aplicación web, incluyendo frontend, backend y la comunicación con los modelos.</p></li>
+<li><p>Desarrollo de APIs: Creación de interfaces de programación de aplicaciones (APIs) para que la aplicación web pueda interactuar con los modelos entrenados.</p></li>
+<li><p>Implementación de la Interfaz de Usuario: Desarrollo del frontend para visualizar resultados y permitir la interacción del usuario.</p></li>
+</ul>
+<p>Fase 6: Pruebas y Despliegue:</p>
+<pre><code>Pruebas de Funcionalidad: Verificación de que todas las características del sistema integrado funcionan según lo esperado.
+
+Pruebas de Rendimiento: Evaluación de la velocidad y eficiencia del sistema.
+
+Despliegue (opcional): Preparación y lanzamiento del sistema en un entorno de producción o simulación.</code></pre>
+</section>
+<section id="herramientas-y-tecnologías-utilizadas" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="herramientas-y-tecnologías-utilizadas"><span class="header-section-number">3.4</span> Herramientas y Tecnologías Utilizadas</h2>
+<ul>
+<li>Lenguaje de Programación: Python</li>
+<li>Librerías de Aprendizaje Profundo: TensorFlow, Keras</li>
+<li>Librerías de Manipulación de Datos: Pandas, NumPy</li>
+<li>Librerías de Visualización: Matplotlib, Seaborn</li>
+<li>Desarrollo Web (Backend): [Flask/Django/FastAPI - Especificar el utilizado]</li>
+<li>Desarrollo Web (Frontend): [HTML, CSS, JavaScript, y un framework como React/Vue.js/Angular - * Especificar el utilizado]</li>
+<li>Base de Datos (si aplica): [Especificar si se usó alguna, ej. SQLite, PostgreSQL, MongoDB]</li>
+<li>Entorno de Desarrollo: Jupyter Notebooks, Google Colab, VS Code</li>
+<li>Control de Versiones: Git, GitHub</li>
+</ul>
+</section>
+</section>
+<section id="desarrollo-técnico-por-módulo" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Desarrollo Técnico por Módulo</h1>
+<section id="módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)</h2>
+<section id="descripción-del-problema" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="descripción-del-problema"><span class="header-section-number">4.1.1</span> Descripción del Problema</h3>
+<p>El objetivo de este módulo es anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esto es crucial para la empresa, ya que una predicción precisa permite optimizar la asignación de recursos (vehículos y personal), reducir costos operativos asociados a la subutilización o sobrecarga de la flota, y mejorar la planificación general de los servicios. La demanda puede medirse en términos de número de pasajeros, cantidad de viajes o volumen de carga.</p>
+</section>
+<section id="dataset" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="dataset"><span class="header-section-number">4.1.2</span> Dataset</h3>
+</section>
+<section id="preprocesamiento" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="preprocesamiento"><span class="header-section-number">4.1.3</span> Preprocesamiento</h3>
+<ol type="1">
+<li><p>Limpieza de Datos: Se identificaron y manejaron valores nulos o inconsistentes. Se realizaron imputaciones simples (ej. media, interpolación) o eliminaciones, según la proporción de datos faltantes.</p></li>
+<li><p>Transformación de Series de Tiempo:</p></li>
+</ol>
+</section>
+<section id="diseño-de-modelo" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="diseño-de-modelo"><span class="header-section-number">4.1.4</span> Diseño de Modelo</h3>
+<p>Se optó por una arquitectura de Red Neuronal Recurrente (RNN) basada en LSTM (Long Short-Term Memory) debido a su probada eficacia en la captura de dependencias a largo plazo en series de tiempo. La arquitectura del modelo es la siguiente:</p>
+</section>
+<section id="evaluación-y-resultados" class="level3" data-number="4.1.5">
+<h3 data-number="4.1.5" class="anchored" data-anchor-id="evaluación-y-resultados"><span class="header-section-number">4.1.5</span> Evaluación y Resultados</h3>
+<p>Las métricas de evaluación utilizadas fueron el RMSE (Root Mean Squared Error) y el MAE (Mean Absolute Error). El RMSE penaliza más los errores grandes, mientras que el MAE proporciona una medida más directa del error promedio.</p>
+</section>
+<section id="gráficas-de-predicción-vs.-demanda-real" class="level3" data-number="4.1.6">
+<h3 data-number="4.1.6" class="anchored" data-anchor-id="gráficas-de-predicción-vs.-demanda-real"><span class="header-section-number">4.1.6</span> Gráficas de predicción vs.&nbsp;demanda real</h3>
+<p>[Imagen 5.1.1: Gráfica de Predicción vs.&nbsp;Demanda Real para la Ruta A] Descripción: Esta gráfica muestra la demanda real (línea azul) y la demanda predicha por el modelo (línea naranja) para la Ruta A durante el período de prueba. Se observa una buena concordancia entre ambas, indicando que el modelo captura las tendencias y fluctuaciones.</p>
+<p>[Imagen 5.1.2: Gráfica de Predicción vs.&nbsp;Demanda Real para la Ruta B] Descripción: Similar a la anterior, esta gráfica ilustra el rendimiento del modelo en la Ruta B, demostrando su capacidad para adaptarse a diferentes patrones de demanda.</p>
+<p>[Imagen 5.1.3: Gráfica de Predicción a 30 días para la Ruta C] Descripción: Muestra la predicción de demanda para los próximos 30 días en la Ruta C. La línea punteada representa la predicción futura del modelo, basada en los patrones aprendidos.</p>
+</section>
+<section id="análisis-de-la-estacionalidad-y-tendencias" class="level3" data-number="4.1.7">
+<h3 data-number="4.1.7" class="anchored" data-anchor-id="análisis-de-la-estacionalidad-y-tendencias"><span class="header-section-number">4.1.7</span> Análisis de la estacionalidad y tendencias</h3>
+<p>El análisis exploratorio y el rendimiento del modelo confirmaron la presencia de patrones estacionales y tendencias en la demanda de transporte. Se observaron picos de demanda durante los fines de semana y períodos vacacionales, así como una tendencia general de crecimiento/decrecimiento en ciertas rutas a lo largo del año. El modelo LSTM fue capaz de capturar eficazmente estos patrones, lo que se refleja en la alineación de las predicciones con la demanda real.</p>
+<p>[Imagen 5.1.4: Descomposición de Serie de Tiempo (Tendencia y Estacionalidad)] Descripción: Esta imagen muestra la descomposición de una serie de tiempo de demanda en sus componentes de tendencia, estacionalidad y residuo, confirmando los patrones cíclicos y la dirección general de la demanda.</p>
+</section>
+</section>
+</section>
+<section id="herramienta-web" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Herramienta Web</h1>
+<p>La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.</p>
+<section id="descripción-de-la-interfaz" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="descripción-de-la-interfaz"><span class="header-section-number">5.1</span> Descripción de la interfaz</h2>
+<p>La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno, utilizando una paleta de colores coherente con la identidad de la empresa.</p>
+<p>[Imagen 6.1: Diseño de la Interfaz Principal de la Herramienta Web] Descripción: Un wireframe o mockup de la página de inicio de la aplicación web, mostrando la navegación principal a los módulos de Predicción, Clasificación y Recomendación.</p>
+<p>[Imagen 6.2: Diagrama de Arquitectura de la Aplicación Web (Frontend, Backend, Modelos)] Descripción: Un diagrama que ilustra la arquitectura de la aplicación, mostrando cómo el frontend se comunica con el backend (API REST), y cómo el backend interactúa con los modelos de aprendizaje profundo (que pueden estar cargados en memoria o servidos a través de un framework como TensorFlow Serving).</p>
+</section>
+<section id="funcionalidades" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="funcionalidades"><span class="header-section-number">5.2</span> Funcionalidades:</h2>
+<section id="módulo-de-predicción-de-demanda" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="módulo-de-predicción-de-demanda"><span class="header-section-number">5.2.1</span> Módulo de Predicción de Demanda</h3>
+<ul>
+<li><p>Descripción: Permite a los usuarios (ej. personal de planificación de la empresa) seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.</p></li>
+<li><p>Interfaz: [Imagen 6.3: Captura de Pantalla de la Interfaz de Predicción de Demanda] Descripción: Captura de pantalla de la sección de predicción de demanda, mostrando un selector de ruta y una gráfica de línea con la demanda histórica y la curva de predicción para los próximos 30 días.</p></li>
+</ul>
+</section>
+<section id="módulo-de-clasificación-de-conducción-distractiva" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="módulo-de-clasificación-de-conducción-distractiva"><span class="header-section-number">5.2.2</span> Módulo de Clasificación de Conducción Distractiva</h3>
+<ul>
+<li><p>Descripción: Permite a los usuarios (ej. personal de seguridad o supervisores) subir una imagen de un conductor. El sistema procesa la imagen y devuelve la clasificación del comportamiento detectado (ej. “Conducción Segura”, “Uso de Teléfono”, “Somnolencia”), junto con la probabilidad de cada clase.</p></li>
+<li><p>Interfaz: [Imagen 6.4: Captura de Pantalla de la Interfaz de Clasificación de Imágenes] Descripción: Captura de pantalla de la sección de clasificación, mostrando un botón para subir una imagen, la imagen cargada y los resultados de la clasificación (clase predicha y probabilidades) en un formato claro.</p></li>
+</ul>
+</section>
+<section id="módulo-de-recomendación-de-destinos-de-viaje" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="módulo-de-recomendación-de-destinos-de-viaje"><span class="header-section-number">5.2.3</span> Módulo de Recomendación de Destinos de Viaje</h3>
+<ul>
+<li><p>Descripción: Permite ingresar un ID de usuario o seleccionar un usuario de una lista. El sistema entonces genera y muestra una lista de destinos de viaje personalizados recomendados para ese usuario, basándose en sus preferencias inferidas.</p></li>
+<li><p>Interfaz: [Imagen 6.5: Captura de Pantalla de la Interfaz de Recomendación de Destinos] Descripción: Captura de pantalla de la sección de recomendación, mostrando un campo para ingresar el ID de usuario o un selector, y una lista de destinos recomendados con sus nombres y quizás una breve descripción o imagen.</p></li>
+</ul>
+</section>
+</section>
+<section id="tecnologías-utilizadas" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="tecnologías-utilizadas"><span class="header-section-number">5.3</span> Tecnologías utilizadas</h2>
+<ul>
+<li><p>Frontend: [React/Vue.js/Angular - Especificar el utilizado] para la construcción de componentes interactivos y una experiencia de usuario dinámica. Se utilizó [Tailwind CSS/Bootstrap/CSS personalizado - Especificar el utilizado] para el estilo.</p></li>
+<li><p>Backend: [Flask/Django/Node.js con Express - Especificar el utilizado] como framework para la API REST. El backend maneja las solicitudes del frontend, interactúa con los modelos de aprendizaje profundo y gestiona la lógica de negocio.</p></li>
+<li><p>API REST: Se diseñó una API RESTful para la comunicación entre el frontend y el backend, permitiendo el intercambio de datos en formato JSON.</p></li>
+<li><p>Despliegue (si aplica): La aplicación se puede desplegar en plataformas como [Heroku/AWS/Google Cloud Platform - Especificar si se hizo o se planea].</p></li>
+</ul>
+</section>
+</section>
+<section id="resultados-generales-y-discusión" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Resultados Generales y Discusión</h1>
+<p>El desarrollo de este Sistema Inteligente Integrado ha demostrado la viabilidad y el potencial transformador del aprendizaje profundo en la optimización de operaciones de transporte, la mejora de la seguridad vial y la personalización de la experiencia del cliente.</p>
+<section id="análisis-de-resultados" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="análisis-de-resultados"><span class="header-section-number">6.1</span> Análisis de resultados</h2>
+<p>Los tres módulos, aunque independientes en su desarrollo, convergen en un sistema sinérgico.</p>
+<ul>
+<li><p>El Módulo de Predicción de Demanda proporciona una base sólida para la planificación operativa, permitiendo a la empresa anticipar las necesidades de recursos con una antelación de 30 días. La precisión alcanzada (RMSE: [Valor], MAE: [Valor]) es suficiente para generar un impacto positivo en la eficiencia.</p></li>
+<li><p>El Módulo de Clasificación de Conducción Distractiva ofrece una herramienta vital para la seguridad. Con una precisión general del [Porcentaje]% y un F1-score de [Valor], el modelo es capaz de identificar comportamientos de riesgo, lo que puede conducir a intervenciones proactivas y a una reducción de accidentes.</p></li>
+<li><p>El Módulo de Recomendación de Destinos mejora la interacción con el usuario al ofrecer sugerencias personalizadas (Precision@5: [Valor], Recall@5: [Valor]). Esto no solo enriquece la experiencia del cliente, sino que también puede estimular la demanda en rutas específicas.</p></li>
+</ul>
+</section>
+<section id="comparación-con-trabajos-previos" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="comparación-con-trabajos-previos"><span class="header-section-number">6.2</span> Comparación con trabajos previos:</h2>
+<p>En comparación con enfoques tradicionales de predicción (ej. ARIMA simple), nuestros modelos de aprendizaje profundo (LSTM) han demostrado una mayor capacidad para capturar patrones complejos y no lineales en la demanda, especialmente en presencia de estacionalidad y eventos externos. Para la clasificación de imágenes, el uso de transfer learning con arquitecturas avanzadas de CNNs superó a métodos basados en características manuales, logrando una mayor robustez y precisión. Los sistemas de recomendación basados en filtrado colaborativo han demostrado ser más efectivos que las recomendaciones puramente populares o basadas en reglas, al adaptarse a las preferencias individuales del usuario.</p>
+</section>
+<section id="impacto-en-la-empresa-de-transporte" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="impacto-en-la-empresa-de-transporte"><span class="header-section-number">6.3</span> Impacto en la empresa de transporte:</h2>
+<ul>
+<li><p>Eficiencia Operativa: La predicción de demanda permite una asignación más precisa de vehículos y personal, reduciendo el tiempo de inactividad o la sobrecarga, lo que se traduce en ahorros significativos de costos y una mayor rentabilidad.</p></li>
+<li><p>Seguridad Vial: Al identificar comportamientos de conducción distractiva, la empresa puede implementar programas de capacitación, alertas o intervenciones, lo que lleva a una reducción potencial en la tasa de accidentes y una mejora en la reputación de seguridad.</p></li>
+<li><p>Experiencia del Usuario: Las recomendaciones personalizadas aumentan la satisfacción y la lealtad del cliente, fomentando la repetición de viajes y el boca a boca positivo. Esto puede traducirse en un aumento de las reservas y una ventaja competitiva.</p></li>
+<li><p>Beneficios económicos y estratégicos: El sistema no solo optimiza costos y mejora la seguridad, sino que también genera nuevas oportunidades de negocio al entender mejor las necesidades del cliente y anticipar las tendencias del mercado.</p></li>
+</ul>
+</section>
+</section>
+<section id="conclusiones-y-recomendaciones" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Conclusiones y Recomendaciones</h1>
+<section id="resumen-de-hallazgos" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="resumen-de-hallazgos"><span class="header-section-number">7.1</span> Resumen de hallazgos:</h2>
+<p>El proyecto ha logrado desarrollar un Sistema Inteligente Integrado que aborda eficazmente los desafíos de la predicción de demanda, la clasificación de conducción distractiva y la recomendación de destinos en una empresa de transporte. Cada módulo de aprendizaje profundo ha demostrado un rendimiento robusto en sus respectivas tareas, y su integración en una herramienta web proporciona una solución holística y funcional. Los modelos de predicción de series de tiempo han capturado patrones complejos de demanda, el clasificador de imágenes ha identificado con alta precisión comportamientos de riesgo, y el sistema de recomendación ha generado sugerencias personalizadas y relevantes.</p>
+</section>
+<section id="propuestas-futuras" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="propuestas-futuras"><span class="header-section-number">7.2</span> Propuestas futuras:</h2>
+<ol type="1">
+<li><p>Mejoras en los modelos:</p>
+<ul>
+<li><p>Predicción de Demanda: Explorar arquitecturas más avanzadas como Transformers para series de tiempo, o incorporar fuentes de datos externas en tiempo real (ej. eventos, clima en vivo) para mejorar la precisión.</p></li>
+<li><p>Clasificación de Conducción Distractiva: Aumentar la diversidad del dataset con más escenarios y condiciones de iluminación. Investigar modelos de detección de objetos en tiempo real para identificar no solo el comportamiento, sino también los objetos específicos que causan la distracción.</p></li>
+<li><p>Sistema de Recomendación: Implementar un enfoque híbrido más sofisticado que combine filtrado colaborativo con información basada en contenido para manejar el problema del “cold start” (nuevos usuarios/destinos) y mejorar la diversidad de las recomendaciones.</p></li>
+</ul></li>
+<li><p>Nuevas funcionalidades en la herramienta web:</p>
+<ul>
+<li><p>Alertas automáticas: Implementar un sistema de alertas en tiempo real para notificar a los supervisores sobre comportamientos de conducción distractiva.</p></li>
+<li><p>Feedback del usuario: Incorporar un mecanismo para que los usuarios califiquen las recomendaciones, lo que permitiría refinar el modelo de recomendación.</p></li>
+<li><p>Interfaz de administración: Desarrollar una sección para que los administradores gestionen rutas, destinos y usuarios, y monitoreen el rendimiento del sistema.</p></li>
+<li><p>Reportes y dashboards: Generar reportes automatizados sobre tendencias de demanda, incidentes de distracción y métricas de recomendación.</p></li>
+</ul></li>
+<li><p>Expansión del alcance:</p>
+<ul>
+<li><p>Predicción de mantenimiento de vehículos: Utilizar datos de sensores para predecir fallas en vehículos y optimizar los cronogramas de mantenimiento.</p></li>
+<li><p>Optimización de rutas dinámica: Integrar el sistema con algoritmos de optimización de rutas en tiempo real para adaptarse a cambios inesperados en la demanda o el tráfico.</p></li>
+<li><p>Análisis de sentimiento del cliente: Analizar el feedback de los clientes para mejorar la calidad del servicio.</p></li>
+</ul></li>
+<li><p>Consideraciones de despliegue:</p>
+<ul>
+<li><p>Escalabilidad: Asegurar que el sistema pueda escalar para manejar un mayor volumen de datos y usuarios a medida que la empresa crece.</p></li>
+<li><p>Monitoreo continuo: Implementar un sistema de monitoreo para supervisar el rendimiento de los modelos en producción y detectar el “model drift” (deterioro del rendimiento del modelo con el tiempo).</p></li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="aspectos-éticos-y-creatividad" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Aspectos Éticos y Creatividad</h1>
+<p>El desarrollo de un sistema inteligente que maneja datos sensibles de usuarios y conductores con lleva importantes consideraciones éticas.</p>
+<section id="gestión-de-datos-y-privacidad" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="gestión-de-datos-y-privacidad"><span class="header-section-number">8.1</span> Gestión de datos y privacidad:</h2>
+<p>Se ha puesto un énfasis primordial en la privacidad de los datos. Para los datos de los usuarios (historial de viajes, preferencias), se implementaron técnicas de anonimización y seudonimización siempre que fue posible, asegurando que la información personal no sea directamente identificable. Para las imágenes de los conductores, se estableció un protocolo estricto para el acceso y el almacenamiento, limitando el acceso solo al personal autorizado y con fines de seguridad y mejora operativa. Se considera el cumplimiento de normativas de protección de datos como [Mencionar normativas relevantes, ej. GDPR, LOPD, leyes locales de privacidad de datos] como un pilar fundamental del proyecto. Los datos no se comparten con terceros sin consentimiento explícito.</p>
+</section>
+<section id="sesgos-en-los-modelos" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="sesgos-en-los-modelos"><span class="header-section-number">8.2</span> Sesgos en los modelos:</h2>
+<p>Se reconoce que los modelos de aprendizaje automático pueden heredar y amplificar sesgos presentes en los datos de entrenamiento.</p>
+<ul>
+<li><p>Clasificación de Conducción Distractiva: Se realizó un esfuerzo para asegurar que el dataset de imágenes fuera lo más diverso posible en términos de demografía, condiciones de iluminación y ángulos de cámara para mitigar sesgos relacionados con la raza, el género o las condiciones ambientales. Sin embargo, se reconoce que pueden persistir sesgos sutiles, y se recomienda un monitoreo continuo del rendimiento del modelo en diferentes subgrupos de conductores.</p></li>
+<li><p>Recomendación de Destinos: Los sesgos en los datos de interacción (ej. destinos más populares que reciben más interacciones) pueden llevar a un “sesgo de popularidad”, donde el sistema tiende a recomendar solo lo que ya es popular. Se exploraron técnicas para mitigar esto, como la diversificación de las recomendaciones o la introducción de un factor de “serendipia” para exponer a los usuarios a nuevos destinos.</p></li>
+</ul>
+</section>
+<section id="creatividad-e-innovación" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="creatividad-e-innovación"><span class="header-section-number">8.3</span> Creatividad e innovación:</h2>
+<p>La creatividad del proyecto reside en la integración holística de tres problemas distintos pero interconectados en una única solución basada en aprendizaje profundo. En lugar de abordar cada desafío de forma aislada, se concibió un sistema que potencia la eficiencia, seguridad y experiencia del usuario de manera combinada. La aplicación de técnicas avanzadas de aprendizaje profundo (LSTMs para series de tiempo complejas, CNNs con transfer learning para clasificación de imágenes detallada, y factorización de matrices para recomendaciones personalizadas) en el dominio del transporte es una demostración de innovación. Además, la construcción de una herramienta web intuitiva para interactuar con estos modelos complejos es un paso creativo hacia la democratización del acceso a estas capacidades de IA dentro de la empresa.</p>
+</section>
+</section>
+<section id="bibliografía" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Bibliografía</h1>
+</section>
+<section id="anexos" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Anexos</h1>
+
+
+</section>
+
+ ]]></description>
+  <category>Redes Neuronales</category>
+  <category>Algoritmos bioinspirados</category>
+  <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/ia-transporte/</guid>
+  <pubDate>Mon, 30 Jun 2025 05:00:00 GMT</pubDate>
+  <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/ia-transporte/image.png" medium="image" type="image/png" height="59" width="144"/>
+</item>
 <item>
   <title>Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte</title>
   <dc:creator>Harlow Malloc</dc:creator>
@@ -21,8 +317,191 @@
 
 
 
-<p>Hola que tal</p>
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> <strong>Introducción</strong></h1>
+<p>El Problema del Viajante de Comercio (<em>Traveling Salesman Problem</em>, TSP) es uno de los problemas más clásicos y estudiados en el campo de la optimización combinatoria (Goodfellow et al., 2016; Zhang et al., 2020). Plantea el reto de encontrar la ruta de menor costo que permita a un vendedor visitar exactamente una vez cada ciudad de un conjunto y retornar al punto de partida. En el contexto colombiano, la optimización de rutas es especialmente relevante debido a la complejidad de la red vial, la alta densidad de peajes y los elevados costos logísticos (Infobae, 2025).</p>
+<p>Este trabajo busca determinar la ruta óptima para un vendedor que debe recorrer las 13 ciudades principales del país, minimizando el costo total que incluye costos de salario, peajes y combustible. Para ello se implementan dos enfoques bioinspirados: <em>algoritmos genéticos</em> (GA) y <em>algoritmos de colonia de hormigas</em> (ACO), comparando su desempeño, analizando la calidad de las soluciones y visualizando los recorridos óptimos sobre el mapa de Colombia.</p>
+</section>
+<section id="marco-teórico" class="level1 page-columns page-full" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> <strong>Marco Teórico</strong></h1>
+<section id="el-problema-del-viajante-de-comercio-tsp" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="el-problema-del-viajante-de-comercio-tsp"><span class="header-section-number">2.1</span> <strong>El Problema del Viajante de Comercio (TSP)</strong></h2>
+<p>El Problema del Viajante de Comercio (TSP, por sus siglas en inglés) es uno de los problemas más emblemáticos de la optimización combinatoria y de la investigación de operaciones. Consiste en encontrar la ruta de menor costo que permita a un viajante visitar una vez cada ciudad de un conjunto dado y regresar al punto de partida (Zhang et al., 2020). Este problema es <em>NP-hard</em>, lo que significa que el número de posibles rutas crece factorialmente con el número de ciudades, volviendo inviable la búsqueda exhaustiva para instancias de tamaño moderado (Goodfellow et al., 2016).</p>
+<p>Matemáticamente, el TSP se modela mediante un grafo completo donde cada nodo representa una ciudad y cada arista tiene un costo asociado (Goodfellow et al., 2016). Como ejemplo de costo asociado tenemos distancia, tiempo, dinero, etc. El objetivo es encontrar el ciclo hamiltoniano de menor costo, es decir, un camino que pase una única vez por cada ciudad, retorne al origen, y minimice la suma de los costos (Zhang et al., 2020).</p>
+</section>
+<section id="placing-colorbars" class="level2 page-columns page-full" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="placing-colorbars"><span class="header-section-number">2.2</span> Placing Colorbars</h2>
+<p>Colorbars indicate the quantitative extent of image data. Placing in a figure is non-trivial because room needs to be made for them. The simplest case is just attaching a colorbar to each axes:<sup>1</sup>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;See the <a href="https://matplotlib.org/stable/gallery/subplots_axes_and_figures/colorbar_placement.html">Matplotlib Gallery</a> to explore colorbars further</p></div></div><div id="91792b71" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">fig, axs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-5">fig.set_size_inches(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb1-6">cmaps <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'RdBu_r'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'viridis'</span>]</span>
+<span id="cb1-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> col <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>):</span>
+<span id="cb1-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> row <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>):</span>
+<span id="cb1-9">        ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> axs[row, col]</span>
+<span id="cb1-10">        pcm <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.pcolormesh(</span>
+<span id="cb1-11">          np.random.random((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (col <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb1-12">          cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>cmaps[col]</span>
+<span id="cb1-13">        )</span>
+<span id="cb1-14">        fig.colorbar(pcm, ax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ax)</span>
+<span id="cb1-15">plt.show()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://alejandroferiagonzalez.github.io/RNAB/posts/post-with-code/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="supuestos-para-el-salario" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="supuestos-para-el-salario"><span class="header-section-number">2.2.1</span> Supuestos para el Salario</h3>
+<p><strong>Se asume un valor monetario por hora de trabajo de $25.000 COP/hora</strong>, definido según parámetros del mercado laboral colombiano, Con este valor se puede estimar el costo del salario que debe pagarse al viajante por ir desde la ciudad <img src="https://latex.codecogs.com/png.latex?i"> a la ciudad <img src="https://latex.codecogs.com/png.latex?j">, mediante la siguiente expresión:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BCosto%20del%20salario%20del%20viajante%7D_%7Bij%7D%20=%20V_h%20%5Ccdot%20T_%7Bij%7D%20%5Ctag%7B1%7D"></p>
+<p>For a demonstration of a line plot on a polar axis, see Figure&nbsp;1.</p>
+<div id="cell-fig-polar" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">r <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>)</span>
+<span id="cb2-5">theta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.pi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> r</span>
+<span id="cb2-6">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(</span>
+<span id="cb2-7">  subplot_kw <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'projection'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'polar'</span>} </span>
+<span id="cb2-8">)</span>
+<span id="cb2-9">ax.plot(theta, r)</span>
+<span id="cb2-10">ax.set_rticks([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>])</span>
+<span id="cb2-11">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-12">plt.show()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-polar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://alejandroferiagonzalez.github.io/RNAB/posts/post-with-code/index_files/figure-html/fig-polar-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A line plot on a polar axis
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
+
+</section>
+</section>
+</section>
 
 
  ]]></description>
@@ -33,8 +512,11 @@
   <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/post-with-code/image.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
-  <title>Bienvenida</title>
-  <dc:creator>Alejandro Feria Gonzalez</dc:creator>
+  <title>Bienvenidos</title>
+  <dc:creator>Diego Fernando Chávez Henao, dfchavez@unal.edu.co</dc:creator>
+  <dc:creator>Alejandro Feria González, aferiag@unal.edu.co</dc:creator>
+  <dc:creator>Santiago Molina Muñoz, smolinam@unal.edu.co</dc:creator>
+  <dc:creator>Juan Manuel Teherán Machado, jteheranm@unal.edu.co</dc:creator>
   <link>https://alejandroferiagonzalez.github.io/RNAB/posts/welcome/</link>
   <description><![CDATA[ 
 
@@ -42,9 +524,7 @@
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="https://alejandroferiagonzalez.github.io/RNAB/posts/welcome/thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+<p>En este espacio se publicarán los trabajos de la materia Redes Neuronales y Algoritmos Bioinspirados. Podrás encontrar diferentes proyectos prácticos donde se explican algoritmos famosos inspirados en la naturaleza.</p>
 
 
 
@@ -53,6 +533,7 @@
   <category>Algoritmos bioinspirados</category>
   <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/welcome/</guid>
   <pubDate>Sun, 15 Jun 2025 05:00:00 GMT</pubDate>
+  <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/welcome/thumbnail.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
