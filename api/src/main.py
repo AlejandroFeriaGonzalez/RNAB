@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src.services.driving_classification import predict_image, PredictionResult
+from src.services.travel_recommendations import recomendar_por_usuario_y_preguntas
 
 SRC = pathlib.Path(__file__).parent
 
@@ -54,3 +55,7 @@ async def api_driving_classification(file: UploadFile = File(...)):
     image_bytes = await file.read()
     prediction = predict_image(image_bytes)
     return JSONResponse(content=prediction)
+
+@app.post("/api/travel-recommendations")
+async def api_travel_recommendations():
+    pass
