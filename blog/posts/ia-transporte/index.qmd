@@ -285,18 +285,194 @@ Curvas de entrenamiento:
 
 ### Descripción del Problema
 
+El objetivo de este módulo es desarrollar un sistema que sugiera destinos de viaje personalizados a los usuarios de la empresa, basándose en su historial de viajes y preferencias. Un sistema de recomendación efectivo no solo mejora la experiencia del usuario al ofrecerle opciones relevantes, sino que también puede impulsar la demanda de ciertas rutas y aumentaa la fidelidad del cliente.
+
 ### Dataset
+Se uso un dataset publico en kaggle llamado [Travel Recommendation Dataset](https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1). Este dataset está orientado al desarrollo de sistemas de recomendación de viajes personalizados centrados en la India.
+
+El dataset se compone de cuatro archivos CSV principales:
+
+1. **Destinos**: Información detallada sobre lugares turísticos en India (tipo de destino, popularidad, mejor época para visitar, etc.).
+
+2. **Usuarios**: Perfiles con datos demográficos y preferencias de viaje, incluyendo composición del grupo (adultos, niños) y diversidad de género.
+
+3. **Reseñas**: Reseñas: Opiniones y valoraciones de usuarios sobre los destinos visitados, útiles para análisis de satisfacción y sentimientos.
+
+4. **Historial de Usuarios**: Registros de destinos previamente visitados y calificaciones otorgadas.
 
 ### Preprocesamiento
+El preprocesamiento de los datos se realizó en varios etapas clave:
+
+1. **Carga de archivos CSV**: Todos los archivos se leyeron con `pandas.read_csv` y se concatenaron en un único DataFrame.
+
+2. **Visualización inicial**: Se observo información general, se buscaron valores nulos y se identificaron tipos de datos, adicionalmente se graficaron las distribuciones de variables numéricas y categóricas usando `matplotlib`.
+
+```{python}
+import glob
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
+
+# 1. CARGA, VISUALIZACIÓN Y LIMPIEZA DEL DATASET
+carpeta = r'./recomendaciones'
+archivos_csv = glob.glob(os.path.join(carpeta, '*.csv'))
+if not archivos_csv:
+    raise FileNotFoundError(f'No se encontraron archivos CSV en la carpeta: {carpeta}')
+print(f'Se encontraron {len(archivos_csv)} archivos CSV.')
+
+# Cargar y concatenar los archivos CSV
+try:
+    dfs = [pd.read_csv(archivo) for archivo in archivos_csv]
+    df = pd.concat(dfs, ignore_index=True)
+except Exception as e:
+    raise RuntimeError(f'Error al cargar los archivos CSV: {e}')
+
+# Visualización de variables numéricas y categóricas (opcional)
+num_cols = df.select_dtypes(include=['float64', 'int64']).columns
+cat_cols = df.select_dtypes(include=['object']).columns
+
+MOSTRAR_GRAFICOS=True
+
+if MOSTRAR_GRAFICOS:
+    for col in num_cols:
+        plt.figure(figsize=(6,4))
+        df[col].hist(bins=20)
+        plt.title(f'Distribución de {col}', fontsize=10)
+        plt.xlabel(col, fontsize=8)
+        plt.ylabel('Frecuencia', fontsize=8)
+        plt.tight_layout()
+        plt.show()
+
+    for col in cat_cols:
+        plt.figure(figsize=(6,4))
+        df[col].value_counts().head(10).plot(kind='bar')
+        plt.title(f'Frecuencia de {col}', fontsize=10)
+        plt.xlabel(col, fontsize=8)
+        plt.ylabel('Frecuencia', fontsize=8)
+        plt.tight_layout()
+        plt.show()
+```
+
+3. **Limpieza de valores nulos**
+
+  * Para columnas numéricas, los valores nulos se rellenaron con la mediana de cada columna.
+
+  * Para columnas categóricas, los valores nulos se rellenaron con la moda (valor más frecuente) o con 'Desconocido' si la moda no estaba disponible.
+
+```python
+# Limpieza básica: rellenar NaN
+for col in num_cols:
+    n_null = df[col].isnull().sum()
+    df[col] = df[col].fillna(df[col].median())
+for col in cat_cols:
+    n_null = df[col].isnull().sum()
+    df[col] = df[col].fillna(df[col].mode()[0] if not df[col].mode().empty else 'Desconocido')
+
+# Normalización de variables numéricas (excluyendo IDs si existen)
+cols_to_normalize = [col for col in num_cols if not col.lower().endswith('id')]
+scaler = MinMaxScaler()
+df[cols_to_normalize] = scaler.fit_transform(df[cols_to_normalize])
+```
+
+4. **Normalización de variables numéricas**:
+Se normalizaron las columnas numéricas (excepto aquellas cuyo nombre termina en 'id') usando MinMaxScaler de scikit-learn, escalando sus valores entre 0 y 1.
+
+5. **Simulación de datos adicionales**:
+Para aumentar la diversidad y cantidad de datos, se generaron registros simulados de usuarios y destinos, basados en las distribuciones reales de los datos originales. Estos datos simulados se concatenaron al DataFrame original.
+
+6. **Construcción de features de texto**:
+Creación de una columna features combinando nombre, tipo, estado, preferencias, época y popularidad, todo normalizado y en minúsculas.
+
 
 ### Diseño de Modelo
+El diseño del modelo sigue un enfoque híbrido, combinando técnicas de filtrado colaborativo y basado en contenido.
+
+1. **1. Matriz de Interacción Usuario-Destino**:
+Se creó una matriz donde las filas son usuarios y las columnas son destinos, y el valor es el rating o experiencia (`ExperienceRating` o `Rating`) que el usuario dio al destino. Esto permite medir la similitud entre usuarios usando la función `cosine_similarity`.
+
+2. **Modelo Basado en Contenido**:
+Se generó una columna `features` para cada destino, combinando y normalizando información relevante (nombre, tipo, estado, preferencias, época, popularidad, etc.).
+Luego, se vectorizó esta columna usando `CountVectorizer` y se calculó la similitud de coseno entre destinos, obteniendo una matriz de similitud de destinos.
+
+```python
+df['features'] = (
+    df['Name'].apply(normaliza_texto) + ' ' +
+    df['Type'].apply(normaliza_texto) + ' ' +
+    df['State'].apply(normaliza_texto) + ' ' +
+    df['Preferences'].apply(normaliza_texto) + ' ' +
+    df['BestTimeToVisit'].apply(normaliza_texto) + ' ' +
+    df['Popularity'].astype(str) + ' ' +
+    df['State'].apply(normaliza_texto) + '_' + df['Type'].apply(normaliza_texto) + ' ' +
+    df['Type'].apply(normaliza_texto) + '_' + df['Preferences'].apply(normaliza_texto) + ' ' +
+    df['Name'].apply(normaliza_texto) + '_' + df['State'].apply(normaliza_texto)
+)
+```
+
+4. **Funciones principales**:
+* **recomendar_temporal_hibrido(user_id, top_n=3)**:
+Recomienda destinos usando solo el historial del usuario (sin considerar el destino de test), basándose en la similitud de contenido entre los destinos ya visitados y los no visitados.
+
+* **recomendar_destinos_simples(user_id, top_n=3)**:
+Recomienda destinos que el usuario no ha visitado aún. Si ya visitó todos, sugiere los destinos más populares. Es un enfoque sencillo basado en el contenido y la popularidad.
+
+* **recomendar_por_preguntas(df, top_n=3)**:
+Hace preguntas al usuario sobre sus preferencias (tipo de destino, época del año, estado) y recomienda destinos que coincidan con esas respuestas. Si no hay coincidencias, sugiere los destinos más populares.
+
 
 ### Evaluación y Resultados
 
+![Visualización de agrupamiento de destinos (t-SNE)](agrupamiento_destinos.png){width=800}
+
+La validación del modelo se realizó mediante una validación cruzada simple por usuario. El procedimiento fue el siguiente:
+
+1. **Separación de historial y test**:
+Para cada usuario, se tomó el último destino visitado como el destino de “test” (el que se debe predecir) y el resto de destinos como su historial.
+
+2. **Generación de recomendaciones**:
+Se usó el historial del usuario para generar recomendaciones (con la función híbrida o de contenido).
+
+3. **Cálculo de métricas**:
+Se calculó la precisión y el recall:
+
+  * Precisión: Proporción de veces que el destino de test aparece en el top N de recomendaciones.
+  * Recall: Proporción de veces que el destino de test es recuperado (como solo hay un relevante, es 1 si aparece, 0 si no).
+
+4. **Promedio de resultados**: Se promediaron los valores de precisión y recall para todos los usuarios, obteniendo así una medida global del desempeño del sistema.
+
+Esto permite evaluar si el sistema es capaz de recomendar correctamente destinos que el usuario realmente visitaría, usando solo información previa a ese destino.
+
+#### Resultados numericos:
+
+* **Precisión promedio**: 0.06
+
+En promedio, solo el 6% de las recomendaciones contienen el destino que el usuario realmente visitó, dentro del top 3 sugerido.
+
+* **Recall promedio**: 0.17
+
+En promedio, el sistema logra recomendar el destino relevante en el 17% de los casos.
+
+* **Pocos destinos**: Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.
+
+* **Simulación**: El sistema no está "adivinando" lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.
+
+**Entendemos que es dificil recomendarle algo completamente bueno para el usuario con tan poca muestra y lo mejor es recomendarle dependiendo de lo que quiere el usuario y teniendo encuenta su historial por ende haremos una funcion, que haga las preguntas a las cosas mas importantes para recomendarle unos lugares al usuario, si de lo que elige no hay ninguna opcion buena recomienda el top 3 de lugares mejor rankeado que no haya visitado el usuario.**
+
+
 ### Ejemplos de recomendaciones generadas
+
+![Ejemplo uso del modelo 3](modelo3Respuesta.png){width=800}
 
 ### Análisis de la efectividad de las recomendaciones:
 La efectividad del sistema de recomendación se analiza en términos de su capacidad para generar recomendaciones relevantes y su impacto potencial en las métricas de negocio.
+
+* **Satisfacción del usuario**: Al ofrecer destinos que se alinean con sus preferencias, se espera un aumento en la satisfacción y la percepción de valor del servicio.
+
+* **Incremento en la demanda de ciertas rutas**: Las recomendaciones pueden dirigir a los usuarios hacia destinos que, de otro modo, no habrían considerado, lo que podría aumentar la demanda en rutas específicas.
+
+* **Tasa de clics/conversión**: Aunque no se midió directamente en este proyecto, se espera que la tasa de clics en las recomendaciones y, en última instancia, la tasa de conversión de reservas, mejoren significativamente.
+
+* **Fidelización**: Un sistema que entiende y anticipa las necesidades del usuario contribuye a una mayor fidelidad a largo plazo.
 
 
 # Herramienta Web
