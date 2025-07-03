@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -75,6 +110,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="custom.css">
 </head>
 
 <body class="floating nav-fixed quarto-light">
@@ -175,7 +211,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#desarrollo-técnico-por-módulo" id="toc-desarrollo-técnico-por-módulo" class="nav-link" data-scroll-target="#desarrollo-técnico-por-módulo"><span class="header-section-number">4</span> Desarrollo Técnico por Módulo</a>
   <ul class="collapse">
-  <li><a href="#módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo" id="toc-módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo" class="nav-link" data-scroll-target="#módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)</a>
+  <li><a href="#módulo-1-predicción-de-demanda-de-transporte" id="toc-módulo-1-predicción-de-demanda-de-transporte" class="nav-link" data-scroll-target="#módulo-1-predicción-de-demanda-de-transporte"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte</a>
   <ul class="collapse">
   <li><a href="#descripción-del-problema" id="toc-descripción-del-problema" class="nav-link" data-scroll-target="#descripción-del-problema"><span class="header-section-number">4.1.1</span> Descripción del Problema</a></li>
   <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset"><span class="header-section-number">4.1.2</span> Dataset</a></li>
@@ -184,6 +220,25 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#evaluación-y-resultados" id="toc-evaluación-y-resultados" class="nav-link" data-scroll-target="#evaluación-y-resultados"><span class="header-section-number">4.1.5</span> Evaluación y Resultados</a></li>
   <li><a href="#gráficas-de-predicción-vs.-demanda-real" id="toc-gráficas-de-predicción-vs.-demanda-real" class="nav-link" data-scroll-target="#gráficas-de-predicción-vs.-demanda-real"><span class="header-section-number">4.1.6</span> Gráficas de predicción vs.&nbsp;demanda real</a></li>
   <li><a href="#análisis-de-la-estacionalidad-y-tendencias" id="toc-análisis-de-la-estacionalidad-y-tendencias" class="nav-link" data-scroll-target="#análisis-de-la-estacionalidad-y-tendencias"><span class="header-section-number">4.1.7</span> Análisis de la estacionalidad y tendencias</a></li>
+  </ul></li>
+  <li><a href="#módulo-2-clasificación-de-conducción-distractiva" id="toc-módulo-2-clasificación-de-conducción-distractiva" class="nav-link" data-scroll-target="#módulo-2-clasificación-de-conducción-distractiva"><span class="header-section-number">4.2</span> Módulo 2: Clasificación de Conducción Distractiva</a>
+  <ul class="collapse">
+  <li><a href="#descripción-del-problema-1" id="toc-descripción-del-problema-1" class="nav-link" data-scroll-target="#descripción-del-problema-1"><span class="header-section-number">4.2.1</span> Descripción del problema</a></li>
+  <li><a href="#dataset-1" id="toc-dataset-1" class="nav-link" data-scroll-target="#dataset-1"><span class="header-section-number">4.2.2</span> Dataset</a></li>
+  <li><a href="#preprocesamiento-1" id="toc-preprocesamiento-1" class="nav-link" data-scroll-target="#preprocesamiento-1"><span class="header-section-number">4.2.3</span> Preprocesamiento:</a></li>
+  <li><a href="#diseño-de-modelo-1" id="toc-diseño-de-modelo-1" class="nav-link" data-scroll-target="#diseño-de-modelo-1"><span class="header-section-number">4.2.4</span> Diseño de Modelo</a></li>
+  <li><a href="#evaluación" id="toc-evaluación" class="nav-link" data-scroll-target="#evaluación"><span class="header-section-number">4.2.5</span> Evaluación</a></li>
+  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados"><span class="header-section-number">4.2.6</span> Resultados</a></li>
+  </ul></li>
+  <li><a href="#módulo-3-recomendación-de-destinos-de-viaje" id="toc-módulo-3-recomendación-de-destinos-de-viaje" class="nav-link" data-scroll-target="#módulo-3-recomendación-de-destinos-de-viaje"><span class="header-section-number">4.3</span> Módulo 3: Recomendación de Destinos de Viaje</a>
+  <ul class="collapse">
+  <li><a href="#descripción-del-problema-2" id="toc-descripción-del-problema-2" class="nav-link" data-scroll-target="#descripción-del-problema-2"><span class="header-section-number">4.3.1</span> Descripción del Problema</a></li>
+  <li><a href="#dataset-2" id="toc-dataset-2" class="nav-link" data-scroll-target="#dataset-2"><span class="header-section-number">4.3.2</span> Dataset</a></li>
+  <li><a href="#preprocesamiento-2" id="toc-preprocesamiento-2" class="nav-link" data-scroll-target="#preprocesamiento-2"><span class="header-section-number">4.3.3</span> Preprocesamiento</a></li>
+  <li><a href="#diseño-de-modelo-2" id="toc-diseño-de-modelo-2" class="nav-link" data-scroll-target="#diseño-de-modelo-2"><span class="header-section-number">4.3.4</span> Diseño de Modelo</a></li>
+  <li><a href="#evaluación-y-resultados-1" id="toc-evaluación-y-resultados-1" class="nav-link" data-scroll-target="#evaluación-y-resultados-1"><span class="header-section-number">4.3.5</span> Evaluación y Resultados</a></li>
+  <li><a href="#ejemplos-de-recomendaciones-generadas" id="toc-ejemplos-de-recomendaciones-generadas" class="nav-link" data-scroll-target="#ejemplos-de-recomendaciones-generadas"><span class="header-section-number">4.3.6</span> Ejemplos de recomendaciones generadas</a></li>
+  <li><a href="#análisis-de-la-efectividad-de-las-recomendaciones" id="toc-análisis-de-la-efectividad-de-las-recomendaciones" class="nav-link" data-scroll-target="#análisis-de-la-efectividad-de-las-recomendaciones"><span class="header-section-number">4.3.7</span> Análisis de la efectividad de las recomendaciones:</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#herramienta-web" id="toc-herramienta-web" class="nav-link" data-scroll-target="#herramienta-web"><span class="header-section-number">5</span> Herramienta Web</a>
@@ -212,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#gestión-de-datos-y-privacidad" id="toc-gestión-de-datos-y-privacidad" class="nav-link" data-scroll-target="#gestión-de-datos-y-privacidad"><span class="header-section-number">8.1</span> Gestión de datos y privacidad:</a></li>
   <li><a href="#sesgos-en-los-modelos" id="toc-sesgos-en-los-modelos" class="nav-link" data-scroll-target="#sesgos-en-los-modelos"><span class="header-section-number">8.2</span> Sesgos en los modelos:</a></li>
-  <li><a href="#creatividad-e-innovación" id="toc-creatividad-e-innovación" class="nav-link" data-scroll-target="#creatividad-e-innovación"><span class="header-section-number">8.3</span> Creatividad e innovación:</a></li>
+  <li><a href="#creatividad" id="toc-creatividad" class="nav-link" data-scroll-target="#creatividad"><span class="header-section-number">8.3</span> Creatividad:</a></li>
   </ul></li>
   <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía"><span class="header-section-number">9</span> Bibliografía</a></li>
   <li><a href="#anexos" id="toc-anexos" class="nav-link" data-scroll-target="#anexos"><span class="header-section-number">10</span> Anexos</a></li>
@@ -250,7 +305,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#desarrollo-técnico-por-módulo" id="toc-desarrollo-técnico-por-módulo"><span class="header-section-number">4</span> Desarrollo Técnico por Módulo</a>
   <ul>
-  <li><a href="#módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo" id="toc-módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)</a>
+  <li><a href="#módulo-1-predicción-de-demanda-de-transporte" id="toc-módulo-1-predicción-de-demanda-de-transporte"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte</a>
   <ul>
   <li><a href="#descripción-del-problema" id="toc-descripción-del-problema"><span class="header-section-number">4.1.1</span> Descripción del Problema</a></li>
   <li><a href="#dataset" id="toc-dataset"><span class="header-section-number">4.1.2</span> Dataset</a></li>
@@ -259,6 +314,25 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#evaluación-y-resultados" id="toc-evaluación-y-resultados"><span class="header-section-number">4.1.5</span> Evaluación y Resultados</a></li>
   <li><a href="#gráficas-de-predicción-vs.-demanda-real" id="toc-gráficas-de-predicción-vs.-demanda-real"><span class="header-section-number">4.1.6</span> Gráficas de predicción vs.&nbsp;demanda real</a></li>
   <li><a href="#análisis-de-la-estacionalidad-y-tendencias" id="toc-análisis-de-la-estacionalidad-y-tendencias"><span class="header-section-number">4.1.7</span> Análisis de la estacionalidad y tendencias</a></li>
+  </ul></li>
+  <li><a href="#módulo-2-clasificación-de-conducción-distractiva" id="toc-módulo-2-clasificación-de-conducción-distractiva"><span class="header-section-number">4.2</span> Módulo 2: Clasificación de Conducción Distractiva</a>
+  <ul>
+  <li><a href="#descripción-del-problema-1" id="toc-descripción-del-problema-1"><span class="header-section-number">4.2.1</span> Descripción del problema</a></li>
+  <li><a href="#dataset-1" id="toc-dataset-1"><span class="header-section-number">4.2.2</span> Dataset</a></li>
+  <li><a href="#preprocesamiento-1" id="toc-preprocesamiento-1"><span class="header-section-number">4.2.3</span> Preprocesamiento:</a></li>
+  <li><a href="#diseño-de-modelo-1" id="toc-diseño-de-modelo-1"><span class="header-section-number">4.2.4</span> Diseño de Modelo</a></li>
+  <li><a href="#evaluación" id="toc-evaluación"><span class="header-section-number">4.2.5</span> Evaluación</a></li>
+  <li><a href="#resultados" id="toc-resultados"><span class="header-section-number">4.2.6</span> Resultados</a></li>
+  </ul></li>
+  <li><a href="#módulo-3-recomendación-de-destinos-de-viaje" id="toc-módulo-3-recomendación-de-destinos-de-viaje"><span class="header-section-number">4.3</span> Módulo 3: Recomendación de Destinos de Viaje</a>
+  <ul>
+  <li><a href="#descripción-del-problema-2" id="toc-descripción-del-problema-2"><span class="header-section-number">4.3.1</span> Descripción del Problema</a></li>
+  <li><a href="#dataset-2" id="toc-dataset-2"><span class="header-section-number">4.3.2</span> Dataset</a></li>
+  <li><a href="#preprocesamiento-2" id="toc-preprocesamiento-2"><span class="header-section-number">4.3.3</span> Preprocesamiento</a></li>
+  <li><a href="#diseño-de-modelo-2" id="toc-diseño-de-modelo-2"><span class="header-section-number">4.3.4</span> Diseño de Modelo</a></li>
+  <li><a href="#evaluación-y-resultados-1" id="toc-evaluación-y-resultados-1"><span class="header-section-number">4.3.5</span> Evaluación y Resultados</a></li>
+  <li><a href="#ejemplos-de-recomendaciones-generadas" id="toc-ejemplos-de-recomendaciones-generadas"><span class="header-section-number">4.3.6</span> Ejemplos de recomendaciones generadas</a></li>
+  <li><a href="#análisis-de-la-efectividad-de-las-recomendaciones" id="toc-análisis-de-la-efectividad-de-las-recomendaciones"><span class="header-section-number">4.3.7</span> Análisis de la efectividad de las recomendaciones:</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#herramienta-web" id="toc-herramienta-web"><span class="header-section-number">5</span> Herramienta Web</a>
@@ -287,7 +361,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#gestión-de-datos-y-privacidad" id="toc-gestión-de-datos-y-privacidad"><span class="header-section-number">8.1</span> Gestión de datos y privacidad:</a></li>
   <li><a href="#sesgos-en-los-modelos" id="toc-sesgos-en-los-modelos"><span class="header-section-number">8.2</span> Sesgos en los modelos:</a></li>
-  <li><a href="#creatividad-e-innovación" id="toc-creatividad-e-innovación"><span class="header-section-number">8.3</span> Creatividad e innovación:</a></li>
+  <li><a href="#creatividad" id="toc-creatividad"><span class="header-section-number">8.3</span> Creatividad:</a></li>
   </ul></li>
   <li><a href="#bibliografía" id="toc-bibliografía"><span class="header-section-number">9</span> Bibliografía</a></li>
   <li><a href="#anexos" id="toc-anexos"><span class="header-section-number">10</span> Anexos</a></li>
@@ -296,14 +370,14 @@ ul.task-list li input[type="checkbox"] {
 <section id="resumen-ejecutivo" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Resumen Ejecutivo</h1>
 <p>Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.</p>
-<p>El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos se uso tensorflow y keras, ademas de sklearn.</p>
+<p>El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos se uso tensorflow y keras, ademas de Sklearn.</p>
 <p>Los resultados preliminares demuestran la viabilidad y el potencial impacto del sistema. El modelo de predicción de demanda alcanzó un RMSE de [Valor de RMSE] y un MAE de [Valor de MAE], lo que permite una planificación más precisa de la asignación de vehículos y personal. El clasificador de conducción distractiva logró una precisión del [Porcentaje de Precisión]% en la detección de comportamientos de riesgo, contribuyendo significativamente a la seguridad. Finalmente, el sistema de recomendación generó recomendaciones pertinentes, con una Precision de [Valor de Precision] y Recall de [Valor de Recall].</p>
 <p>En conclusión, este sistema inteligente representa un avance significativo en la eficiencia operativa, la seguridad vial y la experiencia del cliente para la empresa de transporte, sentando las bases para futuras optimizaciones y expansiones.</p>
 </section>
 <section id="introducción" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Introducción</h1>
-<p>La industria del transporte se encuentra en una constante evolución, enfrentando desafíos como la fluctuación impredecible de la demanda, la imperante necesidad de garantizar la seguridad vial y la creciente expectativa de los usuarios por servicios personalizados. En este contexto, las empresas buscan soluciones innovadoras que les permitan optimizar sus operaciones, mitigar riesgos y fidelizar a sus clientes. El aprendizaje profundo (Deep Learning) emerge como una tecnología clave, capaz de procesar grandes volúmenes de datos complejos para extraer patrones y tomar decisiones inteligentes.</p>
-<p>El presente proyecto aborda estas problemáticas mediante el desarrollo de un Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación. Este sistema busca transformar la manera en que la empresa de transporte gestiona sus recursos, monitorea la seguridad de sus operaciones y se relaciona con sus usuarios.</p>
+<p>La industria del transporte se encuentra en una constante evolución, enfrentando desafíos como la fluctuación impredecible de la demanda, la imperante necesidad de garantizar la seguridad vial y la creciente expectativa de los usuarios por servicios personalizados. En este contexto, las empresas buscan soluciones innovadoras que les permitan optimizar sus operaciones, mitigar riesgos, maximizar ganancias y fidelizar a sus clientes. El aprendizaje profundo (Deep Learning) emerge como una tecnología clave, capaz de procesar grandes volúmenes de datos complejos para extraer patrones y tomar decisiones inteligentes, que manualmente serían inviables.</p>
+<p>El presente proyecto aborda estas problemáticas mediante el desarrollo de tres modulos para predicción, clasificación y recomendación.</p>
 <section id="objetivo-general" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="objetivo-general"><span class="header-section-number">2.1</span> Objetivo General</h2>
 <p>Desarrollar un sistema inteligente basado en aprendizaje profundo que integre la predicción de la demanda de transporte, la clasificación de comportamientos distractores de los conductores mediante imágenes, y un sistema de recomendaciones personalizadas para mejorar la eficiencia y seguridad de los servicios de transporte.</p>
@@ -311,11 +385,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="objetivos-específicos" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="objetivos-específicos"><span class="header-section-number">2.2</span> Objetivos Específicos</h2>
 <ul>
-<li><p>Entrenar un modelo de series de tiempo utilizando los datos históricos de la empresa para predecir la demanda de transporte en rutas específicas durante los próximos 30 días.</p></li>
-<li><p>Implementar un modelo de clasificación de imágenes para identificar comportamientos distractores de los conductores, como el uso de teléfonos móviles o somnolencia.</p></li>
-<li><p>Desarrollar un sistema de recomendaciones personalizadas para sugerir destinos de viaje en función del historial de viajes y las preferencias de los usuarios de la empresa.</p></li>
-<li><p>Construir una herramienta web que integre todas las soluciones desarrolladas, permitiendo visualizar los resultados y probar los modelos de predicción, clasificación y recomendación.</p></li>
-<li><p>Documentar el proceso de desarrollo en un informe técnico detallado y profesional.</p></li>
+<li>Entrenar un modelo de series de tiempo utilizando los datos históricos de la empresa para predecir la demanda de transporte en rutas específicas durante los próximos 30 días.</li>
+<li>Implementar un modelo de clasificación de imágenes para identificar comportamientos distractores de los conductores, como el uso de teléfonos móviles o somnolencia.</li>
+<li>Desarrollar un sistema de recomendaciones personalizadas para sugerir destinos de viaje en función del historial de viajes y las preferencias de los usuarios de la empresa.</li>
+<li>Construir una herramienta web que integre todas las soluciones desarrolladas, permitiendo visualizar los resultados y probar los modelos de predicción, clasificación y recomendación.</li>
+<li>Documentar el proceso de desarrollo en un informe técnico detallado y profesional.</li>
 </ul>
 </section>
 <section id="alcances" class="level2" data-number="2.3">
@@ -325,11 +399,12 @@ ul.task-list li input[type="checkbox"] {
 <section id="limitaciones" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="limitaciones"><span class="header-section-number">2.4</span> Limitaciones</h2>
 <p>Las limitaciones del proyecto incluyen la disponibilidad y calidad de los datos históricos, que pueden influir en la precisión de las predicciones y clasificaciones. Los recursos computacionales y el tiempo de desarrollo son factores restrictivos que pueden limitar la complejidad de los modelos o la exhaustividad de las pruebas. La generalización de los modelos a escenarios o comportamientos no vistos en los datos de entrenamiento también representa un desafío inherente al aprendizaje automático.</p>
+<p>Para el despliegue de la herramienta web, debido a que se un proyecto académico, los recursos en la nube pueden ser limitados, lo que podría afectar la escalabilidad y disponibilidad del sistema. Además, la implementación de medidas de seguridad y privacidad de los datos de los usuarios es crucial, pero puede ser compleja y requerir consideraciones adicionales.</p>
 </section>
 </section>
 <section id="metodología" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Metodología</h1>
-<p>La metodología adoptada para el desarrollo de este sistema inteligente se basa en un enfoque modular y iterativo, siguiendo las mejores prácticas en el campo del aprendizaje automático y la ingeniería de software.</p>
+<p>La metodología adoptada para el desarrollo de este sistema inteligente se basa en un enfoque modular y iterativo, siguiendo las mejores prácticas en el campo del aprendizaje automático y la ingeniería de software. Se usa git para el control de versiones y la colaboración en el desarrollo del código. Se usa CI/CD para asegurar la calidad del código y la integración continua de los módulos desarrollados.</p>
 <section id="explicación-de-conceptos-clave" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="explicación-de-conceptos-clave"><span class="header-section-number">3.1</span> Explicación de Conceptos Clave</h2>
 <ul>
@@ -364,7 +439,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>Fase 4: Evaluación y Optimización:</p>
 <ul>
-<li><p>Definición de Métricas: Selección de métricas de rendimiento apropiadas para cada tipo de problema (RMSE, MAE para predicción; Accuracy, F1-score, Precision, Recall para clasificación; Precision@K, Recall@K para recomendación).</p></li>
+<li><p>Definición de Métricas: Selección de métricas de rendimiento apropiadas para cada tipo de problema (RMSE, MAE para predicción; Accuracy, F1-score, Precision, Recall para clasificación; Precision, Recall para recomendación).</p></li>
 <li><p>Evaluación: Medición del rendimiento de los modelos en el conjunto de prueba, no visto durante el entrenamiento.</p></li>
 <li><p>Optimización: Ajuste de hiperparámetros y refinamiento de las arquitecturas para mejorar el rendimiento.</p></li>
 </ul>
@@ -379,27 +454,26 @@ ul.task-list li input[type="checkbox"] {
 
 Pruebas de Rendimiento: Evaluación de la velocidad y eficiencia del sistema.
 
-Despliegue (opcional): Preparación y lanzamiento del sistema en un entorno de producción o simulación.</code></pre>
+Despliegue: Preparación y lanzamiento del sistema en un entorno de producción. Se uso [Render](https://render.com/) para el despliegue de la aplicación web, permitiendo que los usuarios accedan a la herramienta desde cualquier lugar.</code></pre>
 </section>
 <section id="herramientas-y-tecnologías-utilizadas" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="herramientas-y-tecnologías-utilizadas"><span class="header-section-number">3.4</span> Herramientas y Tecnologías Utilizadas</h2>
 <ul>
 <li>Lenguaje de Programación: Python</li>
-<li>Librerías de Aprendizaje Profundo: TensorFlow, Keras</li>
+<li>Librerías de Aprendizaje Profundo: TensorFlow, Keras, Scikit-learn</li>
 <li>Librerías de Manipulación de Datos: Pandas, NumPy</li>
-<li>Librerías de Visualización: Matplotlib, Seaborn</li>
-<li>Desarrollo Web (Backend): [Flask/Django/FastAPI - Especificar el utilizado]</li>
-<li>Desarrollo Web (Frontend): [HTML, CSS, JavaScript, y un framework como React/Vue.js/Angular - * Especificar el utilizado]</li>
-<li>Base de Datos (si aplica): [Especificar si se usó alguna, ej. SQLite, PostgreSQL, MongoDB]</li>
-<li>Entorno de Desarrollo: Jupyter Notebooks, Google Colab, VS Code</li>
+<li>Librerías de Visualización: Matplotlib</li>
+<li>Desarrollo Web (Backend): FastAPI</li>
+<li>Desarrollo Web (Frontend): Javascript vanilla para la interactividad y Tailwind CSS para los estilos de la página web.</li>
+<li>Entorno de Desarrollo: Jupyter Notebooks, VS Code</li>
 <li>Control de Versiones: Git, GitHub</li>
 </ul>
 </section>
 </section>
 <section id="desarrollo-técnico-por-módulo" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Desarrollo Técnico por Módulo</h1>
-<section id="módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="módulo-1-predicción-de-demanda-de-transporte-series-de-tiempo"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)</h2>
+<section id="módulo-1-predicción-de-demanda-de-transporte" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="módulo-1-predicción-de-demanda-de-transporte"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte</h2>
 <section id="descripción-del-problema" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="descripción-del-problema"><span class="header-section-number">4.1.1</span> Descripción del Problema</h3>
 <p>El objetivo de este módulo es anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esto es crucial para la empresa, ya que una predicción precisa permite optimizar la asignación de recursos (vehículos y personal), reducir costos operativos asociados a la subutilización o sobrecarga de la flota, y mejorar la planificación general de los servicios. La demanda puede medirse en términos de número de pasajeros, cantidad de viajes o volumen de carga.</p>
@@ -434,22 +508,493 @@ Despliegue (opcional): Preparación y lanzamiento del sistema en un entorno de p
 <p>[Imagen 5.1.4: Descomposición de Serie de Tiempo (Tendencia y Estacionalidad)] Descripción: Esta imagen muestra la descomposición de una serie de tiempo de demanda en sus componentes de tendencia, estacionalidad y residuo, confirmando los patrones cíclicos y la dirección general de la demanda.</p>
 </section>
 </section>
+<section id="módulo-2-clasificación-de-conducción-distractiva" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="módulo-2-clasificación-de-conducción-distractiva"><span class="header-section-number">4.2</span> Módulo 2: Clasificación de Conducción Distractiva</h2>
+<section id="descripción-del-problema-1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="descripción-del-problema-1"><span class="header-section-number">4.2.1</span> Descripción del problema</h3>
+<p>Este módulo tiene como objetivo detectar comportamientos distractores en los conductores a partir de imágenes, con el fin de mejorar la seguridad vial. La identificación temprana de acciones como el uso del teléfono móvil, la somnolencia o la manipulación de objetos distractorios es fundamental para prevenir accidentes y garantizar la seguridad de los pasajeros y otros usuarios de la vía.</p>
+</section>
+<section id="dataset-1" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="dataset-1"><span class="header-section-number">4.2.2</span> Dataset</h3>
+<p>El conjunto de datos de imágenes consiste en una colección de fotografías de conductores, categorizadas en diferentes clases de comportamiento. Las imágenes provienen de un dataset publico en kaggle llamado <a href="https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1">Multi-Class Driver Behavior Image Dataset</a>.</p>
+<p>Este dataset fue recopilado en Ashulia, Dhaka (Bangladesh) en octubre de 2024, y contiene imágenes reales capturadas dentro de automóviles particulares y autobuses públicos en condiciones normales de conducción. Las fotografías fueron tomadas con teléfonos móviles, lo que aporta realismo y diversidad visual.</p>
+<p>El objetivo del dataset es facilitar el desarrollo de sistemas de monitoreo en tiempo real que detecten comportamientos de conducción distraída, un problema crítico a nivel mundial.</p>
+<p>Contiene imágenes clasificadas en cinco tipos de comportamiento del conductor:</p>
+<ol type="1">
+<li><p><strong>Conducción Segura</strong>: El conductor está atento, con ambas manos al volante o una en el volante y otra en la palanca.</p></li>
+<li><p><strong>Girando</strong>: El conductor gira la cabeza o el cuerpo para cambiar de dirección.</p></li>
+<li><p><strong>Escribiendo en el Teléfono</strong>: Uso activo del teléfono para mensajes u otras interacciones.</p></li>
+<li><p><strong>Hablando por Teléfono</strong>: El conductor sostiene el teléfono en la oreja o habla mientras maneja.</p></li>
+<li><p><strong>Otros</strong>: Acciones peligrosas como beber, dormir, o conversar con pasajeros traseros.</p></li>
+</ol>
+<p>Las imágenes varían en iluminación, tipo de vehículo y no están procesadas ni etiquetadas, lo cual permite flexibilidad para su uso en aplicaciones de aprendizaje automático.</p>
+</section>
+<section id="preprocesamiento-1" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="preprocesamiento-1"><span class="header-section-number">4.2.3</span> Preprocesamiento:</h3>
+<p>El preprocesamiento de los datos se hizo principalmente con ImageDataGenerator de Keras, siguiendo estos pasos:</p>
+<ol type="1">
+<li><p><strong>Reescalado de imágenes</strong>: Todas las imágenes se normalizan dividiendo los valores de los píxeles por 255 (rescale=1./255), convirtiendo los valores de 0-255 a 0-1.</p></li>
+<li><p><strong>Redimensionamiento</strong>: Las imágenes se redimensionan a un tamaño fijo (img_size), por ejemplo (224, 224) o (256, 256), según el modelo y la etapa.</p></li>
+<li><p><strong>División en entrenamiento y validación</strong>: Se utiliza el parámetro <code>validation_split=0.2</code> para separar automáticamente el 20% de los datos para validación.</p></li>
+<li><p><strong>Aumento de datos (Data Augmentation)</strong>: Para el entrenamiento, se aplican transformaciones aleatorias como:</p></li>
+</ol>
+<ul>
+<li>Rotaciones (rotation_range)</li>
+<li>Desplazamientos horizontales y verticales (width_shift_range, height_shift_range)</li>
+<li>Shear, zoom y volteo horizontal (shear_range, zoom_range, horizontal_flip) Esto ayuda a que el modelo generalice mejor y no se sobreentrene.</li>
+</ul>
+<ol start="5" type="1">
+<li><p><strong>Conversión a escala de grises</strong>: En los modelos CNN personalizados, se usa <code>color_mode='grayscale'</code> para convertir las imágenes a una sola canal, ya que el color no es relevante para la tarea.</p></li>
+<li><p><strong>Carga por lotes y codificación de etiquetas</strong>: <code>flow_from_directory</code> carga las imágenes en lotes (batch_size) y asigna etiquetas en formato one-hot (class_mode=‘categorical’).</p></li>
+<li><p><strong>Balanceo de clases</strong>: Se calcula <code>class_weight</code> para compensar posibles desbalances en la cantidad de imágenes por clase, mejorando el aprendizaje en clases minoritarias.</p></li>
+</ol>
+</section>
+<section id="diseño-de-modelo-1" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="diseño-de-modelo-1"><span class="header-section-number">4.2.4</span> Diseño de Modelo</h3>
+<p>Se implementó una red neuronal convolucional (CNN) secuencial compuesta por varias capas Conv2D, MaxPooling2D, BatchNormalization, Dropout y Dense. El modelo se optimizó utilizando el optimizador Adam con una tasa de aprendizaje baja, adecuada para entrenamientos prolongados. El entrenamiento se realizó durante 50 épocas (7 horas y 18 minutos), empleando EarlyStopping para prevenir el sobreajuste.</p>
+<pre><code>model = Sequential([
+    Conv2D(32, (3,3), activation='relu', input_shape=img_size + (1,)),
+    BatchNormalization(),
+    MaxPooling2D(2,2),
+    Conv2D(64, (3,3), activation='relu'),
+    BatchNormalization(),
+    MaxPooling2D(2,2),
+    Conv2D(128, (3,3), activation='relu'),
+    BatchNormalization(),
+    MaxPooling2D(2,2),
+    Flatten(),
+    Dense(256, activation='relu'),
+    Dropout(0.5),
+    Dense(num_classes, activation='softmax')
+])</code></pre>
+</section>
+<section id="evaluación" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="evaluación"><span class="header-section-number">4.2.5</span> Evaluación</h3>
+<p>Curvas de entrenamiento:</p>
+<ul>
+<li><p>Precisión en validación final: 0.84</p></li>
+<li><p>Pérdida en validación final: 0.48</p></li>
+<li><p>Matriz de confusión:</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="matrixconfusion_modelo2.png" class="img-fluid figure-img" width="800"></p>
+<figcaption>Matrix de Confusión</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>El mayor número de errores se presenta en la clase “other_activities”, debido a la similitud visual con otras clases (posición de cabeza, manos, detalles sutiles en el rostro).</p></li>
+<li><p>Reporte de clasificación:</p></li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Clase</th>
+<th>Precisión</th>
+<th>Recall</th>
+<th>F1-score</th>
+<th>Soporte</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>other_activities</td>
+<td>0.63</td>
+<td>0.80</td>
+<td>0.71</td>
+<td>1184</td>
+</tr>
+<tr class="even">
+<td>safe_driving</td>
+<td>0.92</td>
+<td>0.77</td>
+<td>0.84</td>
+<td>1679</td>
+</tr>
+<tr class="odd">
+<td>talking_phone</td>
+<td>0.88</td>
+<td>0.81</td>
+<td>0.84</td>
+<td>1513</td>
+</tr>
+<tr class="even">
+<td>texting_phone</td>
+<td>0.86</td>
+<td>0.94</td>
+<td>0.90</td>
+<td>1561</td>
+</tr>
+<tr class="odd">
+<td>turning</td>
+<td>0.92</td>
+<td>0.89</td>
+<td>0.90</td>
+<td>1339</td>
+</tr>
+<tr class="even">
+<td>Promedio</td>
+<td>0.84</td>
+<td>0.84</td>
+<td>0.84</td>
+<td>7276</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="resultados" class="level3" data-number="4.2.6">
+<h3 data-number="4.2.6" class="anchored" data-anchor-id="resultados"><span class="header-section-number">4.2.6</span> Resultados</h3>
+<ul>
+<li><p>El modelo aprendió de manera correcta después de 50 épocas y más de 7 horas de entrenamiento, alcanzando una precisión del 84% en la validación.</p></li>
+<li><p>El mayor desafío fue la distinción de la clase “other_activities”, ya que muchas poses y detalles visuales son muy similares entre clases, incluso para un humano.</p></li>
+<li><p>Se recomienda siempre revisar visualmente las predicciones del modelo, especialmente en casos ambiguos.</p></li>
+</ul>
+<section id="posibles-mejoras" class="level4" data-number="4.2.6.1">
+<h4 data-number="4.2.6.1" class="anchored" data-anchor-id="posibles-mejoras"><span class="header-section-number">4.2.6.1</span> Posibles mejoras:</h4>
+<ul>
+<li><p>Ampliar el dataset con más imágenes reales (no artificiales).</p></li>
+<li><p>Aumentar la capacidad de cómputo para reducir el tiempo de entrenamiento.</p></li>
+<li><p>Experimentar con imágenes en RGB vs.&nbsp;escala de grises, aunque los colores no parecen ser determinantes para la tarea.</p></li>
+<li><p>Analizar si una arquitectura más profunda o técnicas de atención pueden mejorar la discriminación entre clases visualmente similares.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="módulo-3-recomendación-de-destinos-de-viaje" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="módulo-3-recomendación-de-destinos-de-viaje"><span class="header-section-number">4.3</span> Módulo 3: Recomendación de Destinos de Viaje</h2>
+<section id="descripción-del-problema-2" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="descripción-del-problema-2"><span class="header-section-number">4.3.1</span> Descripción del Problema</h3>
+<p>El objetivo de este módulo es desarrollar un sistema que sugiera destinos de viaje personalizados a los usuarios de la empresa, basándose en su historial de viajes y preferencias. Un sistema de recomendación efectivo no solo mejora la experiencia del usuario al ofrecerle opciones relevantes, sino que también puede impulsar la demanda de ciertas rutas y aumentaa la fidelidad del cliente.</p>
+</section>
+<section id="dataset-2" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="dataset-2"><span class="header-section-number">4.3.2</span> Dataset</h3>
+<p>Se uso un dataset publico en kaggle llamado <a href="https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1">Travel Recommendation Dataset</a>. Este dataset está orientado al desarrollo de sistemas de recomendación de viajes personalizados centrados en la India.</p>
+<p>El dataset se compone de cuatro archivos CSV principales:</p>
+<ol type="1">
+<li><p><strong>Destinos</strong>: Información detallada sobre lugares turísticos en India (tipo de destino, popularidad, mejor época para visitar, etc.).</p></li>
+<li><p><strong>Usuarios</strong>: Perfiles con datos demográficos y preferencias de viaje, incluyendo composición del grupo (adultos, niños) y diversidad de género.</p></li>
+<li><p><strong>Reseñas</strong>: Reseñas: Opiniones y valoraciones de usuarios sobre los destinos visitados, útiles para análisis de satisfacción y sentimientos.</p></li>
+<li><p><strong>Historial de Usuarios</strong>: Registros de destinos previamente visitados y calificaciones otorgadas.</p></li>
+</ol>
+</section>
+<section id="preprocesamiento-2" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="preprocesamiento-2"><span class="header-section-number">4.3.3</span> Preprocesamiento</h3>
+<p>El preprocesamiento de los datos se realizó en varios etapas clave:</p>
+<ol type="1">
+<li><p><strong>Carga de archivos CSV</strong>: Todos los archivos se leyeron con <code>pandas.read_csv</code> y se concatenaron en un único DataFrame.</p></li>
+<li><p><strong>Visualización inicial</strong>: Se observo información general, se buscaron valores nulos y se identificaron tipos de datos, adicionalmente se graficaron las distribuciones de variables numéricas y categóricas usando <code>matplotlib</code>.</p></li>
+</ol>
+<div id="b50be3aa" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. CARGA, VISUALIZACIÓN Y LIMPIEZA DEL DATASET</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>carpeta <span class="op">=</span> <span class="vs">r'</span><span class="dv">.</span><span class="vs">/recomendaciones'</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>archivos_csv <span class="op">=</span> glob.glob(os.path.join(carpeta, <span class="st">'*.csv'</span>))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> archivos_csv:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="ss">f'No se encontraron archivos CSV en la carpeta: </span><span class="sc">{</span>carpeta<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Se encontraron </span><span class="sc">{</span><span class="bu">len</span>(archivos_csv)<span class="sc">}</span><span class="ss"> archivos CSV.'</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar y concatenar los archivos CSV</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    dfs <span class="op">=</span> [pd.read_csv(archivo) <span class="cf">for</span> archivo <span class="kw">in</span> archivos_csv]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.concat(dfs, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f'Error al cargar los archivos CSV: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización de variables numéricas y categóricas (opcional)</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>]).columns</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>MOSTRAR_GRAFICOS<span class="op">=</span><span class="va">True</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> MOSTRAR_GRAFICOS:</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        df[col].hist(bins<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f'Distribución de </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(col, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'Frecuencia'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        plt.tight_layout()</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        df[col].value_counts().head(<span class="dv">10</span>).plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f'Frecuencia de </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(col, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'Frecuencia'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        plt.tight_layout()</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Se encontraron 4 archivos CSV.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-6.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-7.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-8.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-9.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-10.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-11.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-12.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-13.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-14.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-15.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-16.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-17.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-18.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-19.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li><strong>Limpieza de valores nulos</strong></li>
+</ol>
+<ul>
+<li><p>Para columnas numéricas, los valores nulos se rellenaron con la mediana de cada columna.</p></li>
+<li><p>Para columnas categóricas, los valores nulos se rellenaron con la moda (valor más frecuente) o con ‘Desconocido’ si la moda no estaba disponible.</p></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpieza básica: rellenar NaN</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    n_null <span class="op">=</span> df[col].isnull().<span class="bu">sum</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].fillna(df[col].median())</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    n_null <span class="op">=</span> df[col].isnull().<span class="bu">sum</span>()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].fillna(df[col].mode()[<span class="dv">0</span>] <span class="cf">if</span> <span class="kw">not</span> df[col].mode().empty <span class="cf">else</span> <span class="st">'Desconocido'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización de variables numéricas (excluyendo IDs si existen)</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>cols_to_normalize <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> num_cols <span class="cf">if</span> <span class="kw">not</span> col.lower().endswith(<span class="st">'id'</span>)]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>df[cols_to_normalize] <span class="op">=</span> scaler.fit_transform(df[cols_to_normalize])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><p><strong>Normalización de variables numéricas</strong>: Se normalizaron las columnas numéricas (excepto aquellas cuyo nombre termina en ‘id’) usando MinMaxScaler de scikit-learn, escalando sus valores entre 0 y 1.</p></li>
+<li><p><strong>Simulación de datos adicionales</strong>: Para aumentar la diversidad y cantidad de datos, se generaron registros simulados de usuarios y destinos, basados en las distribuciones reales de los datos originales. Estos datos simulados se concatenaron al DataFrame original.</p></li>
+<li><p><strong>Construcción de features de texto</strong>: Creación de una columna features combinando nombre, tipo, estado, preferencias, época y popularidad, todo normalizado y en minúsculas.</p></li>
+</ol>
+</section>
+<section id="diseño-de-modelo-2" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="diseño-de-modelo-2"><span class="header-section-number">4.3.4</span> Diseño de Modelo</h3>
+<p>El diseño del modelo sigue un enfoque híbrido, combinando técnicas de filtrado colaborativo y basado en contenido.</p>
+<ol type="1">
+<li><p><strong>1. Matriz de Interacción Usuario-Destino</strong>: Se creó una matriz donde las filas son usuarios y las columnas son destinos, y el valor es el rating o experiencia (<code>ExperienceRating</code> o <code>Rating</code>) que el usuario dio al destino. Esto permite medir la similitud entre usuarios usando la función <code>cosine_similarity</code>.</p></li>
+<li><p><strong>Modelo Basado en Contenido</strong>: Se generó una columna <code>features</code> para cada destino, combinando y normalizando información relevante (nombre, tipo, estado, preferencias, época, popularidad, etc.). Luego, se vectorizó esta columna usando <code>CountVectorizer</code> y se calculó la similitud de coseno entre destinos, obteniendo una matriz de similitud de destinos.</p></li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'features'</span>] <span class="op">=</span> (</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Name'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Preferences'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'BestTimeToVisit'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Popularity'</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'Preferences'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Name'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><strong>Funciones principales</strong>:</li>
+</ol>
+<ul>
+<li><p><strong>recomendar_temporal_hibrido(user_id, top_n=3)</strong>: Recomienda destinos usando solo el historial del usuario (sin considerar el destino de test), basándose en la similitud de contenido entre los destinos ya visitados y los no visitados.</p></li>
+<li><p><strong>recomendar_destinos_simples(user_id, top_n=3)</strong>: Recomienda destinos que el usuario no ha visitado aún. Si ya visitó todos, sugiere los destinos más populares. Es un enfoque sencillo basado en el contenido y la popularidad.</p></li>
+<li><p><strong>recomendar_por_preguntas(df, top_n=3)</strong>: Hace preguntas al usuario sobre sus preferencias (tipo de destino, época del año, estado) y recomienda destinos que coincidan con esas respuestas. Si no hay coincidencias, sugiere los destinos más populares.</p></li>
+</ul>
+</section>
+<section id="evaluación-y-resultados-1" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="evaluación-y-resultados-1"><span class="header-section-number">4.3.5</span> Evaluación y Resultados</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="agrupamiento_destinos.png" class="img-fluid figure-img" width="800"></p>
+<figcaption>Visualización de agrupamiento de destinos (t-SNE)</figcaption>
+</figure>
+</div>
+<p>La validación del modelo se realizó mediante una validación cruzada simple por usuario. El procedimiento fue el siguiente:</p>
+<ol type="1">
+<li><p><strong>Separación de historial y test</strong>: Para cada usuario, se tomó el último destino visitado como el destino de “test” (el que se debe predecir) y el resto de destinos como su historial.</p></li>
+<li><p><strong>Generación de recomendaciones</strong>: Se usó el historial del usuario para generar recomendaciones (con la función híbrida o de contenido).</p></li>
+<li><p><strong>Cálculo de métricas</strong>: Se calculó la precisión y el recall:</p></li>
+</ol>
+<ul>
+<li>Precisión: Proporción de veces que el destino de test aparece en el top N de recomendaciones.</li>
+<li>Recall: Proporción de veces que el destino de test es recuperado (como solo hay un relevante, es 1 si aparece, 0 si no).</li>
+</ul>
+<ol start="4" type="1">
+<li><strong>Promedio de resultados</strong>: Se promediaron los valores de precisión y recall para todos los usuarios, obteniendo así una medida global del desempeño del sistema.</li>
+</ol>
+<p>Esto permite evaluar si el sistema es capaz de recomendar correctamente destinos que el usuario realmente visitaría, usando solo información previa a ese destino.</p>
+<section id="resultados-numericos" class="level4" data-number="4.3.5.1">
+<h4 data-number="4.3.5.1" class="anchored" data-anchor-id="resultados-numericos"><span class="header-section-number">4.3.5.1</span> Resultados numericos:</h4>
+<ul>
+<li><strong>Precisión promedio</strong>: 0.06</li>
+</ul>
+<p>En promedio, solo el 6% de las recomendaciones contienen el destino que el usuario realmente visitó, dentro del top 3 sugerido.</p>
+<ul>
+<li><strong>Recall promedio</strong>: 0.17</li>
+</ul>
+<p>En promedio, el sistema logra recomendar el destino relevante en el 17% de los casos.</p>
+<ul>
+<li><p><strong>Pocos destinos</strong>: Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.</p></li>
+<li><p><strong>Simulación</strong>: El sistema no está “adivinando” lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.</p></li>
+</ul>
+<p><strong>Entendemos que es dificil recomendarle algo completamente bueno para el usuario con tan poca muestra y lo mejor es recomendarle dependiendo de lo que quiere el usuario y teniendo encuenta su historial por ende haremos una funcion, que haga las preguntas a las cosas mas importantes para recomendarle unos lugares al usuario, si de lo que elige no hay ninguna opcion buena recomienda el top 3 de lugares mejor rankeado que no haya visitado el usuario.</strong></p>
+</section>
+</section>
+<section id="ejemplos-de-recomendaciones-generadas" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="ejemplos-de-recomendaciones-generadas"><span class="header-section-number">4.3.6</span> Ejemplos de recomendaciones generadas</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="modelo3Respuesta.png" class="img-fluid figure-img" width="800"></p>
+<figcaption>Ejemplo uso del modelo 3</figcaption>
+</figure>
+</div>
+</section>
+<section id="análisis-de-la-efectividad-de-las-recomendaciones" class="level3" data-number="4.3.7">
+<h3 data-number="4.3.7" class="anchored" data-anchor-id="análisis-de-la-efectividad-de-las-recomendaciones"><span class="header-section-number">4.3.7</span> Análisis de la efectividad de las recomendaciones:</h3>
+<p>La efectividad del sistema de recomendación se analiza en términos de su capacidad para generar recomendaciones relevantes y su impacto potencial en las métricas de negocio.</p>
+<ul>
+<li><p><strong>Satisfacción del usuario</strong>: Al ofrecer destinos que se alinean con sus preferencias, se espera un aumento en la satisfacción y la percepción de valor del servicio.</p></li>
+<li><p><strong>Incremento en la demanda de ciertas rutas</strong>: Las recomendaciones pueden dirigir a los usuarios hacia destinos que, de otro modo, no habrían considerado, lo que podría aumentar la demanda en rutas específicas.</p></li>
+<li><p><strong>Tasa de clics/conversión</strong>: Aunque no se midió directamente en este proyecto, se espera que la tasa de clics en las recomendaciones y, en última instancia, la tasa de conversión de reservas, mejoren significativamente.</p></li>
+<li><p><strong>Fidelización</strong>: Un sistema que entiende y anticipa las necesidades del usuario contribuye a una mayor fidelidad a largo plazo.</p></li>
+</ul>
+</section>
+</section>
 </section>
 <section id="herramienta-web" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Herramienta Web</h1>
 <p>La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.</p>
 <section id="descripción-de-la-interfaz" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="descripción-de-la-interfaz"><span class="header-section-number">5.1</span> Descripción de la interfaz</h2>
-<p>La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno, utilizando una paleta de colores coherente con la identidad de la empresa.</p>
-<p>[Imagen 6.1: Diseño de la Interfaz Principal de la Herramienta Web] Descripción: Un wireframe o mockup de la página de inicio de la aplicación web, mostrando la navegación principal a los módulos de Predicción, Clasificación y Recomendación.</p>
-<p>[Imagen 6.2: Diagrama de Arquitectura de la Aplicación Web (Frontend, Backend, Modelos)] Descripción: Un diagrama que ilustra la arquitectura de la aplicación, mostrando cómo el frontend se comunica con el backend (API REST), y cómo el backend interactúa con los modelos de aprendizaje profundo (que pueden estar cargados en memoria o servidos a través de un framework como TensorFlow Serving).</p>
+<p>La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno.</p>
+<p>En la cabezera, se incluye un menú de navegación que permite a los usuarios acceder rápidamente a las diferentes secciones del sistema: Predicción de Demanda, Clasificación de Conducción Distractiva y Recomendación de Destinos.</p>
+<p>En la parte principal de la página, esta el formulario donde los usuarios adjuntan imágenes o ingresan datos según el módulo seleccionado.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="web.png" class="img-fluid figure-img" width="800"></p>
+<figcaption>pagina web</figcaption>
+</figure>
+</div>
 </section>
 <section id="funcionalidades" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="funcionalidades"><span class="header-section-number">5.2</span> Funcionalidades:</h2>
 <section id="módulo-de-predicción-de-demanda" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="módulo-de-predicción-de-demanda"><span class="header-section-number">5.2.1</span> Módulo de Predicción de Demanda</h3>
 <ul>
-<li><p>Descripción: Permite a los usuarios (ej. personal de planificación de la empresa) seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.</p></li>
+<li><p>Descripción: Permite a los usuarios seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.</p></li>
 <li><p>Interfaz: [Imagen 6.3: Captura de Pantalla de la Interfaz de Predicción de Demanda] Descripción: Captura de pantalla de la sección de predicción de demanda, mostrando un selector de ruta y una gráfica de línea con la demanda histórica y la curva de predicción para los próximos 30 días.</p></li>
 </ul>
 </section>
@@ -471,10 +1016,9 @@ Despliegue (opcional): Preparación y lanzamiento del sistema en un entorno de p
 <section id="tecnologías-utilizadas" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="tecnologías-utilizadas"><span class="header-section-number">5.3</span> Tecnologías utilizadas</h2>
 <ul>
-<li><p>Frontend: [React/Vue.js/Angular - Especificar el utilizado] para la construcción de componentes interactivos y una experiencia de usuario dinámica. Se utilizó [Tailwind CSS/Bootstrap/CSS personalizado - Especificar el utilizado] para el estilo.</p></li>
-<li><p>Backend: [Flask/Django/Node.js con Express - Especificar el utilizado] como framework para la API REST. El backend maneja las solicitudes del frontend, interactúa con los modelos de aprendizaje profundo y gestiona la lógica de negocio.</p></li>
-<li><p>API REST: Se diseñó una API RESTful para la comunicación entre el frontend y el backend, permitiendo el intercambio de datos en formato JSON.</p></li>
-<li><p>Despliegue (si aplica): La aplicación se puede desplegar en plataformas como [Heroku/AWS/Google Cloud Platform - Especificar si se hizo o se planea].</p></li>
+<li><p>Frontend: Javascript para la construcción de componentes interactivos y una experiencia de usuario dinámica. Se utilizó Tailwind CSS para el estilo.</p></li>
+<li><p>Backend: Se usa FastApi para servir el frontend, servir la API REST y la interacción con los modelos de aprendizaje profundo.</p></li>
+<li><p>Despliegue: La aplicación se desplego en Render, una plataforma de hosting que permite la ejecución de aplicaciones web con facilidad. Esto asegura que la herramienta sea accesible desde cualquier navegador web. Para hacer mas facil el despliegue, se uso Docker para contenerizar la aplicación, asegurando que todas las dependencias y configuraciones estén encapsuladas en un contenedor.</p></li>
 </ul>
 </section>
 </section>
@@ -545,19 +1089,26 @@ Despliegue (opcional): Preparación y lanzamiento del sistema en un entorno de p
 <p>El desarrollo de un sistema inteligente que maneja datos sensibles de usuarios y conductores con lleva importantes consideraciones éticas.</p>
 <section id="gestión-de-datos-y-privacidad" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="gestión-de-datos-y-privacidad"><span class="header-section-number">8.1</span> Gestión de datos y privacidad:</h2>
-<p>Se ha puesto un énfasis primordial en la privacidad de los datos. Para los datos de los usuarios (historial de viajes, preferencias), se implementaron técnicas de anonimización y seudonimización siempre que fue posible, asegurando que la información personal no sea directamente identificable. Para las imágenes de los conductores, se estableció un protocolo estricto para el acceso y el almacenamiento, limitando el acceso solo al personal autorizado y con fines de seguridad y mejora operativa. Se considera el cumplimiento de normativas de protección de datos como [Mencionar normativas relevantes, ej. GDPR, LOPD, leyes locales de privacidad de datos] como un pilar fundamental del proyecto. Los datos no se comparten con terceros sin consentimiento explícito.</p>
+<p>Actualmente la aplicacion web no almacena datos de usuarios, ni de conductores, ni de viajes. Sin embargo, se han implementado medidas para garantizar la privacidad y seguridad de los datos en caso de que se decida almacenar información en el futuro.</p>
+<p>En caso de que se decida almacenar datos, se implementarán las siguientes medidas:</p>
+<ul>
+<li><p><strong>Anonimización y Seudonimización</strong>: Los datos de los usuarios (historial de viajes, preferencias) se anonimizarán para que no sean directamente identificables. Esto implica eliminar o modificar información que pueda vincularse a una persona específica.</p></li>
+<li><p><strong>Acceso Restringido</strong>: El acceso a los datos sensibles (ej. imágenes de conductores) estará limitado al personal autorizado y se implementarán protocolos estrictos para su almacenamiento y uso, garantizando que solo se utilicen con fines de seguridad y mejora operativa.</p></li>
+<li><p><strong>Consentimiento Informado</strong>: En caso de recopilar datos personales, se obtendrá el consentimiento explícito de los usuarios, informándoles sobre cómo se utilizarán sus datos y asegurando su derecho a acceder, corregir o eliminar su información.</p></li>
+<li><p><strong>Cumplimiento Normativo</strong>: Se seguirán las regulaciones locales e internacionales sobre protección de datos (ej. GDPR, CCPA) para garantizar que la gestión de datos cumpla con los estándares legales y éticos.</p></li>
+</ul>
 </section>
 <section id="sesgos-en-los-modelos" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="sesgos-en-los-modelos"><span class="header-section-number">8.2</span> Sesgos en los modelos:</h2>
 <p>Se reconoce que los modelos de aprendizaje automático pueden heredar y amplificar sesgos presentes en los datos de entrenamiento.</p>
 <ul>
 <li><p>Clasificación de Conducción Distractiva: Se realizó un esfuerzo para asegurar que el dataset de imágenes fuera lo más diverso posible en términos de demografía, condiciones de iluminación y ángulos de cámara para mitigar sesgos relacionados con la raza, el género o las condiciones ambientales. Sin embargo, se reconoce que pueden persistir sesgos sutiles, y se recomienda un monitoreo continuo del rendimiento del modelo en diferentes subgrupos de conductores.</p></li>
-<li><p>Recomendación de Destinos: Los sesgos en los datos de interacción (ej. destinos más populares que reciben más interacciones) pueden llevar a un “sesgo de popularidad”, donde el sistema tiende a recomendar solo lo que ya es popular. Se exploraron técnicas para mitigar esto, como la diversificación de las recomendaciones o la introducción de un factor de “serendipia” para exponer a los usuarios a nuevos destinos.</p></li>
+<li><p>Recomendación de Destinos: Los sesgos en los datos de interacción (ej. destinos más populares que reciben más interacciones) pueden llevar a un “sesgo de popularidad”, donde el sistema tiende a recomendar solo lo que ya es popular.</p></li>
 </ul>
 </section>
-<section id="creatividad-e-innovación" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="creatividad-e-innovación"><span class="header-section-number">8.3</span> Creatividad e innovación:</h2>
-<p>La creatividad del proyecto reside en la integración holística de tres problemas distintos pero interconectados en una única solución basada en aprendizaje profundo. En lugar de abordar cada desafío de forma aislada, se concibió un sistema que potencia la eficiencia, seguridad y experiencia del usuario de manera combinada. La aplicación de técnicas avanzadas de aprendizaje profundo (LSTMs para series de tiempo complejas, CNNs con transfer learning para clasificación de imágenes detallada, y factorización de matrices para recomendaciones personalizadas) en el dominio del transporte es una demostración de innovación. Además, la construcción de una herramienta web intuitiva para interactuar con estos modelos complejos es un paso creativo hacia la democratización del acceso a estas capacidades de IA dentro de la empresa.</p>
+<section id="creatividad" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="creatividad"><span class="header-section-number">8.3</span> Creatividad:</h2>
+<p>La creatividad del proyecto reside en la integración de tres problemas distintos pero interconectados en una única solución basada en aprendizaje profundo. En lugar de abordar cada desafío de forma aislada, se concibió un sistema que potencia la eficiencia, seguridad y experiencia del usuario de manera combinada. Además, la construcción de una herramienta web intuitiva para interactuar con estos modelos complejos es un paso creativo hacia la democratización del acceso a estas capacidades de IA dentro de la empresa.</p>
 </section>
 </section>
 <section id="bibliografía" class="level1" data-number="9">
@@ -565,6 +1116,11 @@ Despliegue (opcional): Preparación y lanzamiento del sistema en un entorno de p
 </section>
 <section id="anexos" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Anexos</h1>
+<ul>
+<li><p>Codigo fuente del proyecto: <a href="https://github.com/AlejandroFeriaGonzalez/RNAB">Repositorio en GitHub</a></p></li>
+<li><p>Multi-Class Driver Behavior Image Dataset: <a href="https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1">https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1</a></p></li>
+<li><p>Travel Recommendation Dataset: <a href="https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1">https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1</a></p></li>
+</ul>
 
 
 </section>
