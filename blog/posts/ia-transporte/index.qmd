@@ -24,29 +24,25 @@ jupyter: python3
 # Resumen Ejecutivo
 Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.
 
-El proyecto se centró en la creación de tres módulos interconectados: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil o la somnolencia, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva, desarrollada con tecnologías de aprendizaje profundo como [Mencionar librerías/frameworks principales, ej. TensorFlow/Keras] y un stack web moderno.
+El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos se uso tensorflow y keras, ademas de Sklearn.
 
-Los resultados preliminares demuestran la viabilidad y el potencial impacto del sistema. El modelo de predicción de demanda alcanzó un RMSE de [Valor de RMSE] y un MAE de [Valor de MAE], lo que permite una planificación más precisa de la asignación de vehículos y personal. El clasificador de conducción distractiva logró una precisión del [Porcentaje de Precisión]% en la detección de comportamientos de riesgo, contribuyendo significativamente a la seguridad. Finalmente, el sistema de recomendación generó recomendaciones pertinentes, con una Precision@5 de [Valor de Precision@5] y Recall@5 de [Valor de Recall@5], lo que promete mejorar la satisfacción del cliente y aumentar la interacción con la plataforma.
+Los resultados preliminares demuestran la viabilidad y el potencial impacto del sistema. El modelo de predicción de demanda alcanzó un RMSE de [Valor de RMSE] y un MAE de [Valor de MAE], lo que permite una planificación más precisa de la asignación de vehículos y personal. El clasificador de conducción distractiva logró una precisión del [Porcentaje de Precisión]% en la detección de comportamientos de riesgo, contribuyendo significativamente a la seguridad. Finalmente, el sistema de recomendación generó recomendaciones pertinentes, con una Precision de [Valor de Precision] y Recall de [Valor de Recall].
 
 En conclusión, este sistema inteligente representa un avance significativo en la eficiencia operativa, la seguridad vial y la experiencia del cliente para la empresa de transporte, sentando las bases para futuras optimizaciones y expansiones.
 
 # Introducción
-La industria del transporte se encuentra en una constante evolución, enfrentando desafíos como la fluctuación impredecible de la demanda, la imperante necesidad de garantizar la seguridad vial y la creciente expectativa de los usuarios por servicios personalizados. En este contexto, las empresas buscan soluciones innovadoras que les permitan optimizar sus operaciones, mitigar riesgos y fidelizar a sus clientes. El aprendizaje profundo (Deep Learning) emerge como una tecnología clave, capaz de procesar grandes volúmenes de datos complejos para extraer patrones y tomar decisiones inteligentes.
+La industria del transporte se encuentra en una constante evolución, enfrentando desafíos como la fluctuación impredecible de la demanda, la imperante necesidad de garantizar la seguridad vial y la creciente expectativa de los usuarios por servicios personalizados. En este contexto, las empresas buscan soluciones innovadoras que les permitan optimizar sus operaciones, mitigar riesgos, maximizar ganancias y fidelizar a sus clientes. El aprendizaje profundo (Deep Learning) emerge como una tecnología clave, capaz de procesar grandes volúmenes de datos complejos para extraer patrones y tomar decisiones inteligentes, que manualmente serían inviables.
 
-El presente proyecto aborda estas problemáticas mediante el desarrollo de un Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación. Este sistema busca transformar la manera en que la empresa de transporte gestiona sus recursos, monitorea la seguridad de sus operaciones y se relaciona con sus usuarios.
+El presente proyecto aborda estas problemáticas mediante el desarrollo de tres modulos para predicción, clasificación y recomendación.
 
 ## Objetivo General
 Desarrollar un sistema inteligente basado en aprendizaje profundo que integre la predicción de la demanda de transporte, la clasificación de comportamientos distractores de los conductores mediante imágenes, y un sistema de recomendaciones personalizadas para mejorar la eficiencia y seguridad de los servicios de transporte.
 
 ## Objetivos Específicos
 * Entrenar un modelo de series de tiempo utilizando los datos históricos de la empresa para predecir la demanda de transporte en rutas específicas durante los próximos 30 días.
-
 * Implementar un modelo de clasificación de imágenes para identificar comportamientos distractores de los conductores, como el uso de teléfonos móviles o somnolencia.
-
 * Desarrollar un sistema de recomendaciones personalizadas para sugerir destinos de viaje en función del historial de viajes y las preferencias de los usuarios de la empresa.
-
 * Construir una herramienta web que integre todas las soluciones desarrolladas, permitiendo visualizar los resultados y probar los modelos de predicción, clasificación y recomendación.
-
 * Documentar el proceso de desarrollo en un informe técnico detallado y profesional.
 
 ## Alcances
@@ -55,8 +51,10 @@ El proyecto abarca el diseño, desarrollo y evaluación de tres módulos princip
 ## Limitaciones
 Las limitaciones del proyecto incluyen la disponibilidad y calidad de los datos históricos, que pueden influir en la precisión de las predicciones y clasificaciones. Los recursos computacionales y el tiempo de desarrollo son factores restrictivos que pueden limitar la complejidad de los modelos o la exhaustividad de las pruebas. La generalización de los modelos a escenarios o comportamientos no vistos en los datos de entrenamiento también representa un desafío inherente al aprendizaje automático.
 
+Para el despliegue de la herramienta web, debido a que se un proyecto académico, los recursos en la nube pueden ser limitados, lo que podría afectar la escalabilidad y disponibilidad del sistema. Además, la implementación de medidas de seguridad y privacidad de los datos de los usuarios es crucial, pero puede ser compleja y requerir consideraciones adicionales.
+
 # Metodología
-La metodología adoptada para el desarrollo de este sistema inteligente se basa en un enfoque modular y iterativo, siguiendo las mejores prácticas en el campo del aprendizaje automático y la ingeniería de software.
+La metodología adoptada para el desarrollo de este sistema inteligente se basa en un enfoque modular y iterativo, siguiendo las mejores prácticas en el campo del aprendizaje automático y la ingeniería de software. Se usa git para el control de versiones y la colaboración en el desarrollo del código. Se usa CI/CD para asegurar la calidad del código y la integración continua de los módulos desarrollados.
 
 ## Explicación de Conceptos Clave
 
@@ -96,7 +94,7 @@ Fase 3: Desarrollo y Entrenamiento de Modelos:
 
 Fase 4: Evaluación y Optimización:
 
-  * Definición de Métricas: Selección de métricas de rendimiento apropiadas para cada tipo de problema (RMSE, MAE para predicción; Accuracy, F1-score, Precision, Recall para clasificación; Precision@K, Recall@K para recomendación).
+  * Definición de Métricas: Selección de métricas de rendimiento apropiadas para cada tipo de problema (RMSE, MAE para predicción; Accuracy, F1-score, Precision, Recall para clasificación; Precision, Recall para recomendación).
 
   * Evaluación: Medición del rendimiento de los modelos en el conjunto de prueba, no visto durante el entrenamiento.
 
@@ -116,17 +114,16 @@ Fase 6: Pruebas y Despliegue:
 
     Pruebas de Rendimiento: Evaluación de la velocidad y eficiencia del sistema.
 
-    Despliegue (opcional): Preparación y lanzamiento del sistema en un entorno de producción o simulación.
+    Despliegue: Preparación y lanzamiento del sistema en un entorno de producción. Se uso [Render](https://render.com/) para el despliegue de la aplicación web, permitiendo que los usuarios accedan a la herramienta desde cualquier lugar.
 
 ## Herramientas y Tecnologías Utilizadas
 * Lenguaje de Programación: Python
-* Librerías de Aprendizaje Profundo: TensorFlow, Keras
+* Librerías de Aprendizaje Profundo: TensorFlow, Keras, Scikit-learn
 * Librerías de Manipulación de Datos: Pandas, NumPy
-* Librerías de Visualización: Matplotlib, Seaborn
-* Desarrollo Web (Backend): [Flask/Django/FastAPI - Especificar el utilizado]
-* Desarrollo Web (Frontend): [HTML, CSS, JavaScript, y un framework como React/Vue.js/Angular - * Especificar el utilizado]
-* Base de Datos (si aplica): [Especificar si se usó alguna, ej. SQLite, PostgreSQL, MongoDB]
-* Entorno de Desarrollo: Jupyter Notebooks, Google Colab, VS Code
+* Librerías de Visualización: Matplotlib
+* Desarrollo Web (Backend): FastAPI
+* Desarrollo Web (Frontend): Javascript vanilla para la interactividad y Tailwind CSS para los estilos de la página web.
+* Entorno de Desarrollo: Jupyter Notebooks, VS Code
 * Control de Versiones: Git, GitHub
 
 # Desarrollo Técnico por Módulo
