@@ -131,14 +131,241 @@ Fase 6: Pruebas y Despliegue:
 
 ## Módulo 1: Predicción de Demanda de Transporte
 ### Descripción del Problema
-El objetivo de este módulo es anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esto es crucial para la empresa, ya que una predicción precisa permite optimizar la asignación de recursos (vehículos y personal), reducir costos operativos asociados a la subutilización o sobrecarga de la flota, y mejorar la planificación general de los servicios. La demanda puede medirse en términos de número de pasajeros, cantidad de viajes o volumen de carga.
+El primer reto consiste en anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esta predicción es esencial para garantizar que la empresa cuente con los recursos adecuados —vehículos, conductores y personal de apoyo— en los momentos y lugares donde se necesiten.
+
+Para ello, se entrenará un modelo de series de tiempo sobre un conjunto de datos históricos reales proporcionado por el CRTM, el cual contiene información detallada de validaciones de transporte público (como número de pasajeros transportados por ruta y por fecha). Este módulo no solo busca predecir la evolución temporal de la demanda, sino también generar información útil para optimizar la planificación operativa, reducir tiempos de espera, minimizar recursos ociosos y mejorar la calidad del servicio.
+
+La solución propuesta se fundamenta en técnicas de aprendizaje profundo especializadas en series temporales, tales como redes neuronales recurrentes (RNN), LSTM o modelos más modernos como Temporal Fusion Transformers. El objetivo es capturar patrones de estacionalidad, tendencias y variaciones anómalas que caracterizan el comportamiento de la demanda de transporte urbano en una ciudad como Madrid.
+
+El conjunto de datos utilizado proviene del portal de datos abiertos del Consorcio Regional de Transportes de Madrid (CRTM). Este dataset, aunque sencillo en estructura, contiene información esencial para el análisis: fecha, modo de transporte (por ejemplo, autobús, metro o cercanías) y número de pasajeros transportados. A partir de estas variables, es posible construir una serie temporal robusta para cada modo de transporte, capturando patrones diarios, estacionales y tendencias a lo largo del tiempo. Esta base, al representar datos reales de demanda, resulta adecuada para entrenar modelos de predicción orientados a mejorar la planificación operativa.
+
+```{python}
+import pandas as pd
+# https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about
+ruta_al_archivo = './transporte_madrid.csv'
+df = pd.read_csv(ruta_al_archivo)
+df['Fecha'] = pd.to_datetime(df['Fecha'], dayfirst=True)
+# 4. Crear columna `Month` como pide prepare_data
+df.rename(columns={'Fecha': 'Month', 'Valor': '#Passengers'}, inplace=True)
+df = df.groupby('Month')['#Passengers'].sum().reset_index()
+```
 
 ### Dataset
 
-### Preprocesamiento
-1. Limpieza de Datos: Se identificaron y manejaron valores nulos o inconsistentes. Se realizaron imputaciones simples (ej. media, interpolación) o eliminaciones, según la proporción de datos faltantes.
+#### Descripción del Conjunto de Datos
 
-2. Transformación de Series de Tiempo:
+Para el desarrollo del modelo de predicción de demanda de transporte, se utilizó un conjunto de datos abierto proporcionado por el Consorcio Regional de Transportes de Madrid (CRTM). Este conjunto contiene información agregada sobre el uso del sistema de transporte público por día y modo de transporte, permitiendo construir series temporales por categoría.
+
+#### Estructura del conjunto de datos
+
+El archivo contiene tres variables principales:
+
+| Variable | Descripción                                              | Tipo       |
+| -------- | -------------------------------------------------------- | ---------- |
+| `Fecha`  | Fecha de la observación (formato AAAA-MM-DD)             | Fecha      |
+| `Modo`   | Tipo de transporte utilizado (Ej: METRO, BUS, CERCANÍAS) | Categórica |
+| `Valor`  | Número de pasajeros registrados en esa fecha      | Numérica   |
+
+
+#### Dimensiones del conjunto
+* Cobertura temporal: Desde el 1 de enero de 2023 hasta el 29 de junio de 2025 (2.5 años).
+* Total de registros: 911 observaciones (dependiendo del número de modos y días disponibles).
+
+#### Ejemplo de registros
+
+| Fecha      | Modo      | Valor     |
+| ---------- | --------- | --------- |
+| 2023-02-15 | BUS       | 945.218   |
+| 2023-02-15 | METRO     | 1.221.504 |
+| 2023-02-15 | CERCANÍAS | 287.564   |
+
+
+#### Consideraciones para el modelado
+* Los datos están agregados a nivel diario por modo, sin segmentación por línea, estación o franja horaria.
+
+* No se cuenta con variables exógenas (clima, festivos, eventos), por lo que el enfoque será univariado por serie, aunque se puede modelar cada modo de transporte por separado o con modelos multivariados si se decide combinar las series.
+
+* Se observan patrones de estacionalidad semanal y anual, así como efectos de calendario (como menor demanda en fines de semana o festivos).
+
+```{python}
+import matplotlib.pyplot as plt
+# Ordenar y tomar los últimos 30 días
+df_last_30 = df.sort_values('Month').tail(90)
+
+# Graficar la serie temporal
+plt.figure(figsize=(12, 5))
+plt.plot(df_last_30['Month'], df_last_30['#Passengers'], marker='o')
+plt.title(f'Demanda diaria de los últimos 90 días')
+plt.xlabel('Fecha')
+plt.ylabel('Número de pasajeros')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+
+### Preprocesamiento
+
+#### Preparación y Visualización de los Datos
+Antes de entrenar cualquier modelo de predicción, es fundamental realizar una limpieza, transformación y exploración inicial de los datos. Esto permite detectar patrones relevantes, anomalías y estacionalidades que influyen directamente en la demanda de transporte.
+
+1. Carga y limpieza inicial
+  * Se importó el conjunto de datos desde un archivo .csv con codificación UTF-8.
+  * Se estandarizó el tipo de dato Fecha y se verificó la ausencia de valores nulos.
+  * Se eliminaron registros con valores de pasajeros iguales a cero o inconsistencias por duplicación.
+
+2. Agregación por modo de transporte: Aunque los datos están segmentados por modo (BUS, METRO, CERCANÍAS), se decidió trabajar inicialmente con series separadas para cada uno, dada la naturaleza operativa distinta de cada sistema.
+
+3. Visualización exploratoria
+Se graficó la demanda diaria de cada modo de transporte, lo que permitió identificar varios patrones:
+
+  * Tendencia general: Incremento progresivo de la demanda.
+  * Estacionalidad semanal: Caídas evidentes los fines de semana, especialmente domingos.
+  * Estacionalidad anual: Reducción de demanda en los meses de verano y festivos largos.
+  * Picos y valles anómalos: Algunos días con valores atípicos por eventos excepcionales o errores de medición.
+
+4. Transformaciones aplicadas
+  * Se aplicó una transformación logarítmica opcional para estabilizar la varianza (en caso de que el modelo lo requiera).
+ * Se realizaron pruebas de estacionariedad (Dickey-Fuller) para evaluar la necesidad de diferenciar la serie.
+
+#### Preparación de datos y creación de secuencias
+Se diseñó una clase personalizada TimeSeriesDataset compatible con torch.utils.data.Dataset, encargada de generar automáticamente las secuencias de entrada (X) y las etiquetas de salida (y) necesarias para el entrenamiento del modelo. Cada muestra consiste en una secuencia de longitud fija (sequence_length) y su correspondiente valor siguiente como objetivo de predicción.
+
+El código realiza lo siguiente:
+
+  * Convierte la serie escalada a FloatTensor.
+  * Divide la serie en múltiples pares (secuencia, objetivo), usando una ventana deslizante.
+  * Cada secuencia se entrega como un tensor de tamaño (sequence_length, 1).
+
+#### División temporal del conjunto de datos
+Se utilizó una estrategia de validación temporal para dividir el conjunto de datos en entrenamiento y validación:
+
+* Los datos anteriores al 1 de marzo de 2025 se usan para entrenamiento.
+* Los datos desde esa fecha se utilizan para validar la capacidad de generalización del modelo.
+
+Esta división respeta la naturaleza temporal de la serie y evita fugas de información del futuro hacia el pasado.
+
+#### Escalamiento
+Dado que las redes neuronales son sensibles a la escala de los datos, se aplicó una transformación MinMaxScaler() a los valores de pasajeros. Esta transformación se ajusta con los datos de entrenamiento y luego se aplica a los de validación.
+
+#### Carga eficiente con DataLoader
+Los datos se organizan y cargan mediante DataLoader, que permite:
+
+  * Entrenamiento en mini-lotes (batch_size=16) para mejorar la estabilidad del gradiente y la eficiencia computacional.
+  * Mezcla aleatoria de las secuencias de entrenamiento (shuffle=True).
+  * Validación con todos los datos de validación disponibles como un único lote.
+
+
+#### Codigo para la preparación de datos
+
+```python
+class TimeSeriesDataset(Dataset):
+    """
+    Custom Dataset class for time series data.
+
+    This class handles the creation of sequences and targets for time series prediction,
+    implementing the necessary methods for PyTorch's Dataset class.
+    """
+    def __init__(self, data, sequence_length):
+        """
+        Initialize the dataset.
+
+        Parameters:
+        data (numpy.array): Input time series data
+        sequence_length (int): Length of input sequences
+        """
+        self.data = torch.FloatTensor(data)
+        self.sequence_length = sequence_length
+
+    def __len__(self):
+        """Return the number of sequences in our dataset."""
+        return len(self.data) - self.sequence_length
+
+    def __getitem__(self, idx):
+        """
+        Get a sequence and its corresponding target.
+
+        Parameters:
+        idx (int): Index of the sequence to retrieve
+
+        Returns:
+        tuple: (sequence, target) pair
+        """
+        sequence = self.data[idx:idx + self.sequence_length]
+        target = self.data[idx + self.sequence_length]
+
+        return sequence.view(-1, 1), target
+
+def prepare_data(filename, split_date='2025-01-01',
+                sequence_length=30, batch_size=32):
+    """
+    Prepare and split data into training and validation sets, creating DataLoader objects.
+
+    Parameters:
+    filename (str): Path to the CSV file
+    split_date (str): Date to split training and validation data
+    sequence_length (int): Length of input sequences
+    batch_size (int): Size of batches for training
+
+    Returns:
+    tuple: Train DataLoader, validation DataLoader, scaler, original training data,
+           original validation data
+    """
+    # Read the CSV file
+    df = pd.read_csv(filename)
+    df['Month'] = pd.to_datetime(df['Month'])
+
+    # Split data
+    train_data = df[df['Month'] < split_date]
+    val_data = df[df['Month'] >= split_date]
+
+    # Scale the data
+    scaler = MinMaxScaler()
+    train_scaled = scaler.fit_transform(train_data['#Passengers'].values.reshape(-1, 1))
+    val_scaled = scaler.transform(val_data['#Passengers'].values.reshape(-1, 1))
+
+    # Create datasets
+    train_dataset = TimeSeriesDataset(train_scaled, sequence_length)
+    val_dataset = TimeSeriesDataset(val_scaled, sequence_length)
+
+    # Create dataloaders
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        drop_last=False  # Drop last incomplete batch
+    )
+
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=len(val_scaled)-sequence_length,
+        shuffle=False,
+        drop_last=False
+    )
+
+    return train_loader, val_loader, scaler, train_data, val_data, train_scaled, val_scaled
+
+  # Prepare our data with the new functionality
+torch.manual_seed(1983)
+sequence_length = 45
+batch_size = 16
+
+train_loader, val_loader, scaler, train_data, val_data, train_scaled, val_scaled = prepare_data(
+    filename = '/content/ruta_location.csv',
+    split_date='2025-04-01',
+    sequence_length=sequence_length,
+    batch_size=batch_size
+)
+
+for batch, (X,y) in enumerate(train_loader):
+  print(f"El lote de inputs tiene dinmensiones {X.shape}")
+  print(f"El lote de targets tiene dimensiones {y.shape}")
+  break
+
+El lote de inputs tiene dinmensiones torch.Size([16, 45, 1])
+El lote de targets tiene dimensiones torch.Size([16, 1])
+```
+
+
 
 ### Diseño de Modelo
 Se optó por una arquitectura de Red Neuronal Recurrente (RNN) basada en LSTM (Long Short-Term Memory) debido a su probada eficacia en la captura de dependencias a largo plazo en series de tiempo. La arquitectura del modelo es la siguiente:
