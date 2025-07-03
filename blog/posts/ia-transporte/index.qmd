@@ -15,6 +15,7 @@ format:
     toc: true
     toc-title: "Tabla de contenido"
     toc-location: left-body
+    css: custom.css
 page-layout: full
 execute:
   cache: true
@@ -128,7 +129,7 @@ Fase 6: Pruebas y Despliegue:
 
 # Desarrollo Técnico por Módulo
 
-## Módulo 1: Predicción de Demanda de Transporte (Series de Tiempo)
+## Módulo 1: Predicción de Demanda de Transporte
 ### Descripción del Problema
 El objetivo de este módulo es anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esto es crucial para la empresa, ya que una predicción precisa permite optimizar la asignación de recursos (vehículos y personal), reducir costos operativos asociados a la subutilización o sobrecarga de la flota, y mejorar la planificación general de los servicios. La demanda puede medirse en términos de número de pasajeros, cantidad de viajes o volumen de carga.
 
@@ -162,22 +163,159 @@ El análisis exploratorio y el rendimiento del modelo confirmaron la presencia d
 [Imagen 5.1.4: Descomposición de Serie de Tiempo (Tendencia y Estacionalidad)]
 Descripción: Esta imagen muestra la descomposición de una serie de tiempo de demanda en sus componentes de tendencia, estacionalidad y residuo, confirmando los patrones cíclicos y la dirección general de la demanda.
 
+## Módulo 2: Clasificación de Conducción Distractiva
+
+### Descripción del problema
+Este módulo tiene como objetivo detectar comportamientos distractores en los conductores a partir de imágenes, con el fin de mejorar la seguridad vial. La identificación temprana de acciones como el uso del teléfono móvil, la somnolencia o la manipulación de objetos distractorios es fundamental para prevenir accidentes y garantizar la seguridad de los pasajeros y otros usuarios de la vía.
+
+### Dataset
+El conjunto de datos de imágenes consiste en una colección de fotografías de conductores, categorizadas en diferentes clases de comportamiento. Las imágenes provienen de un dataset publico en kaggle llamado [Multi-Class Driver Behavior Image Dataset](https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1).
+
+Este dataset fue recopilado en Ashulia, Dhaka (Bangladesh) en octubre de 2024, y contiene imágenes reales capturadas dentro de automóviles particulares y autobuses públicos en condiciones normales de conducción. Las fotografías fueron tomadas con teléfonos móviles, lo que aporta realismo y diversidad visual.
+
+El objetivo del dataset es facilitar el desarrollo de sistemas de monitoreo en tiempo real que detecten comportamientos de conducción distraída, un problema crítico a nivel mundial.
+
+Contiene imágenes clasificadas en cinco tipos de comportamiento del conductor:
+
+  1. **Conducción Segura**: El conductor está atento, con ambas manos al volante o una en el volante y otra en la palanca.
+
+  2. **Girando**: El conductor gira la cabeza o el cuerpo para cambiar de dirección.
+
+  3. **Escribiendo en el Teléfono**: Uso activo del teléfono para mensajes u otras interacciones.
+
+  4. **Hablando por Teléfono**: El conductor sostiene el teléfono en la oreja o habla mientras maneja.
+
+  5. **Otros**: Acciones peligrosas como beber, dormir, o conversar con pasajeros traseros.
+
+Las imágenes varían en iluminación, tipo de vehículo y no están procesadas ni etiquetadas, lo cual permite flexibilidad para su uso en aplicaciones de aprendizaje automático.
+
+### Preprocesamiento:
+
+El preprocesamiento de los datos se hizo principalmente con ImageDataGenerator de Keras, siguiendo estos pasos:
+
+1. **Reescalado de imágenes**:
+  Todas las imágenes se normalizan dividiendo los valores de los píxeles por 255 (rescale=1./255), convirtiendo los valores de 0-255 a 0-1.
+
+2. **Redimensionamiento**:
+  Las imágenes se redimensionan a un tamaño fijo (img_size), por ejemplo (224, 224) o (256, 256), según el modelo y la etapa.
+
+3. **División en entrenamiento y validación**:
+  Se utiliza el parámetro `validation_split=0.2` para separar automáticamente el 20% de los datos para validación.
+
+4. **Aumento de datos (Data Augmentation)**:
+  Para el entrenamiento, se aplican transformaciones aleatorias como:
+
+  * Rotaciones (rotation_range)
+  * Desplazamientos horizontales y verticales (width_shift_range, height_shift_range)
+  * Shear, zoom y volteo horizontal (shear_range, zoom_range, horizontal_flip) Esto ayuda a que el modelo generalice mejor y no se sobreentrene.
+
+5. **Conversión a escala de grises**:
+  En los modelos CNN personalizados, se usa `color_mode='grayscale'` para convertir las imágenes a una sola canal, ya que el color no es relevante para la tarea.
+
+6. **Carga por lotes y codificación de etiquetas**:
+  `flow_from_directory` carga las imágenes en lotes (batch_size) y asigna etiquetas en formato one-hot (class_mode='categorical').
+
+7. **Balanceo de clases**:
+  Se calcula `class_weight` para compensar posibles desbalances en la cantidad de imágenes por clase, mejorando el aprendizaje en clases minoritarias.
+
+### Diseño de Modelo
+Se implementó una red neuronal convolucional (CNN) secuencial compuesta por varias capas Conv2D, MaxPooling2D, BatchNormalization, Dropout y Dense. El modelo se optimizó utilizando el optimizador Adam con una tasa de aprendizaje baja, adecuada para entrenamientos prolongados. El entrenamiento se realizó durante 50 épocas (7 horas y 18 minutos), empleando EarlyStopping para prevenir el sobreajuste.
+
+```
+model = Sequential([
+    Conv2D(32, (3,3), activation='relu', input_shape=img_size + (1,)),
+    BatchNormalization(),
+    MaxPooling2D(2,2),
+    Conv2D(64, (3,3), activation='relu'),
+    BatchNormalization(),
+    MaxPooling2D(2,2),
+    Conv2D(128, (3,3), activation='relu'),
+    BatchNormalization(),
+    MaxPooling2D(2,2),
+    Flatten(),
+    Dense(256, activation='relu'),
+    Dropout(0.5),
+    Dense(num_classes, activation='softmax')
+])
+```
+
+### Evaluación
+Curvas de entrenamiento:
+
+*	Precisión en validación final: 0.84
+
+*	Pérdida en validación final: 0.48
+
+*	Matriz de confusión:
+
+![Matrix de Confusión](matrixconfusion_modelo2.png){width=800}
+
+*	El mayor número de errores se presenta en la clase "other_activities", debido a la similitud visual con otras clases (posición de cabeza, manos, detalles sutiles en el rostro).
+
+*	Reporte de clasificación:
+
+| Clase |	Precisión |	Recall |	F1-score |	Soporte |
+|-------|-----------|--------|----------|---------|
+| other_activities |	0.63 |	0.80 |	0.71 |	1184 |
+| safe_driving |	0.92 |	0.77 |	0.84 |	1679 |
+| talking_phone |	0.88 |	0.81 |	0.84 |	1513 |
+| texting_phone |	0.86 |	0.94 |	0.90 |	1561 |
+| turning |	0.92 |	0.89 |	0.90 |	1339 |
+| Promedio |	0.84 |	0.84 |	0.84 |	7276 |
+
+### Resultados
+
+* El modelo aprendió de manera correcta después de 50 épocas y más de 7 horas de entrenamiento, alcanzando una precisión del 84% en la validación.
+
+*	El mayor desafío fue la distinción de la clase "other_activities", ya que muchas poses y detalles visuales son muy similares entre clases, incluso para un humano.
+
+*	Se recomienda siempre revisar visualmente las predicciones del modelo, especialmente en casos ambiguos.
+
+#### Posibles mejoras:
+
+*	Ampliar el dataset con más imágenes reales (no artificiales).
+
+*	Aumentar la capacidad de cómputo para reducir el tiempo de entrenamiento.
+
+*	Experimentar con imágenes en RGB vs. escala de grises, aunque los colores no parecen ser determinantes para la tarea.
+
+*	Analizar si una arquitectura más profunda o técnicas de atención pueden mejorar la discriminación entre clases visualmente similares.
+
+## Módulo 3: Recomendación de Destinos de Viaje
+
+### Descripción del Problema
+
+### Dataset
+
+### Preprocesamiento
+
+### Diseño de Modelo
+
+### Evaluación y Resultados
+
+### Ejemplos de recomendaciones generadas
+
+### Análisis de la efectividad de las recomendaciones:
+La efectividad del sistema de recomendación se analiza en términos de su capacidad para generar recomendaciones relevantes y su impacto potencial en las métricas de negocio.
+
+
 # Herramienta Web
 La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.
 
 ## Descripción de la interfaz
-La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno, utilizando una paleta de colores coherente con la identidad de la empresa.
+La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno.
 
-[Imagen 6.1: Diseño de la Interfaz Principal de la Herramienta Web]
-Descripción: Un wireframe o mockup de la página de inicio de la aplicación web, mostrando la navegación principal a los módulos de Predicción, Clasificación y Recomendación.
+En la cabezera, se incluye un menú de navegación que permite a los usuarios acceder rápidamente a las diferentes secciones del sistema: Predicción de Demanda, Clasificación de Conducción Distractiva y Recomendación de Destinos.
 
-[Imagen 6.2: Diagrama de Arquitectura de la Aplicación Web (Frontend, Backend, Modelos)]
-Descripción: Un diagrama que ilustra la arquitectura de la aplicación, mostrando cómo el frontend se comunica con el backend (API REST), y cómo el backend interactúa con los modelos de aprendizaje profundo (que pueden estar cargados en memoria o servidos a través de un framework como TensorFlow Serving).
+En la parte principal de la página, esta el formulario donde los usuarios adjuntan imágenes o ingresan datos según el módulo seleccionado.
+
+![pagina web](web.png){width=800}
+
 
 ## Funcionalidades:
 ### Módulo de Predicción de Demanda
 
-  * Descripción: Permite a los usuarios (ej. personal de planificación de la empresa) seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.
+  * Descripción: Permite a los usuarios seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.
 
   * Interfaz:
     [Imagen 6.3: Captura de Pantalla de la Interfaz de Predicción de Demanda]
@@ -201,13 +339,11 @@ Descripción: Un diagrama que ilustra la arquitectura de la aplicación, mostran
 
 ## Tecnologías utilizadas
 
-  * Frontend: [React/Vue.js/Angular - Especificar el utilizado] para la construcción de componentes interactivos y una experiencia de usuario dinámica. Se utilizó [Tailwind CSS/Bootstrap/CSS personalizado - Especificar el utilizado] para el estilo.
+  * Frontend: Javascript para la construcción de componentes interactivos y una experiencia de usuario dinámica. Se utilizó Tailwind CSS para el estilo.
 
-  * Backend: [Flask/Django/Node.js con Express - Especificar el utilizado] como framework para la API REST. El backend maneja las solicitudes del frontend, interactúa con los modelos de aprendizaje profundo y gestiona la lógica de negocio.
+  * Backend: Se usa FastApi para servir el frontend, servir la API REST y la interacción con los modelos de aprendizaje profundo.
 
-  * API REST: Se diseñó una API RESTful para la comunicación entre el frontend y el backend, permitiendo el intercambio de datos en formato JSON.
-
-  * Despliegue (si aplica): La aplicación se puede desplegar en plataformas como [Heroku/AWS/Google Cloud Platform - Especificar si se hizo o se planea].
+  * Despliegue: La aplicación se desplego en Render, una plataforma de hosting que permite la ejecución de aplicaciones web con facilidad. Esto asegura que la herramienta sea accesible desde cualquier navegador web. Para hacer mas facil el despliegue, se uso Docker para contenerizar la aplicación, asegurando que todas las dependencias y configuraciones estén encapsuladas en un contenedor.
 
 # Resultados Generales y Discusión
 El desarrollo de este Sistema Inteligente Integrado ha demostrado la viabilidad y el potencial transformador del aprendizaje profundo en la optimización de operaciones de transporte, la mejora de la seguridad vial y la personalización de la experiencia del cliente.
@@ -277,18 +413,30 @@ El proyecto ha logrado desarrollar un Sistema Inteligente Integrado que aborda e
 El desarrollo de un sistema inteligente que maneja datos sensibles de usuarios y conductores con lleva importantes consideraciones éticas.
 
 ## Gestión de datos y privacidad:
-Se ha puesto un énfasis primordial en la privacidad de los datos. Para los datos de los usuarios (historial de viajes, preferencias), se implementaron técnicas de anonimización y seudonimización siempre que fue posible, asegurando que la información personal no sea directamente identificable. Para las imágenes de los conductores, se estableció un protocolo estricto para el acceso y el almacenamiento, limitando el acceso solo al personal autorizado y con fines de seguridad y mejora operativa. Se considera el cumplimiento de normativas de protección de datos como [Mencionar normativas relevantes, ej. GDPR, LOPD, leyes locales de privacidad de datos] como un pilar fundamental del proyecto. Los datos no se comparten con terceros sin consentimiento explícito.
+Actualmente la aplicacion web no almacena datos de usuarios, ni de conductores, ni de viajes. Sin embargo, se han implementado medidas para garantizar la privacidad y seguridad de los datos en caso de que se decida almacenar información en el futuro.
+
+En caso de que se decida almacenar datos, se implementarán las siguientes medidas:
+
+  * **Anonimización y Seudonimización**: Los datos de los usuarios (historial de viajes, preferencias) se anonimizarán para que no sean directamente identificables. Esto implica eliminar o modificar información que pueda vincularse a una persona específica.
+
+  * **Acceso Restringido**: El acceso a los datos sensibles (ej. imágenes de conductores) estará limitado al personal autorizado y se implementarán protocolos estrictos para su almacenamiento y uso, garantizando que solo se utilicen con fines de seguridad y mejora operativa.
+
+  * **Consentimiento Informado**: En caso de recopilar datos personales, se obtendrá el consentimiento explícito de los usuarios, informándoles sobre cómo se utilizarán sus datos y asegurando su derecho a acceder, corregir o eliminar su información.
+
+  * **Cumplimiento Normativo**: Se seguirán las regulaciones locales e internacionales sobre protección de datos (ej. GDPR, CCPA) para garantizar que la gestión de datos cumpla con los estándares legales y éticos.
 
 ## Sesgos en los modelos:
 Se reconoce que los modelos de aprendizaje automático pueden heredar y amplificar sesgos presentes en los datos de entrenamiento.
 
   * Clasificación de Conducción Distractiva: Se realizó un esfuerzo para asegurar que el dataset de imágenes fuera lo más diverso posible en términos de demografía, condiciones de iluminación y ángulos de cámara para mitigar sesgos relacionados con la raza, el género o las condiciones ambientales. Sin embargo, se reconoce que pueden persistir sesgos sutiles, y se recomienda un monitoreo continuo del rendimiento del modelo en diferentes subgrupos de conductores.
 
-  * Recomendación de Destinos: Los sesgos en los datos de interacción (ej. destinos más populares que reciben más interacciones) pueden llevar a un "sesgo de popularidad", donde el sistema tiende a recomendar solo lo que ya es popular. Se exploraron técnicas para mitigar esto, como la diversificación de las recomendaciones o la introducción de un factor de "serendipia" para exponer a los usuarios a nuevos destinos.
+  * Recomendación de Destinos: Los sesgos en los datos de interacción (ej. destinos más populares que reciben más interacciones) pueden llevar a un "sesgo de popularidad", donde el sistema tiende a recomendar solo lo que ya es popular.
 
-## Creatividad e innovación:
-La creatividad del proyecto reside en la integración holística de tres problemas distintos pero interconectados en una única solución basada en aprendizaje profundo. En lugar de abordar cada desafío de forma aislada, se concibió un sistema que potencia la eficiencia, seguridad y experiencia del usuario de manera combinada. La aplicación de técnicas avanzadas de aprendizaje profundo (LSTMs para series de tiempo complejas, CNNs con transfer learning para clasificación de imágenes detallada, y factorización de matrices para recomendaciones personalizadas) en el dominio del transporte es una demostración de innovación. Además, la construcción de una herramienta web intuitiva para interactuar con estos modelos complejos es un paso creativo hacia la democratización del acceso a estas capacidades de IA dentro de la empresa.
+## Creatividad:
+La creatividad del proyecto reside en la integración de tres problemas distintos pero interconectados en una única solución basada en aprendizaje profundo. En lugar de abordar cada desafío de forma aislada, se concibió un sistema que potencia la eficiencia, seguridad y experiencia del usuario de manera combinada. Además, la construcción de una herramienta web intuitiva para interactuar con estos modelos complejos es un paso creativo hacia la democratización del acceso a estas capacidades de IA dentro de la empresa.
 
 # Bibliografía
 
 # Anexos
+
+* Codigo fuente del proyecto: [Repositorio en GitHub](https://github.com/AlejandroFeriaGonzalez/RNAB)

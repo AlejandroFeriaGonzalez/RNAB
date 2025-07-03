@@ -1,0 +1,120 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en la Empresa de Transporte\"\n",
+        "author: \"Harlow Malloc\"\n",
+        "date: \"2025-06-18\"\n",
+        "categories: [Redes Neuronales, Algoritmos bioinspirados]\n",
+        "image: \"image.jpg\"\n",
+        "format:\n",
+        "  html:\n",
+        "    number-sections: true\n",
+        "    code-fold: true\n",
+        "    toc: true\n",
+        "    toc-title: \"Tabla de contenido\"\n",
+        "    toc-location: left-body\n",
+        "reference-location: margin\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "# **Introducción**\n",
+        "\n",
+        "El Problema del Viajante de Comercio (*Traveling Salesman Problem*, TSP) es uno de los problemas más clásicos y estudiados en el campo de la optimización combinatoria (Goodfellow et al., 2016; Zhang et al., 2020). Plantea el reto de encontrar la ruta de menor costo que permita a un vendedor visitar exactamente una vez cada ciudad de un conjunto y retornar al punto de partida. En el contexto colombiano, la optimización de rutas es especialmente relevante debido a la complejidad de la red vial, la alta densidad de peajes y los elevados costos logísticos (Infobae, 2025).\n",
+        "\n",
+        "Este trabajo busca determinar la ruta óptima para un vendedor que debe recorrer las 13 ciudades principales del país, minimizando el costo total que incluye costos de salario, peajes y combustible. Para ello se implementan dos enfoques bioinspirados: *algoritmos genéticos* (GA) y *algoritmos de colonia de hormigas* (ACO), comparando su desempeño, analizando la calidad de las soluciones y visualizando los recorridos óptimos sobre el mapa de Colombia.\n",
+        "\n",
+        "# **Marco Teórico**\n",
+        "\n",
+        "## **El Problema del Viajante de Comercio (TSP)**\n",
+        "\n",
+        "El Problema del Viajante de Comercio (TSP, por sus siglas en inglés) es uno de los problemas más emblemáticos de la optimización combinatoria y de la investigación de operaciones. Consiste en encontrar la ruta de menor costo que permita a un viajante visitar una vez cada ciudad de un conjunto dado y regresar al punto de partida (Zhang et al., 2020). Este problema es *NP-hard*, lo que significa que el número de posibles rutas crece factorialmente con el número de ciudades, volviendo inviable la búsqueda exhaustiva para instancias de tamaño moderado (Goodfellow et al., 2016).\n",
+        "\n",
+        "Matemáticamente, el TSP se modela mediante un grafo completo donde cada nodo representa una ciudad y cada arista tiene un costo asociado (Goodfellow et al., 2016). Como ejemplo de costo asociado tenemos distancia, tiempo, dinero, etc. El objetivo es encontrar el ciclo hamiltoniano de menor costo, es decir, un camino que pase una única vez por cada ciudad, retorne al origen, y minimice la suma de los costos (Zhang et al., 2020).\n",
+        "\n",
+        "## Placing Colorbars\n",
+        "\n",
+        "Colorbars indicate the quantitative extent of image data.\n",
+        "Placing in a figure is non-trivial because room needs to\n",
+        "be made for them. The simplest case is just attaching a \n",
+        "colorbar to each axes:^[See the [Matplotlib Gallery](https://matplotlib.org/stable/gallery/subplots_axes_and_figures/colorbar_placement.html) to explore colorbars further]."
+      ],
+      "id": "ba839eed"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import matplotlib.pyplot as plt\n",
+        "import numpy as np\n",
+        "\n",
+        "fig, axs = plt.subplots(2, 2)\n",
+        "fig.set_size_inches(20, 8)\n",
+        "cmaps = ['RdBu_r', 'viridis']\n",
+        "for col in range(2):\n",
+        "    for row in range(2):\n",
+        "        ax = axs[row, col]\n",
+        "        pcm = ax.pcolormesh(\n",
+        "          np.random.random((20, 20)) * (col + 1),\n",
+        "          cmap=cmaps[col]\n",
+        "        )\n",
+        "        fig.colorbar(pcm, ax=ax)\n",
+        "plt.show()"
+      ],
+      "id": "0a7a9001",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Supuestos para el Salario\n",
+        "\n",
+        "**Se asume un valor monetario por hora de trabajo de \\$25.000 COP/hora**, definido según parámetros del mercado laboral colombiano, Con este valor se puede estimar el costo del salario que debe pagarse al viajante por ir desde la ciudad $i$ a la ciudad $j$, mediante la siguiente expresión:\n",
+        "\n",
+        "$\\text{Costo del salario del viajante}_{ij} = V_h \\cdot T_{ij} \\tag{1}$\n",
+        "\n",
+        "For a demonstration of a line plot on a polar axis, see @fig-polar."
+      ],
+      "id": "75d7a482"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| label: fig-polar\n",
+        "#| fig-cap: A line plot on a polar axis\n",
+        "\n",
+        "import numpy as np\n",
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "r = np.arange(0, 2, 0.01)\n",
+        "theta = 2 * np.pi * r\n",
+        "fig, ax = plt.subplots(\n",
+        "  subplot_kw = {'projection': 'polar'} \n",
+        ")\n",
+        "ax.plot(theta, r)\n",
+        "ax.set_rticks([0.5, 1, 1.5, 2])\n",
+        "ax.grid(True)\n",
+        "plt.show()"
+      ],
+      "id": "fig-polar",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\Alejandro Feria\\Desktop\\Unal\\7 semestre\\redes_neuronales\\RNAB\\.venv\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
