@@ -1,10 +1,10 @@
 ---
 title: "Bienvenidos"
 author:
-  - name: "Diego Fernando Chávez Henao, dfchavez@unal.edu.co"
   - name: "Alejandro Feria González, aferiag@unal.edu.co"
-  - name: "Santiago Molina Muñoz, smolinam@unal.edu.co"
-  - name: "Juan Manuel Teherán Machado, jteheranm@unal.edu.co"
+  - name: "Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co"
+  - name: "Abraham David Miguel Cardenas, amiguel@unal.edu.co"
+  - name: "Santiago Molina Munoz, smolinam@unal.edu.co"
 date: "2025-06-15"
 categories: [Redes Neuronales, Algoritmos bioinspirados]
 image: "thumbnail.jpg"

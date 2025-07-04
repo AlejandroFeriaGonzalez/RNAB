@@ -25,7 +25,7 @@ jupyter: python3
 # Resumen Ejecutivo
 Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.
 
-El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos se uso tensorflow y keras, ademas de Sklearn.
+El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos 2 y 3 se uso TensorFlow y Keras, mientras que el modelo de series de tiempo se implementó con PyTorch.
 
 Los resultados preliminares demuestran la viabilidad y el potencial impacto del sistema. El modelo de predicción de demanda alcanzó un RMSE de [Valor de RMSE] y un MAE de [Valor de MAE], lo que permite una planificación más precisa de la asignación de vehículos y personal. El clasificador de conducción distractiva logró una precisión del [Porcentaje de Precisión]% en la detección de comportamientos de riesgo, contribuyendo significativamente a la seguridad. Finalmente, el sistema de recomendación generó recomendaciones pertinentes, con una Precision de [Valor de Precision] y Recall de [Valor de Recall].
 
@@ -119,7 +119,7 @@ Fase 6: Pruebas y Despliegue:
 
 ## Herramientas y Tecnologías Utilizadas
 * Lenguaje de Programación: Python
-* Librerías de Aprendizaje Profundo: TensorFlow, Keras, Scikit-learn
+* Librerías de Aprendizaje Profundo: TensorFlow, Keras, Scikit-learn, PyTorch
 * Librerías de Manipulación de Datos: Pandas, NumPy
 * Librerías de Visualización: Matplotlib
 * Desarrollo Web (Backend): FastAPI
@@ -861,6 +861,8 @@ La efectividad del sistema de recomendación se analiza en términos de su capac
 # Herramienta Web
 La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.
 
+{{< video demo_web.mp4 >}}
+
 ## Descripción de la interfaz
 La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno.
 
@@ -874,18 +876,17 @@ En la parte principal de la página, esta el formulario donde los usuarios adjun
 ## Funcionalidades:
 ### Módulo de Predicción de Demanda
 
-  * Descripción: Permite a los usuarios seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.
-
+  * Descripción: Permite a los usuarios subir un archivo CSV con datos históricos para predecir la demanda futura de transporte y visualizar la predicción de demanda para los próximos 30 días. Tambien pueden escribir la cantidad de días a predecir y la logitud de la secuencia, es decir cuantos dias de datos se usan para predecir los dìas siguientes.
   * Interfaz:
-    [Imagen 6.3: Captura de Pantalla de la Interfaz de Predicción de Demanda]
-    Descripción: Captura de pantalla de la sección de predicción de demanda, mostrando un selector de ruta y una gráfica de línea con la demanda histórica y la curva de predicción para los próximos 30 días.
+    ![Captura de Pantalla de la Interfaz de Predicción de Demanda](form1.png)
+    Descripción: Captura de pantalla de la sección de predicción de demanda. Se puede ver el input para subir el archivo CSV, un campo para ingresar la cantidad de días a predecir y la longitud de la secuencia, y un botón para enviar los datos. Una vez procesado, se muestra una tabla con las predicciones.
 
 ### Módulo de Clasificación de Conducción Distractiva
 
-  * Descripción: Permite a los usuarios (ej. personal de seguridad o supervisores) subir una imagen de un conductor. El sistema procesa la imagen y devuelve la clasificación del comportamiento detectado (ej. "Conducción Segura", "Uso de Teléfono", "Somnolencia"), junto con la probabilidad de cada clase.
+  * Descripción: Permite a los usuarios subir una imagen de un conductor. El sistema procesa la imagen y devuelve la clasificación del comportamiento detectado, junto con la probabilidad de cada clase.
 
   * Interfaz:
-    [Imagen 6.4: Captura de Pantalla de la Interfaz de Clasificación de Imágenes]
+    ![Captura de Pantalla de la Interfaz de Clasificación de Imágenes](form2.png)
     Descripción: Captura de pantalla de la sección de clasificación, mostrando un botón para subir una imagen, la imagen cargada y los resultados de la clasificación (clase predicha y probabilidades) en un formato claro.
 
 ### Módulo de Recomendación de Destinos de Viaje
@@ -893,8 +894,8 @@ En la parte principal de la página, esta el formulario donde los usuarios adjun
   * Descripción: Permite ingresar un ID de usuario o seleccionar un usuario de una lista. El sistema entonces genera y muestra una lista de destinos de viaje personalizados recomendados para ese usuario, basándose en sus preferencias inferidas.
 
   * Interfaz:
-    [Imagen 6.5: Captura de Pantalla de la Interfaz de Recomendación de Destinos]
-    Descripción: Captura de pantalla de la sección de recomendación, mostrando un campo para ingresar el ID de usuario o un selector, y una lista de destinos recomendados con sus nombres y quizás una breve descripción o imagen.
+    ![Captura de Pantalla de la Interfaz de Recomendación de Destinos](form3.png)
+    Descripción: Captura de pantalla de la sección de recomendación, mostrando un formulario con las preferencias del usuario para asi obtener recomendaciones personalizadas. Incluye campos para seleccionar tipo de destino, época del año y estado, así como un botón para enviar la solicitud. Los resultados se muestran en una lista.
 
 ## Tecnologías utilizadas
 
@@ -997,9 +998,34 @@ La creatividad del proyecto reside en la integración de tres problemas distinto
 
 # Bibliografía
 
+Abadi, M., Agarwal, A., Barham, P., Brevdo, E., Chen, Z., Citro, C., Corrado, G. S., Davis, A., Dean, J., Devin, M., Ghemawat, S., Goodfellow, I., Harp, A., Irving, G., Isard, M., Jia, Y., Jozefowicz, R., Kaiser, L., Kudlur, M., … Zheng, X. (2016). TensorFlow: Large-scale machine learning on heterogeneous distributed systems. *arXiv preprint arXiv:1603.04467*. https://arxiv.org/abs/1603.04467
+
+Afridi, A. S. (2024). *Multi-Class Driver Behavior Image Dataset* [Conjunto de datos]. Kaggle. https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset
+
+Chollet, F., et al. (2015). *Keras*. https://keras.io
+
+Consorcio Regional de Transportes de Madrid (CRTM). (2025). *Viajeros transportados por modo de transporte* [Conjunto de datos]. Portal de Datos Abiertos del CRTM. https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about
+
+Goodfellow, I., Bengio, Y., & Courville, A. (2016). *Deep Learning*. MIT Press.
+
+Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural Computation*, *9*(8), 1735–1780. https://doi.org/10.1162/neco.1997.9.8.1735
+
+LeCun, Y., Bengio, Y., & Hinton, G. (2015). Deep learning. *Nature*, *521*(7553), 436–444. https://doi.org/10.1038/nature14539
+
+Mehra, A. (2024). *Travel Recommendation Dataset* [Conjunto de datos]. Kaggle. https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset
+
+Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., Killeen, T., Lin, Z., Gimelshein, N., Antiga, L., Desmaison, A., Köpf, A., Yang, E., DeVito, Z., Raison, M., Tejani, A., Chilamkurthy, S., Steiner, B., Fang, L., … Chintala, S. (2019). PyTorch: An imperative style, high-performance deep learning library. *Advances in Neural Information Processing Systems*, *32*.
+
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., & Duchesnay, E. (2011). Scikit-learn: Machine Learning in Python. *Journal of Machine Learning Research*, *12*, 2825–2830.
+
+Ricci, F., Rokach, L., & Shapira, B. (Eds.). (2011). *Recommender systems handbook*. Springer.
+
+
 # Anexos
 
 * Codigo fuente del proyecto: [Repositorio en GitHub](https://github.com/AlejandroFeriaGonzalez/RNAB)
+
+* Dataset de Predicción de Demanda: [https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about](https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about)
 
 * Multi-Class Driver Behavior Image Dataset: [https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1](https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1)
 

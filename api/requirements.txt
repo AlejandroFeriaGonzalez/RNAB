@@ -8,3 +8,6 @@ tensorflow
 pandas
 scikit-learn
 pydantic
+torch
+torchvision
+torchaudio
