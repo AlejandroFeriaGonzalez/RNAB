@@ -844,6 +844,8 @@ En promedio, el sistema logra recomendar el destino relevante en el 17% de los c
 
 ![Ejemplo uso del modelo 3](modelo3Respuesta.png){width=800}
 
+![Resultado del modelo en la pagina web](modelo3_web.png)
+
 ### Análisis de la efectividad de las recomendaciones:
 La efectividad del sistema de recomendación se analiza en términos de su capacidad para generar recomendaciones relevantes y su impacto potencial en las métricas de negocio.
 
