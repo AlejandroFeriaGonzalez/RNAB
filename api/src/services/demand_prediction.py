@@ -5,9 +5,24 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from datetime import timedelta
+import tempfile
+import os
+from typing import List
+from pydantic import BaseModel
 
 SERVICES_PATH = pathlib.Path(__file__).parent
 MODEL_PATH = SERVICES_PATH / "models" / "modelo1.pth"
+
+# Modelos de datos para FastAPI
+class PredictionResult(BaseModel):
+    Fecha: str
+    Demanda_Predicha: int
+
+class DemandPredictionResponse(BaseModel):
+    success: bool
+    predictions: List[PredictionResult]
+    total_predictions: int
+    message: str
 
 # Es necesario definir la arquitectura del modelo para poder cargar los pesos
 class passengersRNN(nn.Module):
@@ -100,6 +115,135 @@ def predict_demand(
     })
 
     return results_df
+
+async def predict_demand_from_upload(
+    file_content: bytes,
+    days_to_predict: int,
+    sequence_length: int = 45
+) -> DemandPredictionResponse:
+    """
+    Función adaptada para FastAPI que predice la demanda a partir de un archivo CSV subido.
+
+    Args:
+        file_content (bytes): Contenido del archivo CSV subido.
+        days_to_predict (int): Número de días a predecir en el futuro.
+        sequence_length (int): Longitud de la secuencia utilizada para entrenar el modelo.
+
+    Returns:
+        DemandPredictionResponse: Respuesta con las predicciones y metadatos.
+    """
+    try:
+        # Crear un archivo temporal para guardar el contenido CSV
+        import tempfile
+        import os
+        
+        with tempfile.NamedTemporaryFile(mode='wb', delete=False, suffix='.csv') as temp_file:
+            temp_file.write(file_content)
+            temp_file_path = temp_file.name
+        
+        try:
+            # Validar el archivo CSV antes de procesarlo
+            df_test = pd.read_csv(temp_file_path)
+            
+            # Verificar que las columnas requeridas estén presentes
+            required_columns = ['Month', '#Passengers']
+            missing_columns = [col for col in required_columns if col not in df_test.columns]
+            
+            if missing_columns:
+                return DemandPredictionResponse(
+                    success=False,
+                    predictions=[],
+                    total_predictions=0,
+                    message=f"El archivo CSV debe contener las columnas: {', '.join(required_columns)}. Columnas faltantes: {', '.join(missing_columns)}"
+                )
+            
+            # Verificar que hay suficientes datos
+            if len(df_test) < sequence_length:
+                return DemandPredictionResponse(
+                    success=False,
+                    predictions=[],
+                    total_predictions=0,
+                    message=f"El archivo debe contener al menos {sequence_length} registros para hacer predicciones. Registros encontrados: {len(df_test)}"
+                )
+            
+            # Verificar que la columna de pasajeros contiene valores numéricos válidos
+            try:
+                pd.to_numeric(df_test['#Passengers'], errors='raise')
+            except ValueError:
+                return DemandPredictionResponse(
+                    success=False,
+                    predictions=[],
+                    total_predictions=0,
+                    message="La columna '#Passengers' debe contener solo valores numéricos válidos"
+                )
+            
+            # Verificar que las fechas son válidas
+            try:
+                pd.to_datetime(df_test['Month'], errors='raise')
+            except ValueError:
+                return DemandPredictionResponse(
+                    success=False,
+                    predictions=[],
+                    total_predictions=0,
+                    message="La columna 'Month' debe contener fechas válidas (formato: YYYY-MM-DD)"
+                )
+            
+            # Usar la función original de predicción
+            result_df = predict_demand(
+                historical_data_path=temp_file_path,
+                days_to_predict=days_to_predict,
+                sequence_length=sequence_length
+            )
+            
+            # Convertir el DataFrame a la estructura de respuesta
+            predictions = [
+                PredictionResult(
+                    Fecha=row['Fecha'].strftime('%Y-%m-%d'),
+                    Demanda_Predicha=int(row['Demanda_Predicha'])
+                )
+                for _, row in result_df.iterrows()
+            ]
+            
+            return DemandPredictionResponse(
+                success=True,
+                predictions=predictions,
+                total_predictions=len(predictions),
+                message=f"Predicción completada exitosamente para {days_to_predict} días"
+            )
+            
+        finally:
+            # Limpiar el archivo temporal
+            if os.path.exists(temp_file_path):
+                os.unlink(temp_file_path)
+                
+    except FileNotFoundError as e:
+        return DemandPredictionResponse(
+            success=False,
+            predictions=[],
+            total_predictions=0,
+            message=f"Error al procesar el archivo: {str(e)}"
+        )
+    except pd.errors.EmptyDataError:
+        return DemandPredictionResponse(
+            success=False,
+            predictions=[],
+            total_predictions=0,
+            message="El archivo CSV está vacío o no contiene datos válidos"
+        )
+    except pd.errors.ParserError as e:
+        return DemandPredictionResponse(
+            success=False,
+            predictions=[],
+            total_predictions=0,
+            message=f"Error al parsear el archivo CSV: {str(e)}"
+        )
+    except Exception as e:
+        return DemandPredictionResponse(
+            success=False,
+            predictions=[],
+            total_predictions=0,
+            message=f"Error en la predicción: {str(e)}"
+        )
 
 # --- Ejemplo de uso ---
 

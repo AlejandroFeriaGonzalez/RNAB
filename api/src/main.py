@@ -1,6 +1,6 @@
 import pathlib
 
-from fastapi import FastAPI, File, Request, UploadFile
+from fastapi import FastAPI, File, Request, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -14,6 +14,7 @@ from src.services.travel_recommendations import (
     TravelRecommendationRequest,
     FeedbackRequest,
 )
+from src.services.demand_prediction import predict_demand_from_upload, DemandPredictionResponse
 
 SRC = pathlib.Path(__file__).parent
 
@@ -102,4 +103,66 @@ async def api_travel_options():
     except Exception as e:
         return JSONResponse(
             status_code=500, content={"error": f"Error al obtener opciones: {str(e)}"}
+        )
+
+@app.post("/api/demand-prediction", response_model=DemandPredictionResponse)
+async def api_demand_prediction(
+    file: UploadFile = File(...),
+    days_to_predict: int = Form(30),
+    sequence_length: int = Form(45)
+):
+    """
+    Endpoint para predecir la demanda de transporte basado en datos históricos.
+    
+    Args:
+        file: Archivo CSV con datos históricos (columnas: 'Month', '#Passengers')
+        days_to_predict: Número de días a predecir (1-365)
+        sequence_length: Longitud de secuencia para el modelo LSTM
+    
+    Returns:
+        DemandPredictionResponse: Respuesta con predicciones y metadatos
+    """
+    # Validar tipo de archivo
+    if not file.filename.endswith('.csv'):
+        return JSONResponse(
+            status_code=400,
+            content={"error": "El archivo debe ser de tipo CSV"}
+        )
+    
+    # Validar parámetros
+    if not (1 <= days_to_predict <= 365):
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Los días a predecir deben estar entre 1 y 365"}
+        )
+    
+    if not (1 <= sequence_length <= 100):
+        return JSONResponse(
+            status_code=400,
+            content={"error": "La longitud de secuencia debe estar entre 1 y 100"}
+        )
+    
+    try:
+        # Leer el contenido del archivo
+        file_content = await file.read()
+        
+        # Llamar a la función de predicción
+        result = await predict_demand_from_upload(
+            file_content=file_content,
+            days_to_predict=days_to_predict,
+            sequence_length=sequence_length
+        )
+        
+        if result.success:
+            return result
+        else:
+            return JSONResponse(
+                status_code=400,
+                content={"error": result.message}
+            )
+            
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Error interno del servidor: {str(e)}"}
         )
