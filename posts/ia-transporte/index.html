@@ -80,6 +80,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-ebd8daedd9a06b75d3ddf6b0552b5a29.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -217,9 +219,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset"><span class="header-section-number">4.1.2</span> Dataset</a></li>
   <li><a href="#preprocesamiento" id="toc-preprocesamiento" class="nav-link" data-scroll-target="#preprocesamiento"><span class="header-section-number">4.1.3</span> Preprocesamiento</a></li>
   <li><a href="#diseño-de-modelo" id="toc-diseño-de-modelo" class="nav-link" data-scroll-target="#diseño-de-modelo"><span class="header-section-number">4.1.4</span> Diseño de Modelo</a></li>
-  <li><a href="#evaluación-y-resultados" id="toc-evaluación-y-resultados" class="nav-link" data-scroll-target="#evaluación-y-resultados"><span class="header-section-number">4.1.5</span> Evaluación y Resultados</a></li>
-  <li><a href="#gráficas-de-predicción-vs.-demanda-real" id="toc-gráficas-de-predicción-vs.-demanda-real" class="nav-link" data-scroll-target="#gráficas-de-predicción-vs.-demanda-real"><span class="header-section-number">4.1.6</span> Gráficas de predicción vs.&nbsp;demanda real</a></li>
-  <li><a href="#análisis-de-la-estacionalidad-y-tendencias" id="toc-análisis-de-la-estacionalidad-y-tendencias" class="nav-link" data-scroll-target="#análisis-de-la-estacionalidad-y-tendencias"><span class="header-section-number">4.1.7</span> Análisis de la estacionalidad y tendencias</a></li>
+  <li><a href="#entrenamiento-del-modelo" id="toc-entrenamiento-del-modelo" class="nav-link" data-scroll-target="#entrenamiento-del-modelo"><span class="header-section-number">4.1.5</span> Entrenamiento del modelo</a></li>
+  <li><a href="#evaluación-y-resultados" id="toc-evaluación-y-resultados" class="nav-link" data-scroll-target="#evaluación-y-resultados"><span class="header-section-number">4.1.6</span> Evaluación y Resultados</a></li>
   </ul></li>
   <li><a href="#módulo-2-clasificación-de-conducción-distractiva" id="toc-módulo-2-clasificación-de-conducción-distractiva" class="nav-link" data-scroll-target="#módulo-2-clasificación-de-conducción-distractiva"><span class="header-section-number">4.2</span> Módulo 2: Clasificación de Conducción Distractiva</a>
   <ul class="collapse">
@@ -311,9 +312,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#dataset" id="toc-dataset"><span class="header-section-number">4.1.2</span> Dataset</a></li>
   <li><a href="#preprocesamiento" id="toc-preprocesamiento"><span class="header-section-number">4.1.3</span> Preprocesamiento</a></li>
   <li><a href="#diseño-de-modelo" id="toc-diseño-de-modelo"><span class="header-section-number">4.1.4</span> Diseño de Modelo</a></li>
-  <li><a href="#evaluación-y-resultados" id="toc-evaluación-y-resultados"><span class="header-section-number">4.1.5</span> Evaluación y Resultados</a></li>
-  <li><a href="#gráficas-de-predicción-vs.-demanda-real" id="toc-gráficas-de-predicción-vs.-demanda-real"><span class="header-section-number">4.1.6</span> Gráficas de predicción vs.&nbsp;demanda real</a></li>
-  <li><a href="#análisis-de-la-estacionalidad-y-tendencias" id="toc-análisis-de-la-estacionalidad-y-tendencias"><span class="header-section-number">4.1.7</span> Análisis de la estacionalidad y tendencias</a></li>
+  <li><a href="#entrenamiento-del-modelo" id="toc-entrenamiento-del-modelo"><span class="header-section-number">4.1.5</span> Entrenamiento del modelo</a></li>
+  <li><a href="#evaluación-y-resultados" id="toc-evaluación-y-resultados"><span class="header-section-number">4.1.6</span> Evaluación y Resultados</a></li>
   </ul></li>
   <li><a href="#módulo-2-clasificación-de-conducción-distractiva" id="toc-módulo-2-clasificación-de-conducción-distractiva"><span class="header-section-number">4.2</span> Módulo 2: Clasificación de Conducción Distractiva</a>
   <ul>
@@ -370,7 +370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="resumen-ejecutivo" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Resumen Ejecutivo</h1>
 <p>Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.</p>
-<p>El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos se uso tensorflow y keras, ademas de Sklearn.</p>
+<p>El proyecto se centró en la creación de tres módulos: un modelo de series de tiempo para predecir la demanda de transporte con 30 días de antelación, un clasificador de imágenes para identificar conductas distractivas como el uso del teléfono móvil, y un sistema de recomendación que sugiere destinos personalizados a los usuarios basándose en su historial y preferencias. Todas estas soluciones se integraron en una herramienta web intuitiva creada con FastAPI. Para la realizacion de los modelos 2 y 3 se uso TensorFlow y Keras, mientras que el modelo de series de tiempo se implementó con PyTorch.</p>
 <p>Los resultados preliminares demuestran la viabilidad y el potencial impacto del sistema. El modelo de predicción de demanda alcanzó un RMSE de [Valor de RMSE] y un MAE de [Valor de MAE], lo que permite una planificación más precisa de la asignación de vehículos y personal. El clasificador de conducción distractiva logró una precisión del [Porcentaje de Precisión]% en la detección de comportamientos de riesgo, contribuyendo significativamente a la seguridad. Finalmente, el sistema de recomendación generó recomendaciones pertinentes, con una Precision de [Valor de Precision] y Recall de [Valor de Recall].</p>
 <p>En conclusión, este sistema inteligente representa un avance significativo en la eficiencia operativa, la seguridad vial y la experiencia del cliente para la empresa de transporte, sentando las bases para futuras optimizaciones y expansiones.</p>
 </section>
@@ -460,7 +460,7 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <h2 data-number="3.4" class="anchored" data-anchor-id="herramientas-y-tecnologías-utilizadas"><span class="header-section-number">3.4</span> Herramientas y Tecnologías Utilizadas</h2>
 <ul>
 <li>Lenguaje de Programación: Python</li>
-<li>Librerías de Aprendizaje Profundo: TensorFlow, Keras, Scikit-learn</li>
+<li>Librerías de Aprendizaje Profundo: TensorFlow, Keras, Scikit-learn, PyTorch</li>
 <li>Librerías de Manipulación de Datos: Pandas, NumPy</li>
 <li>Librerías de Visualización: Matplotlib</li>
 <li>Desarrollo Web (Backend): FastAPI</li>
@@ -476,36 +476,490 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <h2 data-number="4.1" class="anchored" data-anchor-id="módulo-1-predicción-de-demanda-de-transporte"><span class="header-section-number">4.1</span> Módulo 1: Predicción de Demanda de Transporte</h2>
 <section id="descripción-del-problema" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="descripción-del-problema"><span class="header-section-number">4.1.1</span> Descripción del Problema</h3>
-<p>El objetivo de este módulo es anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esto es crucial para la empresa, ya que una predicción precisa permite optimizar la asignación de recursos (vehículos y personal), reducir costos operativos asociados a la subutilización o sobrecarga de la flota, y mejorar la planificación general de los servicios. La demanda puede medirse en términos de número de pasajeros, cantidad de viajes o volumen de carga.</p>
+<p>El primer reto consiste en anticipar la demanda de transporte en rutas específicas durante los próximos 30 días. Esta predicción es esencial para garantizar que la empresa cuente con los recursos adecuados —vehículos, conductores y personal de apoyo— en los momentos y lugares donde se necesiten.</p>
+<p>Para ello, se entrenará un modelo de series de tiempo sobre un conjunto de datos históricos reales proporcionado por el CRTM, el cual contiene información detallada de validaciones de transporte público (como número de pasajeros transportados por ruta y por fecha). Este módulo no solo busca predecir la evolución temporal de la demanda, sino también generar información útil para optimizar la planificación operativa, reducir tiempos de espera, minimizar recursos ociosos y mejorar la calidad del servicio.</p>
+<p>La solución propuesta se fundamenta en técnicas de aprendizaje profundo especializadas en series temporales, tales como redes neuronales recurrentes (RNN), LSTM o modelos más modernos como Temporal Fusion Transformers. El objetivo es capturar patrones de estacionalidad, tendencias y variaciones anómalas que caracterizan el comportamiento de la demanda de transporte urbano en una ciudad como Madrid.</p>
+<p>El conjunto de datos utilizado proviene del portal de datos abiertos del Consorcio Regional de Transportes de Madrid (CRTM). Este dataset, aunque sencillo en estructura, contiene información esencial para el análisis: fecha, modo de transporte (por ejemplo, autobús, metro o cercanías) y número de pasajeros transportados. A partir de estas variables, es posible construir una serie temporal robusta para cada modo de transporte, capturando patrones diarios, estacionales y tendencias a lo largo del tiempo. Esta base, al representar datos reales de demanda, resulta adecuada para entrenar modelos de predicción orientados a mejorar la planificación operativa.</p>
+<div id="d1f71b6a" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ruta_al_archivo <span class="op">=</span> <span class="st">'./transporte_madrid.csv'</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(ruta_al_archivo)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Fecha'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Fecha'</span>], dayfirst<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Crear columna `Month` como pide prepare_data</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df.rename(columns<span class="op">=</span>{<span class="st">'Fecha'</span>: <span class="st">'Month'</span>, <span class="st">'Valor'</span>: <span class="st">'#Passengers'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.groupby(<span class="st">'Month'</span>)[<span class="st">'#Passengers'</span>].<span class="bu">sum</span>().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 <section id="dataset" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="dataset"><span class="header-section-number">4.1.2</span> Dataset</h3>
+<section id="descripción-del-conjunto-de-datos" class="level4" data-number="4.1.2.1">
+<h4 data-number="4.1.2.1" class="anchored" data-anchor-id="descripción-del-conjunto-de-datos"><span class="header-section-number">4.1.2.1</span> Descripción del Conjunto de Datos</h4>
+<p>Para el desarrollo del modelo de predicción de demanda de transporte, se utilizó un conjunto de datos abierto proporcionado por el Consorcio Regional de Transportes de Madrid (CRTM). Este conjunto contiene información agregada sobre el uso del sistema de transporte público por día y modo de transporte, permitiendo construir series temporales por categoría.</p>
+</section>
+<section id="estructura-del-conjunto-de-datos" class="level4" data-number="4.1.2.2">
+<h4 data-number="4.1.2.2" class="anchored" data-anchor-id="estructura-del-conjunto-de-datos"><span class="header-section-number">4.1.2.2</span> Estructura del conjunto de datos</h4>
+<p>El archivo contiene tres variables principales:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 75%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Descripción</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Fecha</code></td>
+<td>Fecha de la observación (formato AAAA-MM-DD)</td>
+<td>Fecha</td>
+</tr>
+<tr class="even">
+<td><code>Modo</code></td>
+<td>Tipo de transporte utilizado (Ej: METRO, BUS, CERCANÍAS)</td>
+<td>Categórica</td>
+</tr>
+<tr class="odd">
+<td><code>Valor</code></td>
+<td>Número de pasajeros registrados en esa fecha</td>
+<td>Numérica</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dimensiones-del-conjunto" class="level4" data-number="4.1.2.3">
+<h4 data-number="4.1.2.3" class="anchored" data-anchor-id="dimensiones-del-conjunto"><span class="header-section-number">4.1.2.3</span> Dimensiones del conjunto</h4>
+<ul>
+<li>Cobertura temporal: Desde el 1 de enero de 2023 hasta el 29 de junio de 2025 (2.5 años).</li>
+<li>Total de registros: 911 observaciones (dependiendo del número de modos y días disponibles).</li>
+</ul>
+</section>
+<section id="ejemplo-de-registros" class="level4" data-number="4.1.2.4">
+<h4 data-number="4.1.2.4" class="anchored" data-anchor-id="ejemplo-de-registros"><span class="header-section-number">4.1.2.4</span> Ejemplo de registros</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Fecha</th>
+<th>Modo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2023-02-15</td>
+<td>BUS</td>
+<td>945.218</td>
+</tr>
+<tr class="even">
+<td>2023-02-15</td>
+<td>METRO</td>
+<td>1.221.504</td>
+</tr>
+<tr class="odd">
+<td>2023-02-15</td>
+<td>CERCANÍAS</td>
+<td>287.564</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="consideraciones-para-el-modelado" class="level4" data-number="4.1.2.5">
+<h4 data-number="4.1.2.5" class="anchored" data-anchor-id="consideraciones-para-el-modelado"><span class="header-section-number">4.1.2.5</span> Consideraciones para el modelado</h4>
+<ul>
+<li><p>Los datos están agregados a nivel diario por modo, sin segmentación por línea, estación o franja horaria.</p></li>
+<li><p>No se cuenta con variables exógenas (clima, festivos, eventos), por lo que el enfoque será univariado por serie, aunque se puede modelar cada modo de transporte por separado o con modelos multivariados si se decide combinar las series.</p></li>
+<li><p>Se observan patrones de estacionalidad semanal y anual, así como efectos de calendario (como menor demanda en fines de semana o festivos).</p></li>
+</ul>
+<div id="a390608c" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenar y tomar los últimos 30 días</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df_last_30 <span class="op">=</span> df.sort_values(<span class="st">'Month'</span>).tail(<span class="dv">90</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar la serie temporal</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.plot(df_last_30[<span class="st">'Month'</span>], df_last_30[<span class="st">'#Passengers'</span>], marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Demanda diaria de los últimos 90 días'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Fecha'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Número de pasajeros'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="preprocesamiento" class="level3" data-number="4.1.3">
 <h3 data-number="4.1.3" class="anchored" data-anchor-id="preprocesamiento"><span class="header-section-number">4.1.3</span> Preprocesamiento</h3>
+<section id="preparación-y-visualización-de-los-datos" class="level4" data-number="4.1.3.1">
+<h4 data-number="4.1.3.1" class="anchored" data-anchor-id="preparación-y-visualización-de-los-datos"><span class="header-section-number">4.1.3.1</span> Preparación y Visualización de los Datos</h4>
+<p>Antes de entrenar cualquier modelo de predicción, es fundamental realizar una limpieza, transformación y exploración inicial de los datos. Esto permite detectar patrones relevantes, anomalías y estacionalidades que influyen directamente en la demanda de transporte.</p>
 <ol type="1">
-<li><p>Limpieza de Datos: Se identificaron y manejaron valores nulos o inconsistentes. Se realizaron imputaciones simples (ej. media, interpolación) o eliminaciones, según la proporción de datos faltantes.</p></li>
-<li><p>Transformación de Series de Tiempo:</p></li>
+<li>Carga y limpieza inicial</li>
 </ol>
+<ul>
+<li>Se importó el conjunto de datos desde un archivo .csv con codificación UTF-8.</li>
+<li>Se estandarizó el tipo de dato Fecha y se verificó la ausencia de valores nulos.</li>
+<li>Se eliminaron registros con valores de pasajeros iguales a cero o inconsistencias por duplicación.</li>
+</ul>
+<ol start="2" type="1">
+<li><p>Agregación por modo de transporte: Aunque los datos están segmentados por modo (BUS, METRO, CERCANÍAS), se decidió trabajar inicialmente con series separadas para cada uno, dada la naturaleza operativa distinta de cada sistema.</p></li>
+<li><p>Visualización exploratoria Se graficó la demanda diaria de cada modo de transporte, lo que permitió identificar varios patrones:</p></li>
+</ol>
+<ul>
+<li>Tendencia general: Incremento progresivo de la demanda.</li>
+<li>Estacionalidad semanal: Caídas evidentes los fines de semana, especialmente domingos.</li>
+<li>Estacionalidad anual: Reducción de demanda en los meses de verano y festivos largos.</li>
+<li>Picos y valles anómalos: Algunos días con valores atípicos por eventos excepcionales o errores de medición.</li>
+</ul>
+<ol start="4" type="1">
+<li>Transformaciones aplicadas</li>
+</ol>
+<ul>
+<li>Se aplicó una transformación logarítmica opcional para estabilizar la varianza (en caso de que el modelo lo requiera).</li>
+<li>Se realizaron pruebas de estacionariedad (Dickey-Fuller) para evaluar la necesidad de diferenciar la serie.</li>
+</ul>
+</section>
+<section id="preparación-de-datos-y-creación-de-secuencias" class="level4" data-number="4.1.3.2">
+<h4 data-number="4.1.3.2" class="anchored" data-anchor-id="preparación-de-datos-y-creación-de-secuencias"><span class="header-section-number">4.1.3.2</span> Preparación de datos y creación de secuencias</h4>
+<p>Se diseñó una clase personalizada TimeSeriesDataset compatible con torch.utils.data.Dataset, encargada de generar automáticamente las secuencias de entrada (X) y las etiquetas de salida (y) necesarias para el entrenamiento del modelo. Cada muestra consiste en una secuencia de longitud fija (sequence_length) y su correspondiente valor siguiente como objetivo de predicción.</p>
+<p>El código realiza lo siguiente:</p>
+<ul>
+<li>Convierte la serie escalada a FloatTensor.</li>
+<li>Divide la serie en múltiples pares (secuencia, objetivo), usando una ventana deslizante.</li>
+<li>Cada secuencia se entrega como un tensor de tamaño (sequence_length, 1).</li>
+</ul>
+</section>
+<section id="división-temporal-del-conjunto-de-datos" class="level4" data-number="4.1.3.3">
+<h4 data-number="4.1.3.3" class="anchored" data-anchor-id="división-temporal-del-conjunto-de-datos"><span class="header-section-number">4.1.3.3</span> División temporal del conjunto de datos</h4>
+<p>Se utilizó una estrategia de validación temporal para dividir el conjunto de datos en entrenamiento y validación:</p>
+<ul>
+<li>Los datos anteriores al 1 de marzo de 2025 se usan para entrenamiento.</li>
+<li>Los datos desde esa fecha se utilizan para validar la capacidad de generalización del modelo.</li>
+</ul>
+<p>Esta división respeta la naturaleza temporal de la serie y evita fugas de información del futuro hacia el pasado.</p>
+</section>
+<section id="escalamiento" class="level4" data-number="4.1.3.4">
+<h4 data-number="4.1.3.4" class="anchored" data-anchor-id="escalamiento"><span class="header-section-number">4.1.3.4</span> Escalamiento</h4>
+<p>Dado que las redes neuronales son sensibles a la escala de los datos, se aplicó una transformación MinMaxScaler() a los valores de pasajeros. Esta transformación se ajusta con los datos de entrenamiento y luego se aplica a los de validación.</p>
+</section>
+<section id="carga-eficiente-con-dataloader" class="level4" data-number="4.1.3.5">
+<h4 data-number="4.1.3.5" class="anchored" data-anchor-id="carga-eficiente-con-dataloader"><span class="header-section-number">4.1.3.5</span> Carga eficiente con DataLoader</h4>
+<p>Los datos se organizan y cargan mediante DataLoader, que permite:</p>
+<ul>
+<li>Entrenamiento en mini-lotes (batch_size=16) para mejorar la estabilidad del gradiente y la eficiencia computacional.</li>
+<li>Mezcla aleatoria de las secuencias de entrenamiento (shuffle=True).</li>
+<li>Validación con todos los datos de validación disponibles como un único lote.</li>
+</ul>
+</section>
+<section id="codigo-para-la-preparación-de-datos" class="level4" data-number="4.1.3.6">
+<h4 data-number="4.1.3.6" class="anchored" data-anchor-id="codigo-para-la-preparación-de-datos"><span class="header-section-number">4.1.3.6</span> Codigo para la preparación de datos</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TimeSeriesDataset(Dataset):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Custom Dataset class for time series data.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    This class handles the creation of sequences and targets for time series prediction,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    implementing the necessary methods for PyTorch's Dataset class.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data, sequence_length):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Initialize the dataset.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters:</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">        data (numpy.array): Input time series data</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">        sequence_length (int): Length of input sequences</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.data <span class="op">=</span> torch.FloatTensor(data)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sequence_length <span class="op">=</span> sequence_length</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Return the number of sequences in our dataset."""</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.data) <span class="op">-</span> <span class="va">self</span>.sequence_length</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">        Get a sequence and its corresponding target.</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters:</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">        idx (int): Index of the sequence to retrieve</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">        tuple: (sequence, target) pair</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        sequence <span class="op">=</span> <span class="va">self</span>.data[idx:idx <span class="op">+</span> <span class="va">self</span>.sequence_length]</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        target <span class="op">=</span> <span class="va">self</span>.data[idx <span class="op">+</span> <span class="va">self</span>.sequence_length]</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sequence.view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), target</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_data(filename, split_date<span class="op">=</span><span class="st">'2025-01-01'</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                sequence_length<span class="op">=</span><span class="dv">30</span>, batch_size<span class="op">=</span><span class="dv">32</span>):</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">    Prepare and split data into training and validation sets, creating DataLoader objects.</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">    filename (str): Path to the CSV file</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">    split_date (str): Date to split training and validation data</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">    sequence_length (int): Length of input sequences</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">    batch_size (int): Size of batches for training</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">    tuple: Train DataLoader, validation DataLoader, scaler, original training data,</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">           original validation data</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read the CSV file</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(filename)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Month'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Month'</span>])</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Split data</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    train_data <span class="op">=</span> df[df[<span class="st">'Month'</span>] <span class="op">&lt;</span> split_date]</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    val_data <span class="op">=</span> df[df[<span class="st">'Month'</span>] <span class="op">&gt;=</span> split_date]</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scale the data</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    train_scaled <span class="op">=</span> scaler.fit_transform(train_data[<span class="st">'#Passengers'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    val_scaled <span class="op">=</span> scaler.transform(val_data[<span class="st">'#Passengers'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create datasets</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    train_dataset <span class="op">=</span> TimeSeriesDataset(train_scaled, sequence_length)</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    val_dataset <span class="op">=</span> TimeSeriesDataset(val_scaled, sequence_length)</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create dataloaders</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    train_loader <span class="op">=</span> DataLoader(</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>        train_dataset,</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>        batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>        shuffle<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>        drop_last<span class="op">=</span><span class="va">False</span>  <span class="co"># Drop last incomplete batch</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    val_loader <span class="op">=</span> DataLoader(</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>        val_dataset,</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>        batch_size<span class="op">=</span><span class="bu">len</span>(val_scaled)<span class="op">-</span>sequence_length,</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>        shuffle<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>        drop_last<span class="op">=</span><span class="va">False</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> train_loader, val_loader, scaler, train_data, val_data, train_scaled, val_scaled</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prepare our data with the new functionality</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">1983</span>)</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>sequence_length <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">16</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>train_loader, val_loader, scaler, train_data, val_data, train_scaled, val_scaled <span class="op">=</span> prepare_data(</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> <span class="st">'/content/ruta_location.csv'</span>,</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>    split_date<span class="op">=</span><span class="st">'2025-04-01'</span>,</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>    sequence_length<span class="op">=</span>sequence_length,</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span>batch_size</span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch, (X,y) <span class="kw">in</span> <span class="bu">enumerate</span>(train_loader):</span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"El lote de inputs tiene dinmensiones </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"El lote de targets tiene dimensiones </span><span class="sc">{</span>y<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>  <span class="cf">break</span></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>El lote de inputs tiene dinmensiones torch.Size([<span class="dv">16</span>, <span class="dv">45</span>, <span class="dv">1</span>])</span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>El lote de targets tiene dimensiones torch.Size([<span class="dv">16</span>, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 <section id="diseño-de-modelo" class="level3" data-number="4.1.4">
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="diseño-de-modelo"><span class="header-section-number">4.1.4</span> Diseño de Modelo</h3>
-<p>Se optó por una arquitectura de Red Neuronal Recurrente (RNN) basada en LSTM (Long Short-Term Memory) debido a su probada eficacia en la captura de dependencias a largo plazo en series de tiempo. La arquitectura del modelo es la siguiente:</p>
+<p>Para modelar la demanda de transporte en el tiempo, se optó por una arquitectura basada en redes neuronales recurrentes del tipo LSTM (Long Short-Term Memory), ampliamente utilizadas para modelar dependencias temporales en series de tiempo debido a su capacidad para retener información a largo plazo y mitigar el problema del desvanecimiento del gradiente.</p>
+<section id="arquitectura-del-modelo" class="level4" data-number="4.1.4.1">
+<h4 data-number="4.1.4.1" class="anchored" data-anchor-id="arquitectura-del-modelo"><span class="header-section-number">4.1.4.1</span> Arquitectura del Modelo</h4>
+<p>El modelo se implementó mediante una clase personalizada passengersRNN utilizando PyTorch. Su estructura es la siguiente:</p>
+<p>Capa LSTM: * Entrada univariada (input_size=1): representa el número de pasajeros por día. * Dos capas ocultas (num_layers=2) que permiten capturar patrones más complejos. * Cada capa oculta tiene 32 unidades (hidden_size=32). * Se incorpora dropout (dropout=0.2) como mecanismo de regularización para evitar sobreajuste. *La salida de la LSTM es una secuencia de vectores ocultos, pero solo se usa la salida del último paso temporal.</p>
+<p>Capa fully-connected (lineal): Recibe el vector oculto final de la LSTM y lo transforma en un único valor escalar: la predicción del número de pasajeros para el siguiente día.</p>
 </section>
-<section id="evaluación-y-resultados" class="level3" data-number="4.1.5">
-<h3 data-number="4.1.5" class="anchored" data-anchor-id="evaluación-y-resultados"><span class="header-section-number">4.1.5</span> Evaluación y Resultados</h3>
-<p>Las métricas de evaluación utilizadas fueron el RMSE (Root Mean Squared Error) y el MAE (Mean Absolute Error). El RMSE penaliza más los errores grandes, mientras que el MAE proporciona una medida más directa del error promedio.</p>
+<section id="mecanismo-de-inferencia-forward" class="level4" data-number="4.1.4.2">
+<h4 data-number="4.1.4.2" class="anchored" data-anchor-id="mecanismo-de-inferencia-forward"><span class="header-section-number">4.1.4.2</span> Mecanismo de inferencia (forward)</h4>
+<p>Durante la inferencia:</p>
+<ul>
+<li>Se inicializan los estados ocultos (h0) y de celda (c0) en cero.</li>
+<li>Se pasa la secuencia de entrada por la LSTM.</li>
+<li>Se extrae el estado oculto del último paso temporal (out[:, -1, :]).</li>
+<li>Finalmente, se aplica la capa lineal para generar la predicción.</li>
+</ul>
 </section>
-<section id="gráficas-de-predicción-vs.-demanda-real" class="level3" data-number="4.1.6">
-<h3 data-number="4.1.6" class="anchored" data-anchor-id="gráficas-de-predicción-vs.-demanda-real"><span class="header-section-number">4.1.6</span> Gráficas de predicción vs.&nbsp;demanda real</h3>
-<p>[Imagen 5.1.1: Gráfica de Predicción vs.&nbsp;Demanda Real para la Ruta A] Descripción: Esta gráfica muestra la demanda real (línea azul) y la demanda predicha por el modelo (línea naranja) para la Ruta A durante el período de prueba. Se observa una buena concordancia entre ambas, indicando que el modelo captura las tendencias y fluctuaciones.</p>
-<p>[Imagen 5.1.2: Gráfica de Predicción vs.&nbsp;Demanda Real para la Ruta B] Descripción: Similar a la anterior, esta gráfica ilustra el rendimiento del modelo en la Ruta B, demostrando su capacidad para adaptarse a diferentes patrones de demanda.</p>
-<p>[Imagen 5.1.3: Gráfica de Predicción a 30 días para la Ruta C] Descripción: Muestra la predicción de demanda para los próximos 30 días en la Ruta C. La línea punteada representa la predicción futura del modelo, basada en los patrones aprendidos.</p>
+<section id="inicialización-del-modelo-y-modo-de-evaluación" class="level4" data-number="4.1.4.3">
+<h4 data-number="4.1.4.3" class="anchored" data-anchor-id="inicialización-del-modelo-y-modo-de-evaluación"><span class="header-section-number">4.1.4.3</span> Inicialización del modelo y modo de evaluación</h4>
+<p>El modelo se instancia con una semilla fija para garantizar la reproducibilidad. Posteriormente, se lleva a modo de evaluación (model.eval()), lo cual desactiva el dropout durante la inferencia:</p>
+<p>En la siguiente sección se describirá el proceso de entrenamiento del modelo, incluyendo la función de pérdida utilizada, el optimizador, número de épocas y criterios de evaluación (como MAE, RMSE o MAPE).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> passengersRNN(nn.Module):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_size<span class="op">=</span><span class="dv">1</span>, hidden_size<span class="op">=</span><span class="dv">32</span>, num_layers<span class="op">=</span><span class="dv">2</span>, dropout<span class="op">=</span><span class="fl">0.2</span>):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(passengersRNN, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.hidden_size <span class="op">=</span> hidden_size</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_layers <span class="op">=</span> num_layers</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lstm <span class="op">=</span> nn.LSTM(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            input_size<span class="op">=</span>input_size,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            hidden_size<span class="op">=</span>hidden_size,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            num_layers<span class="op">=</span>num_layers,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            batch_first<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            dropout<span class="op">=</span>dropout  <span class="co"># Add dropout for regularization</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fc <span class="op">=</span> nn.Linear(hidden_size, <span class="dv">1</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        batch_size <span class="op">=</span> x.size(<span class="dv">0</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        h0 <span class="op">=</span> torch.zeros(<span class="va">self</span>.num_layers, batch_size, <span class="va">self</span>.hidden_size).to(x.device)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        c0 <span class="op">=</span> torch.zeros(<span class="va">self</span>.num_layers, batch_size, <span class="va">self</span>.hidden_size).to(x.device)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        out, h <span class="op">=</span> <span class="va">self</span>.lstm(x, (h0, c0))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> <span class="va">self</span>.fc(out[:, <span class="op">-</span><span class="dv">1</span>, :])</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> out</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize our model</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">1983</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> passengersRNN().to(device)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">eval</span>() <span class="co"># Cancela el dropout cuando invocamos el modelo</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  y_pred <span class="op">=</span> model(X.to(device))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="análisis-de-la-estacionalidad-y-tendencias" class="level3" data-number="4.1.7">
-<h3 data-number="4.1.7" class="anchored" data-anchor-id="análisis-de-la-estacionalidad-y-tendencias"><span class="header-section-number">4.1.7</span> Análisis de la estacionalidad y tendencias</h3>
-<p>El análisis exploratorio y el rendimiento del modelo confirmaron la presencia de patrones estacionales y tendencias en la demanda de transporte. Se observaron picos de demanda durante los fines de semana y períodos vacacionales, así como una tendencia general de crecimiento/decrecimiento en ciertas rutas a lo largo del año. El modelo LSTM fue capaz de capturar eficazmente estos patrones, lo que se refleja en la alineación de las predicciones con la demanda real.</p>
-<p>[Imagen 5.1.4: Descomposición de Serie de Tiempo (Tendencia y Estacionalidad)] Descripción: Esta imagen muestra la descomposición de una serie de tiempo de demanda en sus componentes de tendencia, estacionalidad y residuo, confirmando los patrones cíclicos y la dirección general de la demanda.</p>
+</section>
+<section id="entrenamiento-del-modelo" class="level3" data-number="4.1.5">
+<h3 data-number="4.1.5" class="anchored" data-anchor-id="entrenamiento-del-modelo"><span class="header-section-number">4.1.5</span> Entrenamiento del modelo</h3>
+<p>Una vez definida la arquitectura, se procedió al entrenamiento del modelo LSTM utilizando un ciclo de aprendizaje supervisado. Para ello, se implementó una función personalizada train_model que gestiona tanto la fase de entrenamiento como la de validación en cada época, haciendo uso eficiente de los objetos DataLoader.</p>
+<section id="configuración-de-entrenamiento" class="level4" data-number="4.1.5.1">
+<h4 data-number="4.1.5.1" class="anchored" data-anchor-id="configuración-de-entrenamiento"><span class="header-section-number">4.1.5.1</span> Configuración de entrenamiento</h4>
+<ul>
+<li>Función de pérdida: Se empleó el error cuadrático medio (MSE), una métrica estándar para problemas de regresión, especialmente útil cuando se penalizan errores grandes de forma cuadrática.</li>
+<li>Optimizador: Se utilizó el algoritmo Adam, conocido por su eficiencia computacional y capacidad de adaptación del learning rate durante el entrenamiento.</li>
+<li>Tasa de aprendizaje: lr=0.001, ajustada para favorecer una convergencia estable.</li>
+<li>Épocas: El modelo fue entrenado por 150 iteraciones completas sobre el conjunto de entrenamiento.</li>
+</ul>
+</section>
+<section id="proceso-de-entrenamiento" class="level4" data-number="4.1.5.2">
+<h4 data-number="4.1.5.2" class="anchored" data-anchor-id="proceso-de-entrenamiento"><span class="header-section-number">4.1.5.2</span> Proceso de entrenamiento</h4>
+<p>En cada época del entrenamiento se ejecutan dos fases: * Fase de entrenamiento (model.train()): * El modelo se entrena por mini-lotes usando train_loader. * Se calcula la pérdida por lote. * Se hace backpropagation (loss.backward()), se actualizan los pesos (optimizer.step()), y se reinician los gradientes.</p>
+<ul>
+<li>Fase de validación (model.eval()):
+<ul>
+<li>El modelo se evalúa con el conjunto de validación completo, sin actualizar pesos y con dropout desactivado.</li>
+<li>Se calcula la pérdida de validación para monitorear la capacidad de generalización.</li>
+</ul></li>
+</ul>
+</section>
+<section id="monitoreo-del-rendimiento" class="level4" data-number="4.1.5.3">
+<h4 data-number="4.1.5.3" class="anchored" data-anchor-id="monitoreo-del-rendimiento"><span class="header-section-number">4.1.5.3</span> Monitoreo del rendimiento</h4>
+<p>Se almacenaron las pérdidas promedio por época para entrenamiento y validación. Esto permitió visualizar la evolución del aprendizaje y detectar posibles señales de sobreajuste o subajuste.</p>
+<p>La siguiente figura muestra la evolución de la pérdida (error cuadrático medio) durante las 150 épocas del entrenamiento para los conjuntos de entrenamiento y validación:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./modelo1_perdida.png" class="img-fluid figure-img"></p>
+<figcaption>evolución de la pérdida</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Convergencia rápida: En las primeras 20 épocas se observa una reducción abrupta en ambas curvas de pérdida, lo que indica que el modelo aprendió rápidamente patrones generales de la serie.</p></li>
+<li><p>Estabilización: A partir de la época 40, las curvas tienden a estabilizarse, señal de que el modelo ha llegado a una zona de mínimo estable de la función de pérdida.</p></li>
+<li><p>Generalización adecuada: La curva de validación se mantiene por debajo de la de entrenamiento, lo cual sugiere una buena capacidad de generalización y ausencia de sobreajuste. Esto se refuerza por la baja varianza entre épocas en la curva de validación.</p></li>
+</ul>
+</section>
+</section>
+<section id="evaluación-y-resultados" class="level3" data-number="4.1.6">
+<h3 data-number="4.1.6" class="anchored" data-anchor-id="evaluación-y-resultados"><span class="header-section-number">4.1.6</span> Evaluación y Resultados</h3>
+<section id="obteniendo-predicciones-del-modelo" class="level4" data-number="4.1.6.1">
+<h4 data-number="4.1.6.1" class="anchored" data-anchor-id="obteniendo-predicciones-del-modelo"><span class="header-section-number">4.1.6.1</span> Obteniendo predicciones del modelo</h4>
+<p>Una vez entrenado el modelo, se procedió a realizar predicciones sobre el horizonte de validación con el objetivo de evaluar su desempeño en un entorno no visto durante el entrenamiento.</p>
+<ol type="1">
+<li>Predicción paso a paso (modo autorregresivo) Se implementó una función predict_sequence que genera predicciones de manera autoregresiva, es decir, utilizando la propia salida del modelo como nueva entrada para el siguiente paso. Este enfoque permite proyectar la serie hacia el futuro, partiendo de la última secuencia disponible del conjunto de entrenamiento.</li>
+</ol>
+<ul>
+<li>Se toma la última ventana temporal de tamaño sequence_length.</li>
+<li>Se hacen predicciones iterativas para tantos pasos como se desee (en este caso, igual al tamaño del conjunto de validación).</li>
+<li>Tras cada predicción, se actualiza la secuencia incluyendo el valor recién estimado.</li>
+<li>Finalmente, las predicciones se reescalan a la escala original mediante la inversa de MinMaxScaler.</li>
+</ul>
+<ol start="2" type="1">
+<li>Cálculo de métricas de evaluación Para cuantificar la precisión del modelo, se calcularon las siguientes métricas sobre los datos de validación reales vs.&nbsp;predichos:</li>
+</ol>
+<ul>
+<li>MSE (Error Cuadrático Medio)</li>
+<li>RMSE (Raíz del Error Cuadrático Medio)</li>
+<li>MAE (Error Absoluto Medio)</li>
+<li>MAPE (Error Porcentual Absoluto Medio)</li>
+</ul>
+</section>
+<section id="gráficas-de-predicción-vs.-demanda-real" class="level4" data-number="4.1.6.2">
+<h4 data-number="4.1.6.2" class="anchored" data-anchor-id="gráficas-de-predicción-vs.-demanda-real"><span class="header-section-number">4.1.6.2</span> Gráficas de predicción vs.&nbsp;demanda real</h4>
+<p>Finalizado el entrenamiento, se generaron predicciones sobre el conjunto de validación utilizando el enfoque autorregresivo. Esto implicó tomar la última secuencia de entrenamiento y, en cada paso, utilizar la predicción previa como entrada para generar la siguiente.</p>
+<p>Predicciones paso a paso El modelo fue capaz de predecir la demanda diaria durante el periodo comprendido entre marzo y julio de 2025. El proceso incluyó la inversión del escalado aplicado previamente, con el fin de comparar las predicciones en la misma escala que los datos reales.</p>
+<p>Visualización: valores reales vs.&nbsp;predicciones La siguiente figura muestra la comparación entre los valores reales de número de pasajeros y las predicciones generadas por el modelo:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./modelo1_predicciones.png" class="img-fluid figure-img"></p>
+<figcaption>Predicciones del modelo</figcaption>
+</figure>
+</div>
+</section>
+<section id="análisis-de-la-estacionalidad-y-tendencias" class="level4" data-number="4.1.6.3">
+<h4 data-number="4.1.6.3" class="anchored" data-anchor-id="análisis-de-la-estacionalidad-y-tendencias"><span class="header-section-number">4.1.6.3</span> Análisis de la estacionalidad y tendencias</h4>
+<ul>
+<li><p>El modelo logra capturar correctamente la estacionalidad semanal, con ciclos que reflejan la disminución de pasajeros los fines de semana.</p></li>
+<li><p>Sin embargo, tiende a subestimar los picos de demanda durante los días laborales, manteniéndose en niveles más estables.</p></li>
+<li><p>Esto puede deberse a la naturaleza conservadora del modelo o a una limitación de información contextual (por ejemplo, feriados o eventos especiales no incluidos como variables exógenas).</p></li>
+</ul>
+</section>
+<section id="métricas-de-desempeño" class="level4" data-number="4.1.6.4">
+<h4 data-number="4.1.6.4" class="anchored" data-anchor-id="métricas-de-desempeño"><span class="header-section-number">4.1.6.4</span> Métricas de desempeño</h4>
+<p>A continuación se resumen las métricas de error sobre el conjunto de validación:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Métrica</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MSE</td>
+<td>726063597870.29</td>
+</tr>
+<tr class="even">
+<td>RMSE</td>
+<td>852093.66</td>
+</tr>
+<tr class="odd">
+<td>MAE</td>
+<td>589533.53</td>
+</tr>
+<tr class="even">
+<td>MAPE</td>
+<td>14.54</td>
+</tr>
+</tbody>
+</table>
+<p>Estas métricas indican un error medio absoluto cercano a los 589 mil pasajeros por día, lo cual representa un 14.5% de desviación media relativa respecto a los valores reales. Si bien el modelo generaliza bien la forma de la serie, aún presenta limitaciones para captar la magnitud exacta de los picos más altos, lo cual podría mejorarse con modelos más sofisticados o variables adicionales.</p>
+</section>
+<section id="conclusiones-del-módulo-1" class="level4" data-number="4.1.6.5">
+<h4 data-number="4.1.6.5" class="anchored" data-anchor-id="conclusiones-del-módulo-1"><span class="header-section-number">4.1.6.5</span> Conclusiones del Módulo 1</h4>
+<p>El presente módulo logró desarrollar un modelo de predicción basado en redes neuronales LSTM para anticipar la demanda diaria de pasajeros en el sistema de transporte público. A partir de una serie temporal univariada, se construyó un enfoque autorregresivo que permitió proyectar la demanda futura con un horizonte de 30 días.</p>
+<p>Los principales logros y hallazgos del módulo fueron:</p>
+<p>Se implementó un pipeline robusto de preprocesamiento, escalamiento, estructuración de secuencias y entrenamiento eficiente mediante DataLoader.</p>
+<p>El modelo logró capturar patrones de estacionalidad semanal y tendencia general, ajustándose de forma razonable a la estructura temporal de la serie.</p>
+<p>Las métricas de desempeño obtenidas —RMSE de 852.093, MAE de 589.533 y MAPE de 14,5%— evidencian un nivel de error aceptable para tareas de planificación operativa, aunque con margen de mejora.</p>
+<p>Se observó una tendencia del modelo a subestimar los valores máximos de demanda, lo cual sugiere que futuras versiones podrían beneficiarse del uso de modelos multivariados, incorporación de variables externas (eventos, clima, calendario), o arquitecturas más avanzadas (como Transformers o híbridos LSTM-CNN).</p>
+<p>En síntesis, este módulo demuestra el potencial de los modelos de aprendizaje profundo para apoyar la planificación estratégica de recursos en una empresa de transporte, al anticipar comportamientos de la demanda que permiten tomar decisiones informadas y oportunas.</p>
+</section>
 </section>
 </section>
 <section id="módulo-2-clasificación-de-conducción-distractiva" class="level2" data-number="4.2">
@@ -516,6 +970,7 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 </section>
 <section id="dataset-1" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="dataset-1"><span class="header-section-number">4.2.2</span> Dataset</h3>
+<p><img src="modelo2_dataset1.png" class="img-fluid" alt="modelo2_dataset1"> <img src="modelo2_dataset2.png" class="img-fluid" alt="modelo2_dataset2"></p>
 <p>El conjunto de datos de imágenes consiste en una colección de fotografías de conductores, categorizadas en diferentes clases de comportamiento. Las imágenes provienen de un dataset publico en kaggle llamado <a href="https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1">Multi-Class Driver Behavior Image Dataset</a>.</p>
 <p>Este dataset fue recopilado en Ashulia, Dhaka (Bangladesh) en octubre de 2024, y contiene imágenes reales capturadas dentro de automóviles particulares y autobuses públicos en condiciones normales de conducción. Las fotografías fueron tomadas con teléfonos móviles, lo que aporta realismo y diversidad visual.</p>
 <p>El objetivo del dataset es facilitar el desarrollo de sistemas de monitoreo en tiempo real que detecten comportamientos de conducción distraída, un problema crítico a nivel mundial.</p>
@@ -552,30 +1007,36 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <section id="diseño-de-modelo-1" class="level3" data-number="4.2.4">
 <h3 data-number="4.2.4" class="anchored" data-anchor-id="diseño-de-modelo-1"><span class="header-section-number">4.2.4</span> Diseño de Modelo</h3>
 <p>Se implementó una red neuronal convolucional (CNN) secuencial compuesta por varias capas Conv2D, MaxPooling2D, BatchNormalization, Dropout y Dense. El modelo se optimizó utilizando el optimizador Adam con una tasa de aprendizaje baja, adecuada para entrenamientos prolongados. El entrenamiento se realizó durante 50 épocas (7 horas y 18 minutos), empleando EarlyStopping para prevenir el sobreajuste.</p>
-<pre><code>model = Sequential([
-    Conv2D(32, (3,3), activation='relu', input_shape=img_size + (1,)),
-    BatchNormalization(),
-    MaxPooling2D(2,2),
-    Conv2D(64, (3,3), activation='relu'),
-    BatchNormalization(),
-    MaxPooling2D(2,2),
-    Conv2D(128, (3,3), activation='relu'),
-    BatchNormalization(),
-    MaxPooling2D(2,2),
-    Flatten(),
-    Dense(256, activation='relu'),
-    Dropout(0.5),
-    Dense(num_classes, activation='softmax')
-])</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential([</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>,<span class="dv">3</span>), activation<span class="op">=</span><span class="st">'relu'</span>, input_shape<span class="op">=</span>img_size <span class="op">+</span> (<span class="dv">1</span>,)),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    BatchNormalization(),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    MaxPooling2D(<span class="dv">2</span>,<span class="dv">2</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>,<span class="dv">3</span>), activation<span class="op">=</span><span class="st">'relu'</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    BatchNormalization(),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    MaxPooling2D(<span class="dv">2</span>,<span class="dv">2</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    Conv2D(<span class="dv">128</span>, (<span class="dv">3</span>,<span class="dv">3</span>), activation<span class="op">=</span><span class="st">'relu'</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    BatchNormalization(),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    MaxPooling2D(<span class="dv">2</span>,<span class="dv">2</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    Flatten(),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    Dense(<span class="dv">256</span>, activation<span class="op">=</span><span class="st">'relu'</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    Dropout(<span class="fl">0.5</span>),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    Dense(num_classes, activation<span class="op">=</span><span class="st">'softmax'</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="evaluación" class="level3" data-number="4.2.5">
 <h3 data-number="4.2.5" class="anchored" data-anchor-id="evaluación"><span class="header-section-number">4.2.5</span> Evaluación</h3>
-<p>Curvas de entrenamiento:</p>
-<ul>
-<li><p>Precisión en validación final: 0.84</p></li>
-<li><p>Pérdida en validación final: 0.48</p></li>
-<li><p>Matriz de confusión:</p></li>
-</ul>
+<section id="perdida-del-modelo" class="level4" data-number="4.2.5.1">
+<h4 data-number="4.2.5.1" class="anchored" data-anchor-id="perdida-del-modelo"><span class="header-section-number">4.2.5.1</span> Perdida del modelo</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="modelo2_perdida.png" class="img-fluid figure-img"></p>
+<figcaption>modelo2_perdida.png</figcaption>
+</figure>
+</div>
+<p>La gráfica muestra la evolución de la pérdida durante el entrenamiento del modelo. Se observa una disminución constante de la pérdida tanto en el conjunto de entrenamiento como en el de validación, lo que indica que el modelo está aprendiendo correctamente y no presenta signos de sobreajuste.</p>
+</section>
+<section id="matriz-de-confusión" class="level4" data-number="4.2.5.2">
+<h4 data-number="4.2.5.2" class="anchored" data-anchor-id="matriz-de-confusión"><span class="header-section-number">4.2.5.2</span> Matriz de Confusión</h4>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="matrixconfusion_modelo2.png" class="img-fluid figure-img" width="800"></p>
@@ -583,9 +1044,11 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 </figure>
 </div>
 <ul>
-<li><p>El mayor número de errores se presenta en la clase “other_activities”, debido a la similitud visual con otras clases (posición de cabeza, manos, detalles sutiles en el rostro).</p></li>
-<li><p>Reporte de clasificación:</p></li>
+<li>El mayor número de errores se presenta en la clase “other_activities”, debido a la similitud visual con otras clases (posición de cabeza, manos, detalles sutiles en el rostro).</li>
 </ul>
+</section>
+<section id="reporte-de-clasificación" class="level4" data-number="4.2.5.3">
+<h4 data-number="4.2.5.3" class="anchored" data-anchor-id="reporte-de-clasificación"><span class="header-section-number">4.2.5.3</span> Reporte de clasificación:</h4>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -642,6 +1105,7 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 </tbody>
 </table>
 </section>
+</section>
 <section id="resultados" class="level3" data-number="4.2.6">
 <h3 data-number="4.2.6" class="anchored" data-anchor-id="resultados"><span class="header-section-number">4.2.6</span> Resultados</h3>
 <ul>
@@ -684,53 +1148,53 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <li><p><strong>Carga de archivos CSV</strong>: Todos los archivos se leyeron con <code>pandas.read_csv</code> y se concatenaron en un único DataFrame.</p></li>
 <li><p><strong>Visualización inicial</strong>: Se observo información general, se buscaron valores nulos y se identificaron tipos de datos, adicionalmente se graficaron las distribuciones de variables numéricas y categóricas usando <code>matplotlib</code>.</p></li>
 </ol>
-<div id="b50be3aa" class="cell" data-execution_count="2">
+<div id="abf54e08" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. CARGA, VISUALIZACIÓN Y LIMPIEZA DEL DATASET</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>carpeta <span class="op">=</span> <span class="vs">r'</span><span class="dv">.</span><span class="vs">/recomendaciones'</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>archivos_csv <span class="op">=</span> glob.glob(os.path.join(carpeta, <span class="st">'*.csv'</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> archivos_csv:</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="ss">f'No se encontraron archivos CSV en la carpeta: </span><span class="sc">{</span>carpeta<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Se encontraron </span><span class="sc">{</span><span class="bu">len</span>(archivos_csv)<span class="sc">}</span><span class="ss"> archivos CSV.'</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar y concatenar los archivos CSV</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    dfs <span class="op">=</span> [pd.read_csv(archivo) <span class="cf">for</span> archivo <span class="kw">in</span> archivos_csv]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.concat(dfs, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f'Error al cargar los archivos CSV: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización de variables numéricas y categóricas (opcional)</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>]).columns</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>MOSTRAR_GRAFICOS<span class="op">=</span><span class="va">True</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> MOSTRAR_GRAFICOS:</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        df[col].hist(bins<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f'Distribución de </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(col, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'Frecuencia'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        plt.tight_layout()</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        df[col].value_counts().head(<span class="dv">10</span>).plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f'Frecuencia de </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(col, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'Frecuencia'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        plt.tight_layout()</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. CARGA, VISUALIZACIÓN Y LIMPIEZA DEL DATASET</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>carpeta <span class="op">=</span> <span class="vs">r'</span><span class="dv">.</span><span class="vs">/recomendaciones'</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>archivos_csv <span class="op">=</span> glob.glob(os.path.join(carpeta, <span class="st">'*.csv'</span>))</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> archivos_csv:</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="ss">f'No se encontraron archivos CSV en la carpeta: </span><span class="sc">{</span>carpeta<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Se encontraron </span><span class="sc">{</span><span class="bu">len</span>(archivos_csv)<span class="sc">}</span><span class="ss"> archivos CSV.'</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar y concatenar los archivos CSV</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    dfs <span class="op">=</span> [pd.read_csv(archivo) <span class="cf">for</span> archivo <span class="kw">in</span> archivos_csv]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.concat(dfs, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f'Error al cargar los archivos CSV: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización de variables numéricas y categóricas (opcional)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>]).columns</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>MOSTRAR_GRAFICOS<span class="op">=</span><span class="va">True</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> MOSTRAR_GRAFICOS:</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        df[col].hist(bins<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f'Distribución de </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(col, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'Frecuencia'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>        plt.tight_layout()</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        df[col].value_counts().head(<span class="dv">10</span>).plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f'Frecuencia de </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(col, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'Frecuencia'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>        plt.tight_layout()</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Se encontraron 4 archivos CSV.</code></pre>
@@ -738,126 +1202,126 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-4.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-4.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-5.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-5.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-6.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-6.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-7.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-7.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-8.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-8.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-9.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-9.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-10.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-10.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-11.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-11.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-12.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-12.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-13.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-13.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-14.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-14.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-15.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-15.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-16.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-16.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-17.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-17.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-18.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-18.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-19.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-4-output-19.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -869,18 +1333,18 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <li><p>Para columnas numéricas, los valores nulos se rellenaron con la mediana de cada columna.</p></li>
 <li><p>Para columnas categóricas, los valores nulos se rellenaron con la moda (valor más frecuente) o con ‘Desconocido’ si la moda no estaba disponible.</p></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpieza básica: rellenar NaN</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    n_null <span class="op">=</span> df[col].isnull().<span class="bu">sum</span>()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].fillna(df[col].median())</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    n_null <span class="op">=</span> df[col].isnull().<span class="bu">sum</span>()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].fillna(df[col].mode()[<span class="dv">0</span>] <span class="cf">if</span> <span class="kw">not</span> df[col].mode().empty <span class="cf">else</span> <span class="st">'Desconocido'</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización de variables numéricas (excluyendo IDs si existen)</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>cols_to_normalize <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> num_cols <span class="cf">if</span> <span class="kw">not</span> col.lower().endswith(<span class="st">'id'</span>)]</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>df[cols_to_normalize] <span class="op">=</span> scaler.fit_transform(df[cols_to_normalize])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpieza básica: rellenar NaN</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    n_null <span class="op">=</span> df[col].isnull().<span class="bu">sum</span>()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].fillna(df[col].median())</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    n_null <span class="op">=</span> df[col].isnull().<span class="bu">sum</span>()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].fillna(df[col].mode()[<span class="dv">0</span>] <span class="cf">if</span> <span class="kw">not</span> df[col].mode().empty <span class="cf">else</span> <span class="st">'Desconocido'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalización de variables numéricas (excluyendo IDs si existen)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>cols_to_normalize <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> num_cols <span class="cf">if</span> <span class="kw">not</span> col.lower().endswith(<span class="st">'id'</span>)]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>df[cols_to_normalize] <span class="op">=</span> scaler.fit_transform(df[cols_to_normalize])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li><p><strong>Normalización de variables numéricas</strong>: Se normalizaron las columnas numéricas (excepto aquellas cuyo nombre termina en ‘id’) usando MinMaxScaler de scikit-learn, escalando sus valores entre 0 y 1.</p></li>
 <li><p><strong>Simulación de datos adicionales</strong>: Para aumentar la diversidad y cantidad de datos, se generaron registros simulados de usuarios y destinos, basados en las distribuciones reales de los datos originales. Estos datos simulados se concatenaron al DataFrame original.</p></li>
@@ -894,17 +1358,17 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <li><p><strong>1. Matriz de Interacción Usuario-Destino</strong>: Se creó una matriz donde las filas son usuarios y las columnas son destinos, y el valor es el rating o experiencia (<code>ExperienceRating</code> o <code>Rating</code>) que el usuario dio al destino. Esto permite medir la similitud entre usuarios usando la función <code>cosine_similarity</code>.</p></li>
 <li><p><strong>Modelo Basado en Contenido</strong>: Se generó una columna <code>features</code> para cada destino, combinando y normalizando información relevante (nombre, tipo, estado, preferencias, época, popularidad, etc.). Luego, se vectorizó esta columna usando <code>CountVectorizer</code> y se calculó la similitud de coseno entre destinos, obteniendo una matriz de similitud de destinos.</p></li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'features'</span>] <span class="op">=</span> (</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Name'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Preferences'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'BestTimeToVisit'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Popularity'</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'Preferences'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Name'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'features'</span>] <span class="op">=</span> (</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Name'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Preferences'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'BestTimeToVisit'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Popularity'</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Type'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'Preferences'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">' '</span> <span class="op">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Name'</span>].<span class="bu">apply</span>(normaliza_texto) <span class="op">+</span> <span class="st">'_'</span> <span class="op">+</span> df[<span class="st">'State'</span>].<span class="bu">apply</span>(normaliza_texto)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li><strong>Funciones principales</strong>:</li>
 </ol>
@@ -961,6 +1425,12 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <figcaption>Ejemplo uso del modelo 3</figcaption>
 </figure>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="modelo3_web.png" class="img-fluid figure-img"></p>
+<figcaption>Resultado del modelo en la pagina web</figcaption>
+</figure>
+</div>
 </section>
 <section id="análisis-de-la-efectividad-de-las-recomendaciones" class="level3" data-number="4.3.7">
 <h3 data-number="4.3.7" class="anchored" data-anchor-id="análisis-de-la-efectividad-de-las-recomendaciones"><span class="header-section-number">4.3.7</span> Análisis de la efectividad de las recomendaciones:</h3>
@@ -977,6 +1447,7 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <section id="herramienta-web" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Herramienta Web</h1>
 <p>La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo_web.mp4"></video></div>
 <section id="descripción-de-la-interfaz" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="descripción-de-la-interfaz"><span class="header-section-number">5.1</span> Descripción de la interfaz</h2>
 <p>La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno.</p>
@@ -994,22 +1465,22 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <section id="módulo-de-predicción-de-demanda" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="módulo-de-predicción-de-demanda"><span class="header-section-number">5.2.1</span> Módulo de Predicción de Demanda</h3>
 <ul>
-<li><p>Descripción: Permite a los usuarios seleccionar una ruta específica y visualizar la predicción de demanda para los próximos 30 días. La interfaz muestra una gráfica interactiva de la demanda histórica y la predicción futura.</p></li>
-<li><p>Interfaz: [Imagen 6.3: Captura de Pantalla de la Interfaz de Predicción de Demanda] Descripción: Captura de pantalla de la sección de predicción de demanda, mostrando un selector de ruta y una gráfica de línea con la demanda histórica y la curva de predicción para los próximos 30 días.</p></li>
+<li>Descripción: Permite a los usuarios subir un archivo CSV con datos históricos para predecir la demanda futura de transporte y visualizar la predicción de demanda para los próximos 30 días. Tambien pueden escribir la cantidad de días a predecir y la logitud de la secuencia, es decir cuantos dias de datos se usan para predecir los dìas siguientes.</li>
+<li>Interfaz: <img src="form1.png" class="img-fluid" alt="Captura de Pantalla de la Interfaz de Predicción de Demanda"> Descripción: Captura de pantalla de la sección de predicción de demanda. Se puede ver el input para subir el archivo CSV, un campo para ingresar la cantidad de días a predecir y la longitud de la secuencia, y un botón para enviar los datos. Una vez procesado, se muestra una tabla con las predicciones.</li>
 </ul>
 </section>
 <section id="módulo-de-clasificación-de-conducción-distractiva" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="módulo-de-clasificación-de-conducción-distractiva"><span class="header-section-number">5.2.2</span> Módulo de Clasificación de Conducción Distractiva</h3>
 <ul>
-<li><p>Descripción: Permite a los usuarios (ej. personal de seguridad o supervisores) subir una imagen de un conductor. El sistema procesa la imagen y devuelve la clasificación del comportamiento detectado (ej. “Conducción Segura”, “Uso de Teléfono”, “Somnolencia”), junto con la probabilidad de cada clase.</p></li>
-<li><p>Interfaz: [Imagen 6.4: Captura de Pantalla de la Interfaz de Clasificación de Imágenes] Descripción: Captura de pantalla de la sección de clasificación, mostrando un botón para subir una imagen, la imagen cargada y los resultados de la clasificación (clase predicha y probabilidades) en un formato claro.</p></li>
+<li><p>Descripción: Permite a los usuarios subir una imagen de un conductor. El sistema procesa la imagen y devuelve la clasificación del comportamiento detectado, junto con la probabilidad de cada clase.</p></li>
+<li><p>Interfaz: <img src="form2.png" class="img-fluid" alt="Captura de Pantalla de la Interfaz de Clasificación de Imágenes"> Descripción: Captura de pantalla de la sección de clasificación, mostrando un botón para subir una imagen, la imagen cargada y los resultados de la clasificación (clase predicha y probabilidades) en un formato claro.</p></li>
 </ul>
 </section>
 <section id="módulo-de-recomendación-de-destinos-de-viaje" class="level3" data-number="5.2.3">
 <h3 data-number="5.2.3" class="anchored" data-anchor-id="módulo-de-recomendación-de-destinos-de-viaje"><span class="header-section-number">5.2.3</span> Módulo de Recomendación de Destinos de Viaje</h3>
 <ul>
 <li><p>Descripción: Permite ingresar un ID de usuario o seleccionar un usuario de una lista. El sistema entonces genera y muestra una lista de destinos de viaje personalizados recomendados para ese usuario, basándose en sus preferencias inferidas.</p></li>
-<li><p>Interfaz: [Imagen 6.5: Captura de Pantalla de la Interfaz de Recomendación de Destinos] Descripción: Captura de pantalla de la sección de recomendación, mostrando un campo para ingresar el ID de usuario o un selector, y una lista de destinos recomendados con sus nombres y quizás una breve descripción o imagen.</p></li>
+<li><p>Interfaz: <img src="form3.png" class="img-fluid" alt="Captura de Pantalla de la Interfaz de Recomendación de Destinos"> Descripción: Captura de pantalla de la sección de recomendación, mostrando un formulario con las preferencias del usuario para asi obtener recomendaciones personalizadas. Incluye campos para seleccionar tipo de destino, época del año y estado, así como un botón para enviar la solicitud. Los resultados se muestran en una lista.</p></li>
 </ul>
 </section>
 </section>
@@ -1029,9 +1500,9 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <h2 data-number="6.1" class="anchored" data-anchor-id="análisis-de-resultados"><span class="header-section-number">6.1</span> Análisis de resultados</h2>
 <p>Los tres módulos, aunque independientes en su desarrollo, convergen en un sistema sinérgico.</p>
 <ul>
-<li><p>El Módulo de Predicción de Demanda proporciona una base sólida para la planificación operativa, permitiendo a la empresa anticipar las necesidades de recursos con una antelación de 30 días. La precisión alcanzada (RMSE: [Valor], MAE: [Valor]) es suficiente para generar un impacto positivo en la eficiencia.</p></li>
-<li><p>El Módulo de Clasificación de Conducción Distractiva ofrece una herramienta vital para la seguridad. Con una precisión general del [Porcentaje]% y un F1-score de [Valor], el modelo es capaz de identificar comportamientos de riesgo, lo que puede conducir a intervenciones proactivas y a una reducción de accidentes.</p></li>
-<li><p>El Módulo de Recomendación de Destinos mejora la interacción con el usuario al ofrecer sugerencias personalizadas (Precision@5: [Valor], Recall@5: [Valor]). Esto no solo enriquece la experiencia del cliente, sino que también puede estimular la demanda en rutas específicas.</p></li>
+<li><p>El Módulo de Predicción de Demanda proporciona una base sólida para la planificación operativa, permitiendo a la empresa anticipar las necesidades de recursos con una antelación de 30 días. La precisión alcanzada (RMSE: 852093.66, MAE: 589533.53) es suficiente para generar un impacto positivo en la eficiencia.</p></li>
+<li><p>El Módulo de Clasificación de Conducción Distractiva ofrece una herramienta vital para la seguridad. Con una precisión general del 84% y un F1-score de 0.84, el modelo es capaz de identificar comportamientos de riesgo, lo que puede conducir a intervenciones proactivas y a una reducción de accidentes.</p></li>
+<li><p>El Módulo de Recomendación de Destinos, en promedio, logra recomendar el destino relevante en el 17% de los casos, por esta razon se implementó una función que hace preguntas al usuario para mejorar la recomendación. Aunque la precisión es baja, el enfoque híbrido y basado en contenido permite personalizar las sugerencias, lo que puede aumentar la satisfacción del usuario y la demanda de rutas específicas.</p></li>
 </ul>
 </section>
 <section id="comparación-con-trabajos-previos" class="level2" data-number="6.2">
@@ -1113,11 +1584,23 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 </section>
 <section id="bibliografía" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Bibliografía</h1>
+<p>Abadi, M., Agarwal, A., Barham, P., Brevdo, E., Chen, Z., Citro, C., Corrado, G. S., Davis, A., Dean, J., Devin, M., Ghemawat, S., Goodfellow, I., Harp, A., Irving, G., Isard, M., Jia, Y., Jozefowicz, R., Kaiser, L., Kudlur, M., … Zheng, X. (2016). TensorFlow: Large-scale machine learning on heterogeneous distributed systems. <em>arXiv preprint arXiv:1603.04467</em>. https://arxiv.org/abs/1603.04467</p>
+<p>Afridi, A. S. (2024). <em>Multi-Class Driver Behavior Image Dataset</em> [Conjunto de datos]. Kaggle. https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset</p>
+<p>Chollet, F., et al.&nbsp;(2015). <em>Keras</em>. https://keras.io</p>
+<p>Consorcio Regional de Transportes de Madrid (CRTM). (2025). <em>Viajeros transportados por modo de transporte</em> [Conjunto de datos]. Portal de Datos Abiertos del CRTM. https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about</p>
+<p>Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep Learning</em>. MIT Press.</p>
+<p>Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. <em>Neural Computation</em>, <em>9</em>(8), 1735–1780. https://doi.org/10.1162/neco.1997.9.8.1735</p>
+<p>LeCun, Y., Bengio, Y., &amp; Hinton, G. (2015). Deep learning. <em>Nature</em>, <em>521</em>(7553), 436–444. https://doi.org/10.1038/nature14539</p>
+<p>Mehra, A. (2024). <em>Travel Recommendation Dataset</em> [Conjunto de datos]. Kaggle. https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset</p>
+<p>Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., Killeen, T., Lin, Z., Gimelshein, N., Antiga, L., Desmaison, A., Köpf, A., Yang, E., DeVito, Z., Raison, M., Tejani, A., Chilamkurthy, S., Steiner, B., Fang, L., … Chintala, S. (2019). PyTorch: An imperative style, high-performance deep learning library. <em>Advances in Neural Information Processing Systems</em>, <em>32</em>.</p>
+<p>Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., &amp; Duchesnay, E. (2011). Scikit-learn: Machine Learning in Python. <em>Journal of Machine Learning Research</em>, <em>12</em>, 2825–2830.</p>
+<p>Ricci, F., Rokach, L., &amp; Shapira, B. (Eds.). (2011). <em>Recommender systems handbook</em>. Springer.</p>
 </section>
 <section id="anexos" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Anexos</h1>
 <ul>
 <li><p>Codigo fuente del proyecto: <a href="https://github.com/AlejandroFeriaGonzalez/RNAB">Repositorio en GitHub</a></p></li>
+<li><p>Dataset de Predicción de Demanda: <a href="https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about">https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about</a></p></li>
 <li><p>Multi-Class Driver Behavior Image Dataset: <a href="https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1">https://www.kaggle.com/datasets/arafatsahinafridi/multi-class-driver-behavior-image-dataset/data?authuser=1</a></p></li>
 <li><p>Travel Recommendation Dataset: <a href="https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1">https://www.kaggle.com/datasets/amanmehra23/travel-recommendation-dataset?authuser=1</a></p></li>
 </ul>
@@ -1526,6 +2009,7 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
   });
   </script>
 </div> <!-- /content -->
+<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
