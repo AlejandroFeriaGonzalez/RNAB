@@ -2,7 +2,7 @@ import pathlib
 
 from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -31,9 +31,9 @@ app.mount("/static", StaticFiles(directory=SRC / "static"), name="static")
 templates = Jinja2Templates(directory=SRC / "static/")
 
 
-@app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse(request, "index.html")
+@app.get("/")
+async def index():
+    return RedirectResponse(url="/demand-prediction")
 
 
 @app.get("/demand-prediction", response_class=HTMLResponse)
