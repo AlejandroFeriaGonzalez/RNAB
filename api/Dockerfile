@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./src /app/src
 
 # Exponer el puerto en el que la aplicación correrá
-EXPOSE 8080
+EXPOSE 8081
 
 # Comando para correr la aplicación
-CMD ["fastapi", "run", "src/main.py", "--port", "8080"]
+CMD ["fastapi", "run", "src/main.py", "--port", "8081"]

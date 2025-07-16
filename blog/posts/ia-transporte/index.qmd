@@ -22,6 +22,11 @@ execute:
 jupyter: python3
 ---
 
+Repositorio: [https://github.com/AlejandroFeriaGonzalez/RNAB](https://github.com/AlejandroFeriaGonzalez/RNAB)
+
+Nootebooks: [https://github.com/AlejandroFeriaGonzalez/RNAB/tree/main/notebooks](https://github.com/AlejandroFeriaGonzalez/RNAB/tree/main/notebooks)
+
+
 # Resumen Ejecutivo
 Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.
 

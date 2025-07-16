@@ -1,5 +1,5 @@
 ---
-title: "Aplicaciones de grandes modelos de lenguaje"
+title: "trabajo2"
 author:
   - name: "Alejandro Feria González, aferiag@unal.edu.co"
   - name: "Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co"
