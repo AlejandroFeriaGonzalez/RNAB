@@ -24,6 +24,8 @@
 
 
 
+<p>Repositorio: <a href="https://github.com/AlejandroFeriaGonzalez/RNAB">https://github.com/AlejandroFeriaGonzalez/RNAB</a></p>
+<p>Nootebooks: <a href="https://github.com/AlejandroFeriaGonzalez/RNAB/tree/main/notebooks">https://github.com/AlejandroFeriaGonzalez/RNAB/tree/main/notebooks</a></p>
 <section id="resumen-ejecutivo" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Resumen Ejecutivo</h1>
 <p>Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.</p>
@@ -1324,6 +1326,15 @@ font-style: inherit;">'softmax'</span>)</span>
 </tbody>
 </table>
 </section>
+<section id="interpretación-de-las-métricas" class="level4" data-number="4.2.5.4">
+<h4 data-number="4.2.5.4" class="anchored" data-anchor-id="interpretación-de-las-métricas"><span class="header-section-number">4.2.5.4</span> Interpretación de las métricas</h4>
+<p><strong>RMSE (Root Mean Square Error):</strong> 0.9165</p>
+<p>El RMSE mide la diferencia promedio entre los valores predichos y los valores reales, penalizando en mayor medida los errores más grandes. Un valor 0.9165 indica que en promedio, las predicciones se desvían aproximadamente 0.9165 unidades de los valores reales.</p>
+<p>El MAE mide la diferencia absoluta promedio entre las predicciones y los valores reales.</p>
+<p><strong>MAE (Mean Absolute Error):</strong> 0.3289</p>
+<p>El MAE mide la diferencia absoluta promedio entre las predicciones y los valores reales. Un valor 0.3289 indica que en promedio, las predicciones se desvían aproximadamente 0.3289 unidades de los valores reales.</p>
+<p>Si bien se presentan los valores de un modelo moderado, se debe tener en cuenta que se está analizando un modelo de clasificación para detectar distracciones. Por ende, el RMSE y el MAE no son las métricas más adecuadas para evaluar este problema. Es preferible utilizar precision, recall, f1-score y support, con los cuales se obtiene un rendimiento BUENO, dado un accuracy del 84%.</p>
+</section>
 </section>
 <section id="resultados" class="level3" data-number="4.2.6">
 <h3 data-number="4.2.6" class="anchored" data-anchor-id="resultados"><span class="header-section-number">4.2.6</span> Resultados</h3>
@@ -1999,21 +2010,58 @@ font-style: inherit;">apply</span>(normaliza_texto)</span>
 <li><strong>Promedio de resultados</strong>: Se promediaron los valores de precisión y recall para todos los usuarios, obteniendo así una medida global del desempeño del sistema.</li>
 </ol>
 <p>Esto permite evaluar si el sistema es capaz de recomendar correctamente destinos que el usuario realmente visitaría, usando solo información previa a ese destino.</p>
-<section id="resultados-numericos" class="level4" data-number="4.3.5.1">
-<h4 data-number="4.3.5.1" class="anchored" data-anchor-id="resultados-numericos"><span class="header-section-number">4.3.5.1</span> Resultados numericos:</h4>
+<section id="métricas-de-evaluación" class="level4" data-number="4.3.5.1">
+<h4 data-number="4.3.5.1" class="anchored" data-anchor-id="métricas-de-evaluación"><span class="header-section-number">4.3.5.1</span> Métricas de Evaluación:</h4>
 <ul>
-<li><strong>Precisión promedio</strong>: 0.06</li>
+<li>RMSE (Root Mean Square Error): 0.1889 Las predicciones de ratings se desvían en promedio 0.1889 unidades de los valores reales. Un RMSE tan bajo indica predicciones muy precisas</li>
+<li>MAE (Mean Absolute Error): 0.1265 En promedio, las predicciones se desvían 0.1265 unidades de los ratings reales. Un MAE tan bajo muestra alta precisión</li>
 </ul>
-<p>En promedio, solo el 6% de las recomendaciones contienen el destino que el usuario realmente visitó, dentro del top 3 sugerido.</p>
+</section>
+<section id="comparación-de-métricas" class="level4" data-number="4.3.5.2">
+<h4 data-number="4.3.5.2" class="anchored" data-anchor-id="comparación-de-métricas"><span class="header-section-number">4.3.5.2</span> Comparación de Métricas:</h4>
 <ul>
-<li><strong>Recall promedio</strong>: 0.17</li>
+<li>RMSE (0.1889) &gt; MAE (0.1265): Esto es normal y esperado</li>
+<li>Diferencia pequeña: Indica que hay pocos errores grandes (outliers)</li>
+<li>Consistencia: Ambas métricas muestran excelente rendimiento</li>
 </ul>
-<p>En promedio, el sistema logra recomendar el destino relevante en el 17% de los casos.</p>
+</section>
+<section id="métricas-de-clasificación" class="level4" data-number="4.3.5.3">
+<h4 data-number="4.3.5.3" class="anchored" data-anchor-id="métricas-de-clasificación"><span class="header-section-number">4.3.5.3</span> Métricas de Clasificación:</h4>
 <ul>
-<li><p><strong>Pocos destinos</strong>: Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.</p></li>
-<li><p><strong>Simulación</strong>: El sistema no está “adivinando” lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.</p></li>
+<li>Precisión promedio: 0.06 (6%) Solo el 6% de las recomendaciones contienen el destino relevante. Necesita mejora.</li>
+<li>Recall promedio: 0.17 (17%) El sistema logra recomendar el destino relevante en el 17% de los casos. Necesita mejora.</li>
+</ul>
+</section>
+<section id="análisis-general-del-sistema" class="level4" data-number="4.3.5.4">
+<h4 data-number="4.3.5.4" class="anchored" data-anchor-id="análisis-general-del-sistema"><span class="header-section-number">4.3.5.4</span> Análisis General del Sistema:</h4>
+<ul>
+<li><strong>Fortalezas:</strong>
+<ul>
+<li>Predicción de ratings: Excelente (RMSE: 0.1889, MAE: 0.1265)</li>
+<li>Sistema híbrido: Combina filtrado colaborativo y por contenido</li>
+<li>Validación cruzada: Implementada correctamente</li>
+<li>Feedback del usuario: Sistema de calificación integrado</li>
+</ul></li>
+<li><strong>Limitaciones:</strong>
+<ul>
+<li>Baja precisión de recomendaciones: 6% precision, 17% recall</li>
+<li>Pocos destinos: Dataset limitado en diversidad</li>
+<li>Datos simulados: Pueden no reflejar patrones reales</li>
+<li>Falta de personalización: Recomendaciones muy genéricas</li>
+</ul></li>
 </ul>
 <p><strong>Entendemos que es dificil recomendarle algo completamente bueno para el usuario con tan poca muestra y lo mejor es recomendarle dependiendo de lo que quiere el usuario y teniendo encuenta su historial por ende haremos una funcion, que haga las preguntas a las cosas mas importantes para recomendarle unos lugares al usuario, si de lo que elige no hay ninguna opcion buena recomienda el top 3 de lugares mejor rankeado que no haya visitado el usuario.</strong></p>
+</section>
+<section id="recomendaciónes-y-cosas-a-mejorar" class="level4" data-number="4.3.5.5">
+<h4 data-number="4.3.5.5" class="anchored" data-anchor-id="recomendaciónes-y-cosas-a-mejorar"><span class="header-section-number">4.3.5.5</span> Recomendaciónes y cosas a mejorar:</h4>
+<p>El modelo es adecuado para predecir calificaciones pero necesita mejoras significativas en la generación de recomendaciones. Considera:</p>
+<ul>
+<li><p>Expandir el dataset con más destinos</p></li>
+<li><p>Implementar algoritmos más sofisticados (SVD, NMF)</p></li>
+<li><p>Mejorar la personalización basada en preferencias específicas</p></li>
+<li><p>Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.</p></li>
+<li><p>El sistema no está “adivinando” lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.</p></li>
+</ul>
 </section>
 </section>
 <section id="ejemplos-de-recomendaciones-generadas" class="level3" data-number="4.3.6">
@@ -2046,7 +2094,7 @@ font-style: inherit;">apply</span>(normaliza_texto)</span>
 <section id="herramienta-web" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Herramienta Web</h1>
 <p>La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.</p>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo_web.mp4"></video></div>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo_web2.mp4"></video></div>
 <section id="descripción-de-la-interfaz" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="descripción-de-la-interfaz"><span class="header-section-number">5.1</span> Descripción de la interfaz</h2>
 <p>La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno.</p>
@@ -2213,6 +2261,429 @@ font-style: inherit;">apply</span>(normaliza_texto)</span>
   <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/ia-transporte/</guid>
   <pubDate>Mon, 30 Jun 2025 05:00:00 GMT</pubDate>
   <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/ia-transporte/image.png" medium="image" type="image/png" height="59" width="144"/>
+</item>
+<item>
+  <title>Aplicaciones de grandes modelos de lenguaje</title>
+  <dc:creator>Alejandro Feria González, aferiag@unal.edu.co</dc:creator>
+  <dc:creator>Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co</dc:creator>
+  <dc:creator>Abraham David Miguel Cardenas, amiguel@unal.edu.co</dc:creator>
+  <dc:creator>Santiago Molina Munoz, smolinam@unal.edu.co</dc:creator>
+  <link>https://alejandroferiagonzalez.github.io/RNAB/posts/llms/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="reporte-técnico-agente-creativo-de-generación-de-historias-con-llms" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Reporte Técnico: Agente Creativo de Generación de Historias con LLMs</h1>
+<section id="introducción" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">1.1</span> 1. Introducción</h2>
+<p>El presente trabajo describe el diseño, implementación y evaluación de un agente interactivo basado en grandes modelos de lenguaje (LLMs) para la generación creativa de historias cortas. El objetivo principal es explorar el potencial de los LLMs en tareas creativas, específicamente en la escritura colaborativa de relatos, permitiendo a los usuarios especificar parámetros narrativos y recibir historias personalizadas y coherentes.</p>
+</section>
+<section id="objetivos-de-aprendizaje" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="objetivos-de-aprendizaje"><span class="header-section-number">1.2</span> 2. Objetivos de Aprendizaje</h2>
+<ul>
+<li>Comprender los principios del diseño de agentes basados en LLM.</li>
+<li>Aprender a crear prompts efectivos para tareas creativas.</li>
+<li>Implementar procesamiento y validación robusta de entradas del usuario.</li>
+<li>Gestionar interacciones con APIs y manejo de errores.</li>
+<li>Explorar el potencial creativo y limitaciones de los LLMs.</li>
+<li>Aplicar principios de ingeniería de software en aplicaciones de IA.</li>
+</ul>
+</section>
+<section id="descripción-general-del-proyecto" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="descripción-general-del-proyecto"><span class="header-section-number">1.3</span> 3. Descripción General del Proyecto</h2>
+<p>El agente desarrollado permite a los usuarios generar historias de distintos géneros, integrando elementos como personajes, escenarios, tono, conflicto y longitud. La aplicación ofrece una interfaz web intuitiva, validación de entradas, manejo de memoria conversacional y opciones para regenerar historias o limpiar el contexto.</p>
+</section>
+<section id="arquitectura-y-componentes" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="arquitectura-y-componentes"><span class="header-section-number">1.4</span> 4. Arquitectura y Componentes</h2>
+<section id="procesamiento-de-entradas" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="procesamiento-de-entradas"><span class="header-section-number">1.4.1</span> 4.1. Procesamiento de Entradas</h3>
+<p>El módulo <code>entrada_processor.py</code> valida y transforma las entradas del usuario, aceptando tanto formularios estructurados como descripciones libres o mixtas. Se asegura que los datos sean suficientes y relevantes para la generación de historias, proporcionando advertencias o errores útiles en caso de información incompleta.</p>
+<ul>
+<li><strong>Validación estructurada:</strong> Verifica la presencia de género, tono, personajes, escenario, conflicto y extensión.</li>
+<li><strong>Validación libre:</strong> Exige un mínimo de 20 caracteres y la presencia de palabras clave narrativas.</li>
+<li><strong>Mensajes de advertencia:</strong> Sugiere al usuario mejorar la entrada si faltan elementos importantes.</li>
+</ul>
+</section>
+<section id="motor-de-generación-de-historias" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="motor-de-generación-de-historias"><span class="header-section-number">1.4.2</span> 4.2. Motor de Generación de Historias</h3>
+<p>El núcleo del agente es el módulo <code>history_ai.py</code>, que utiliza LangChain y el modelo Gemini de Google para generar historias. Se implementa una memoria conversacional para mantener el contexto y se emplea un prompt cuidadosamente diseñado que guía al modelo en la estructura, género, tono y coherencia narrativa.</p>
+<ul>
+<li><strong>Prompting estructurado:</strong> El prompt instruye explícitamente sobre la estructura (inicio, nudo, desenlace), el respeto a los géneros y la consistencia de personajes.</li>
+<li><strong>Control de longitud:</strong> Se especifica la extensión deseada en el prompt.</li>
+<li><strong>Formato de salida:</strong> El modelo responde en formato JSON, facilitando el procesamiento posterior.</li>
+</ul>
+</section>
+<section id="interfaz-de-usuario" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="interfaz-de-usuario"><span class="header-section-number">1.4.3</span> 4.3. Interfaz de Usuario</h3>
+<p>La interfaz web, construida con FastAPI, Bootstrap y JavaScript, permite:</p>
+<ul>
+<li>Seleccionar entre formulario estructurado y descripción libre.</li>
+<li>Especificar todos los parámetros narrativos requeridos.</li>
+<li>Visualizar historias generadas, copiar el texto o solicitar una nueva versión.</li>
+<li>Limpiar la memoria del modelo para evitar contaminación de contexto.</li>
+</ul>
+</section>
+<section id="manejo-de-estado-y-errores" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="manejo-de-estado-y-errores"><span class="header-section-number">1.4.4</span> 4.4. Manejo de Estado y Errores</h3>
+<ul>
+<li><strong>Gestión de memoria:</strong> El usuario puede limpiar el contexto conversacional para obtener historias independientes.</li>
+<li><strong>Manejo de errores:</strong> Se gestionan errores de validación, fallos de API y respuestas inesperadas, mostrando mensajes claros al usuario.</li>
+<li><strong>Extensibilidad:</strong> El diseño modular permite añadir nuevos géneros o parámetros fácilmente.</li>
+</ul>
+</section>
+</section>
+<section id="ingeniería-de-prompts" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="ingeniería-de-prompts"><span class="header-section-number">1.5</span> 5. Ingeniería de Prompts</h2>
+<p>La ingeniería de prompts fue iterativa y fundamental para lograr historias coherentes y personalizadas. Se consideraron los siguientes aspectos:</p>
+<ul>
+<li><strong>Instrucciones específicas por género:</strong> El prompt adapta la estructura y elementos narrativos según el género seleccionado.</li>
+<li><strong>Consistencia de personajes:</strong> Se recuerda al modelo las características y roles de los personajes, evitando contradicciones.</li>
+<li><strong>Orientación estructural:</strong> Se guía al modelo para que la historia tenga introducción, desarrollo y desenlace.</li>
+<li><strong>Control de longitud:</strong> Se solicita explícitamente la extensión deseada.</li>
+<li><strong>Formato de salida:</strong> Se exige respuesta en JSON para facilitar el procesamiento y visualización.</li>
+</ul>
+</section>
+<section id="desafíos-y-soluciones" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="desafíos-y-soluciones"><span class="header-section-number">1.6</span> 6. Desafíos y Soluciones</h2>
+<ul>
+<li><strong>Ambigüedad en entradas libres:</strong> Se implementó validación de palabras clave y longitud mínima para asegurar relevancia narrativa.</li>
+<li><strong>Control de longitud:</strong> Aunque el prompt especifica la extensión, los LLMs pueden desviarse. Se ajustó el prompt y se monitoreó la salida, sugiriendo al usuario modificar la entrada si es necesario.</li>
+<li><strong>Consistencia de personajes:</strong> El prompt enfatiza la importancia de mantener rasgos y roles, y se refuerza en la validación de entrada.</li>
+<li><strong>Manejo de errores de API:</strong> Se implementó manejo robusto de excepciones y mensajes claros para el usuario.</li>
+<li><strong>Filtrado de contenido:</strong> Aunque no se implementó un filtro avanzado, el prompt desalienta la generación de contenido inapropiado.</li>
+</ul>
+</section>
+<section id="reflexión-sobre-llms-en-tareas-creativas" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="reflexión-sobre-llms-en-tareas-creativas"><span class="header-section-number">1.7</span> 7. Reflexión sobre LLMs en Tareas Creativas</h2>
+<section id="determinismo-vs.-creatividad" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="determinismo-vs.-creatividad"><span class="header-section-number">1.7.1</span> 7.1. Determinismo vs.&nbsp;Creatividad</h3>
+<p>La naturaleza probabilística de los LLMs implica que, aunque el código es determinista, las salidas pueden variar. Para equilibrar creatividad y control, se emplean prompts detallados y memoria conversacional, permitiendo cierta variabilidad pero dentro de límites definidos por el usuario.</p>
+</section>
+<section id="ingeniería-de-prompts-para-creatividad" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="ingeniería-de-prompts-para-creatividad"><span class="header-section-number">1.7.2</span> 7.2. Ingeniería de Prompts para Creatividad</h3>
+<p>A diferencia de tareas factuales, la generación creativa requiere prompts más abiertos pero con restricciones claras sobre estructura y tono. Se observó que instrucciones demasiado vagas resultan en historias genéricas, mientras que prompts muy restrictivos limitan la creatividad.</p>
+</section>
+<section id="sesgos-y-consideraciones-éticas" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="sesgos-y-consideraciones-éticas"><span class="header-section-number">1.7.3</span> 7.3. Sesgos y Consideraciones Éticas</h3>
+<p>Los LLMs pueden reflejar sesgos culturales presentes en sus datos de entrenamiento. Para mitigar esto, se recomienda revisar las historias generadas y, en aplicaciones reales, implementar filtros adicionales.</p>
+</section>
+<section id="rol-del-usuario" class="level3" data-number="1.7.4">
+<h3 data-number="1.7.4" class="anchored" data-anchor-id="rol-del-usuario"><span class="header-section-number">1.7.4</span> 7.4. Rol del Usuario</h3>
+<p>El usuario actúa como co-creador, guiando la dirección de la historia y ajustando parámetros según sus preferencias. Esto difiere de la creación puramente humana o automática, fomentando una colaboración hombre-máquina.</p>
+</section>
+</section>
+<section id="ejemplos-de-historias-generadas" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="ejemplos-de-historias-generadas"><span class="header-section-number">1.8</span> 8. Ejemplos de Historias Generadas</h2>
+<p>A continuación, se presentan ejemplos de historias generadas por el agente en distintos géneros y configuraciones:</p>
+<section id="ejemplo-1-fantasía-tono-humorístico-personajes-definidos" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="ejemplo-1-fantasía-tono-humorístico-personajes-definidos"><span class="header-section-number">1.8.1</span> Ejemplo 1: Fantasía, tono humorístico, personajes definidos</h3>
+<blockquote class="blockquote">
+<p><strong>Título:</strong> El dragón vegetariano<br>
+<strong>Historia:</strong> En el reino de Eldoria, el dragón Rufus era famoso no por su ferocidad, sino por su amor a las zanahorias…<br>
+<em>(Historia completa de ~350 palabras)</em></p>
+</blockquote>
+</section>
+<section id="ejemplo-2-misterio-tono-oscuro-conflicto-central" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="ejemplo-2-misterio-tono-oscuro-conflicto-central"><span class="header-section-number">1.8.2</span> Ejemplo 2: Misterio, tono oscuro, conflicto central</h3>
+<blockquote class="blockquote">
+<p><strong>Título:</strong> La sombra en la biblioteca<br>
+<strong>Historia:</strong> La detective Clara llegó a la antigua biblioteca tras recibir una carta anónima…<br>
+<em>(Historia completa de ~400 palabras)</em></p>
+</blockquote>
+</section>
+<section id="ejemplo-3-romance-escenario-futurista" class="level3" data-number="1.8.3">
+<h3 data-number="1.8.3" class="anchored" data-anchor-id="ejemplo-3-romance-escenario-futurista"><span class="header-section-number">1.8.3</span> Ejemplo 3: Romance, escenario futurista</h3>
+<blockquote class="blockquote">
+<p><strong>Título:</strong> Amor entre circuitos<br>
+<strong>Historia:</strong> En el año 2145, los androides y humanos convivían en armonía, pero el amor entre Eva y el ingeniero Marco desafió todas las normas…<br>
+<em>(Historia completa de ~500 palabras)</em></p>
+</blockquote>
+</section>
+<section id="ejemplo-4-terror-conflicto-sobrenatural" class="level3" data-number="1.8.4">
+<h3 data-number="1.8.4" class="anchored" data-anchor-id="ejemplo-4-terror-conflicto-sobrenatural"><span class="header-section-number">1.8.4</span> Ejemplo 4: Terror, conflicto sobrenatural</h3>
+<blockquote class="blockquote">
+<p><strong>Título:</strong> El susurro del bosque<br>
+<strong>Historia:</strong> Nadie se atrevía a cruzar el bosque de noche, pero Lucas necesitaba respuestas…<br>
+<em>(Historia completa de ~600 palabras)</em></p>
+</blockquote>
+</section>
+<section id="ejemplo-5-comedia-aventura-personajes-excéntricos" class="level3" data-number="1.8.5">
+<h3 data-number="1.8.5" class="anchored" data-anchor-id="ejemplo-5-comedia-aventura-personajes-excéntricos"><span class="header-section-number">1.8.5</span> Ejemplo 5: Comedia, aventura, personajes excéntricos</h3>
+<blockquote class="blockquote">
+<p><strong>Título:</strong> Los piratas del café descafeinado<br>
+<strong>Historia:</strong> El capitán Barbaespuma y su tripulación buscaban el tesoro más raro del Caribe: el café descafeinado perfecto…<br>
+<em>(Historia completa de ~350 palabras)</em></p>
+</blockquote>
+</section>
+</section>
+<section id="conclusiones" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="conclusiones"><span class="header-section-number">1.9</span> 9. Conclusiones</h2>
+<p>El desarrollo de un agente creativo basado en LLMs demuestra el potencial de estas tecnologías para tareas narrativas, permitiendo la colaboración humano-máquina en la creación de historias personalizadas. La ingeniería de prompts y la validación de entradas son claves para obtener resultados coherentes y satisfactorios. Sin embargo, persisten desafíos en el control de longitud, consistencia y sesgos, lo que sugiere la necesidad de investigación y desarrollo continuo en este campo.</p>
+</section>
+<section id="referencias" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="referencias"><span class="header-section-number">1.10</span> 10. Referencias</h2>
+<ul>
+<li>Documentación de LangChain y Gemini</li>
+<li>Artículos sobre ingeniería de prompts y generación creativa con LLMs</li>
+<li>Buenas prácticas en validación de entradas y diseño de interfaces para IA</li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Redes Neuronales</category>
+  <category>Algoritmos bioinspirados</category>
+  <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/llms/</guid>
+  <pubDate>Mon, 30 Jun 2025 05:00:00 GMT</pubDate>
+  <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/llms/image.png" medium="image" type="image/png"/>
+</item>
+<item>
+  <title>Aplicaciones de grandes modelos de lenguaje</title>
+  <dc:creator>Alejandro Feria González, aferiag@unal.edu.co</dc:creator>
+  <dc:creator>Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co</dc:creator>
+  <dc:creator>Abraham David Miguel Cardenas, amiguel@unal.edu.co</dc:creator>
+  <dc:creator>Santiago Molina Munoz, smolinam@unal.edu.co</dc:creator>
+  <link>https://alejandroferiagonzalez.github.io/RNAB/posts/trabajo2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 1. Introducción</h1>
+<p>El acceso al crédito es un pilar fundamental en la inclusión financiera y el crecimiento económico de las sociedades modernas. Sin embargo, otorgar crédito implica inherentemente un riesgo para las instituciones financieras: la posibilidad de que un prestatario no cumpla con sus obligaciones. En este contexto, la capacidad para predecir el incumplimiento de pagos se convierte en un componente esencial de una gestión crediticia efectiva.</p>
+<p>El presente trabajo aborda el desarrollo de un modelo de predicción de la probabilidad de incumplimiento en créditos individuales utilizando redes neuronales artificiales aplicadas a datos tabulares. Se emplea como caso de estudio el conjunto de datos denominado Credit Risk Dataset, disponible en la plataforma Kaggle. Este dataset incluye una amplia variedad de características sociodemográficas, financieras y crediticias que permiten modelar el comportamiento de pago de los clientes.</p>
+<p>Más allá del modelo predictivo, el trabajo propone una representación en forma de scorecard —una herramienta ampliamente utilizada en la industria financiera para comunicar riesgos de manera simple y comprensible—, así como una aplicación web interactiva que permite a los usuarios explorar su nivel de riesgo frente al resto de la población analizada. Esta integración entre inteligencia artificial, visualización y accesibilidad promueve una comprensión activa del riesgo crediticio tanto para entidades como para individuos.</p>
+</section>
+<section id="evaluación-y-gestión-del-riesgo-de-crédito" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 2. Evaluación y Gestión del Riesgo de Crédito</h1>
+<p>La evaluación del riesgo de crédito busca estimar la probabilidad de que un solicitante de crédito incumpla sus obligaciones contractuales, lo cual tiene implicaciones directas en la rentabilidad, sostenibilidad y solvencia de las instituciones financieras. Tradicionalmente, esta evaluación se ha basado en análisis estadísticos y expertos humanos, pero los avances recientes en ciencia de datos permiten la implementación de modelos más complejos y adaptativos, como las redes neuronales.</p>
+<p>La gestión del riesgo crediticio abarca no solo la predicción del incumplimiento, sino también su monitoreo continuo, la segmentación de clientes, la definición de políticas de originación, y el cálculo de provisiones y capital regulatorio. En este sentido, los modelos predictivos contribuyen a:</p>
+<ul>
+<li>Reducir la morosidad mediante decisiones informadas de otorgamiento.</li>
+<li>Asignar precios al riesgo de forma diferenciada.</li>
+<li>Optimizar el portafolio de cartera balanceando riesgo y retorno.</li>
+</ul>
+<p>En este trabajo se sigue una lógica propia del scoring de crédito, enfocada en estimar la probabilidad de ser “malo” (default), una perspectiva crítica para prevenir pérdidas esperadas. La transformación de la variable loan_status en una variable binaria facilita este enfoque, permitiendo excluir casos inciertos y concentrar el análisis en observaciones con historial conocido.</p>
+<p>La metodología propuesta tiene un enfoque práctico, que puede ser fácilmente adaptado por cooperativas, fondos de empleados y fintechs interesadas en mejorar sus esquemas de evaluación crediticia mediante herramientas basadas en aprendizaje automático.</p>
+</section>
+<section id="delimitación-del-problema-y-metodología" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 3. Delimitación del Problema y Metodología</h1>
+<section id="delimitación-del-problema" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="delimitación-del-problema"><span class="header-section-number">3.1</span> Delimitación del Problema</h2>
+<p>El presente trabajo se enfoca en la predicción del riesgo de incumplimiento crediticio individual a partir de información sociodemográfica, financiera y crediticia contenida en el Credit Risk Dataset. Se define como problema principal la estimación de la probabilidad de que un cliente sea “malo”, es decir, que no pague su crédito de manera completa o que presente morosidades graves.</p>
+<p>Para ello, se construye una variable objetivo binaria en la que:</p>
+<ul>
+<li>1 representa un cliente que incumple (por ejemplo, estados como Charged Off, Default, o Late 31-120 days),</li>
+<li>0 representa un cliente que cumple (por ejemplo, Fully Paid o equivalentes),</li>
+<li>Casos con estados como Current, Issued, In Grace Period, o con información ambigua son excluidos del entrenamiento.</li>
+</ul>
+<p>La tarea se delimita como un problema de clasificación supervisada binaria, donde el objetivo es modelar la probabilidad condicional de ser un mal pagador dadas sus características observadas. No se aborda en este trabajo la estimación de pérdida esperada ni la severidad del incumplimiento, sino únicamente su ocurrencia.</p>
+<p>Además, el trabajo se centra en el desarrollo y análisis de modelos basados en redes neuronales artificiales aplicadas a datos tabulares. Si bien se incluye un modelo de referencia más simple (como regresión logística), el foco principal es la exploración y optimización de arquitecturas de redes para mejorar el poder predictivo.</p>
+</section>
+<section id="metodología" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="metodología"><span class="header-section-number">3.2</span> Metodología</h2>
+<p>La metodología del trabajo consta de las siguientes etapas:</p>
+<ol type="1">
+<li>Preparación del conjunto de datos</li>
+</ol>
+<ul>
+<li>Carga del dataset y exploración preliminar.</li>
+<li>Transformación de la variable loan_status a formato binario.</li>
+<li>Tratamiento de valores faltantes y codificación de variables categóricas.</li>
+<li>Normalización de variables numéricas según requerimientos de la red neuronal.</li>
+</ul>
+<ol start="2" type="1">
+<li>Análisis exploratorio</li>
+</ol>
+<ul>
+<li>Descripción estadística de variables clave.</li>
+<li>Visualización de relaciones entre variables y la clase objetivo.</li>
+<li>Generación de hipótesis iniciales sobre factores de riesgo.</li>
+</ul>
+<ol start="3" type="1">
+<li>Construcción y validación de modelos</li>
+</ol>
+<ul>
+<li>Implementación de un modelo de referencia (regresión logística o árbol).</li>
+<li>Diseño y entrenamiento de una red neuronal feedforward (MLP).</li>
+<li>Optimización de hiperparámetros (número de capas, neuronas, función de activación, regularización, tasa de aprendizaje).</li>
+<li>Evaluación del desempeño mediante métricas como AUC, precisión, recall y matriz de confusión sobre conjuntos de validación y prueba.</li>
+</ul>
+<ol start="4" type="1">
+<li>Interpretabilidad y scorecard</li>
+</ol>
+<ul>
+<li>Aproximación de la red neuronal mediante métodos interpretables.</li>
+<li>Conversión de salidas en una escala de score (por ejemplo, 300–850).</li>
+<li>Visualización del score en comparación con la población general.</li>
+</ul>
+<ol start="5" type="1">
+<li>Despliegue web</li>
+</ol>
+<ul>
+<li>Desarrollo de una aplicación interactiva que permite ingresar características individuales y visualizar el score.</li>
+<li>Inclusión de visualizaciones comparativas y mensajes interpretativos.</li>
+<li>Enlace a reporte técnico y video promocional.</li>
+</ul>
+<ol start="6" type="1">
+<li>Evaluación y documentación</li>
+</ol>
+<ul>
+<li>Análisis de resultados y aprendizajes clave.</li>
+<li>Discusión sobre aplicabilidad práctica del modelo.</li>
+<li>Redacción del reporte técnico con normas APA y presentación audiovisual.</li>
+</ul>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 2. Ver número de filas y columnas</span></span>
+<span id="cb1-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Filas: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, Columnas: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 3. Ver distribución de la variable objetivo</span></span>
+<span id="cb1-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Frecuencia de loan_status:"</span>)</span>
+<span id="cb1-9"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_status'</span>].value_counts(dropna<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>))</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 4. Proporción de valores nulos por variable</span></span>
+<span id="cb1-12">nulos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.isna().mean().sort_values(ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb1-13"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Top 20 columnas con más nulos:"</span>)</span>
+<span id="cb1-14"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(nulos.head(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>))</span>
+<span id="cb1-15"></span>
+<span id="cb1-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 5. Filtrado de columnas útiles (menos de 30% nulos)</span></span>
+<span id="cb1-17">columnas_utiles <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nulos[nulos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>].index.tolist()</span>
+<span id="cb1-18">df_util <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[columnas_utiles]</span>
+<span id="cb1-19"></span>
+<span id="cb1-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 6. Mostrar tipos de variables (numéricas vs categóricas)</span></span>
+<span id="cb1-21">tipos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_util.dtypes.value_counts()</span>
+<span id="cb1-22"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Tipos de variables:"</span>)</span>
+<span id="cb1-23"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tipos)</span>
+<span id="cb1-24"></span>
+<span id="cb1-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 7. Mostrar una muestra del dataset reducido</span></span>
+<span id="cb1-26">df_util.sample(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, random_state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_status'</span>].unique()</span></code></pre></div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Redes Neuronales</category>
+  <category>Algoritmos bioinspirados</category>
+  <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/trabajo2/</guid>
+  <pubDate>Mon, 30 Jun 2025 05:00:00 GMT</pubDate>
+  <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/trabajo2/image.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Bienvenidos</title>

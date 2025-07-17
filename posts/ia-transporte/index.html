@@ -367,6 +367,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#anexos" id="toc-anexos"><span class="header-section-number">10</span> Anexos</a></li>
   </ul>
 </nav>
+<p>Repositorio: <a href="https://github.com/AlejandroFeriaGonzalez/RNAB">https://github.com/AlejandroFeriaGonzalez/RNAB</a></p>
+<p>Nootebooks: <a href="https://github.com/AlejandroFeriaGonzalez/RNAB/tree/main/notebooks">https://github.com/AlejandroFeriaGonzalez/RNAB/tree/main/notebooks</a></p>
 <section id="resumen-ejecutivo" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Resumen Ejecutivo</h1>
 <p>Este reporte detalla el desarrollo de un sistema inteligente basado en aprendizaje profundo, diseñado para abordar tres desafíos críticos en una empresa de transporte: la optimización de recursos mediante la predicción de demanda, la mejora de la seguridad vial a través de la clasificación de comportamientos distractivos en conductores, y la personalización de la experiencia del usuario con un sistema de recomendación de destinos.</p>
@@ -1105,6 +1107,15 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 </tbody>
 </table>
 </section>
+<section id="interpretación-de-las-métricas" class="level4" data-number="4.2.5.4">
+<h4 data-number="4.2.5.4" class="anchored" data-anchor-id="interpretación-de-las-métricas"><span class="header-section-number">4.2.5.4</span> Interpretación de las métricas</h4>
+<p><strong>RMSE (Root Mean Square Error):</strong> 0.9165</p>
+<p>El RMSE mide la diferencia promedio entre los valores predichos y los valores reales, penalizando en mayor medida los errores más grandes. Un valor 0.9165 indica que en promedio, las predicciones se desvían aproximadamente 0.9165 unidades de los valores reales.</p>
+<p>El MAE mide la diferencia absoluta promedio entre las predicciones y los valores reales.</p>
+<p><strong>MAE (Mean Absolute Error):</strong> 0.3289</p>
+<p>El MAE mide la diferencia absoluta promedio entre las predicciones y los valores reales. Un valor 0.3289 indica que en promedio, las predicciones se desvían aproximadamente 0.3289 unidades de los valores reales.</p>
+<p>Si bien se presentan los valores de un modelo moderado, se debe tener en cuenta que se está analizando un modelo de clasificación para detectar distracciones. Por ende, el RMSE y el MAE no son las métricas más adecuadas para evaluar este problema. Es preferible utilizar precision, recall, f1-score y support, con los cuales se obtiene un rendimiento BUENO, dado un accuracy del 84%.</p>
+</section>
 </section>
 <section id="resultados" class="level3" data-number="4.2.6">
 <h3 data-number="4.2.6" class="anchored" data-anchor-id="resultados"><span class="header-section-number">4.2.6</span> Resultados</h3>
@@ -1400,21 +1411,58 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <li><strong>Promedio de resultados</strong>: Se promediaron los valores de precisión y recall para todos los usuarios, obteniendo así una medida global del desempeño del sistema.</li>
 </ol>
 <p>Esto permite evaluar si el sistema es capaz de recomendar correctamente destinos que el usuario realmente visitaría, usando solo información previa a ese destino.</p>
-<section id="resultados-numericos" class="level4" data-number="4.3.5.1">
-<h4 data-number="4.3.5.1" class="anchored" data-anchor-id="resultados-numericos"><span class="header-section-number">4.3.5.1</span> Resultados numericos:</h4>
+<section id="métricas-de-evaluación" class="level4" data-number="4.3.5.1">
+<h4 data-number="4.3.5.1" class="anchored" data-anchor-id="métricas-de-evaluación"><span class="header-section-number">4.3.5.1</span> Métricas de Evaluación:</h4>
 <ul>
-<li><strong>Precisión promedio</strong>: 0.06</li>
+<li>RMSE (Root Mean Square Error): 0.1889 Las predicciones de ratings se desvían en promedio 0.1889 unidades de los valores reales. Un RMSE tan bajo indica predicciones muy precisas</li>
+<li>MAE (Mean Absolute Error): 0.1265 En promedio, las predicciones se desvían 0.1265 unidades de los ratings reales. Un MAE tan bajo muestra alta precisión</li>
 </ul>
-<p>En promedio, solo el 6% de las recomendaciones contienen el destino que el usuario realmente visitó, dentro del top 3 sugerido.</p>
+</section>
+<section id="comparación-de-métricas" class="level4" data-number="4.3.5.2">
+<h4 data-number="4.3.5.2" class="anchored" data-anchor-id="comparación-de-métricas"><span class="header-section-number">4.3.5.2</span> Comparación de Métricas:</h4>
 <ul>
-<li><strong>Recall promedio</strong>: 0.17</li>
+<li>RMSE (0.1889) &gt; MAE (0.1265): Esto es normal y esperado</li>
+<li>Diferencia pequeña: Indica que hay pocos errores grandes (outliers)</li>
+<li>Consistencia: Ambas métricas muestran excelente rendimiento</li>
 </ul>
-<p>En promedio, el sistema logra recomendar el destino relevante en el 17% de los casos.</p>
+</section>
+<section id="métricas-de-clasificación" class="level4" data-number="4.3.5.3">
+<h4 data-number="4.3.5.3" class="anchored" data-anchor-id="métricas-de-clasificación"><span class="header-section-number">4.3.5.3</span> Métricas de Clasificación:</h4>
 <ul>
-<li><p><strong>Pocos destinos</strong>: Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.</p></li>
-<li><p><strong>Simulación</strong>: El sistema no está “adivinando” lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.</p></li>
+<li>Precisión promedio: 0.06 (6%) Solo el 6% de las recomendaciones contienen el destino relevante. Necesita mejora.</li>
+<li>Recall promedio: 0.17 (17%) El sistema logra recomendar el destino relevante en el 17% de los casos. Necesita mejora.</li>
+</ul>
+</section>
+<section id="análisis-general-del-sistema" class="level4" data-number="4.3.5.4">
+<h4 data-number="4.3.5.4" class="anchored" data-anchor-id="análisis-general-del-sistema"><span class="header-section-number">4.3.5.4</span> Análisis General del Sistema:</h4>
+<ul>
+<li><strong>Fortalezas:</strong>
+<ul>
+<li>Predicción de ratings: Excelente (RMSE: 0.1889, MAE: 0.1265)</li>
+<li>Sistema híbrido: Combina filtrado colaborativo y por contenido</li>
+<li>Validación cruzada: Implementada correctamente</li>
+<li>Feedback del usuario: Sistema de calificación integrado</li>
+</ul></li>
+<li><strong>Limitaciones:</strong>
+<ul>
+<li>Baja precisión de recomendaciones: 6% precision, 17% recall</li>
+<li>Pocos destinos: Dataset limitado en diversidad</li>
+<li>Datos simulados: Pueden no reflejar patrones reales</li>
+<li>Falta de personalización: Recomendaciones muy genéricas</li>
+</ul></li>
 </ul>
 <p><strong>Entendemos que es dificil recomendarle algo completamente bueno para el usuario con tan poca muestra y lo mejor es recomendarle dependiendo de lo que quiere el usuario y teniendo encuenta su historial por ende haremos una funcion, que haga las preguntas a las cosas mas importantes para recomendarle unos lugares al usuario, si de lo que elige no hay ninguna opcion buena recomienda el top 3 de lugares mejor rankeado que no haya visitado el usuario.</strong></p>
+</section>
+<section id="recomendaciónes-y-cosas-a-mejorar" class="level4" data-number="4.3.5.5">
+<h4 data-number="4.3.5.5" class="anchored" data-anchor-id="recomendaciónes-y-cosas-a-mejorar"><span class="header-section-number">4.3.5.5</span> Recomendaciónes y cosas a mejorar:</h4>
+<p>El modelo es adecuado para predecir calificaciones pero necesita mejoras significativas en la generación de recomendaciones. Considera:</p>
+<ul>
+<li><p>Expandir el dataset con más destinos</p></li>
+<li><p>Implementar algoritmos más sofisticados (SVD, NMF)</p></li>
+<li><p>Mejorar la personalización basada en preferencias específicas</p></li>
+<li><p>Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.</p></li>
+<li><p>El sistema no está “adivinando” lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.</p></li>
+</ul>
 </section>
 </section>
 <section id="ejemplos-de-recomendaciones-generadas" class="level3" data-number="4.3.6">
@@ -1447,7 +1495,7 @@ Despliegue: Preparación y lanzamiento del sistema en un entorno de producción.
 <section id="herramienta-web" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Herramienta Web</h1>
 <p>La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.</p>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo_web.mp4"></video></div>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="demo_web2.mp4"></video></div>
 <section id="descripción-de-la-interfaz" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="descripción-de-la-interfaz"><span class="header-section-number">5.1</span> Descripción de la interfaz</h2>
 <p>La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno.</p>
