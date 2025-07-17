@@ -649,6 +649,19 @@ La gráfica muestra la evolución de la pérdida durante el entrenamiento del mo
 | turning |	0.92 |	0.89 |	0.90 |	1339 |
 | Promedio |	0.84 |	0.84 |	0.84 |	7276 |
 
+#### Interpretación de las métricas
+ **RMSE (Root Mean Square Error):** 0.9165
+
+  El RMSE mide la diferencia promedio entre los valores predichos y los valores reales, penalizando en mayor medida los errores más grandes. Un valor 0.9165 indica que en promedio, las predicciones se desvían aproximadamente 0.9165 unidades de los valores reales.
+
+  El MAE mide la diferencia absoluta promedio entre las predicciones y los valores reales.
+
+**MAE (Mean Absolute Error):** 0.3289
+
+  El MAE mide la diferencia absoluta promedio entre las predicciones y los valores reales. Un valor 0.3289 indica que en promedio, las predicciones se desvían aproximadamente 0.3289 unidades de los valores reales.
+
+Si bien se presentan los valores de un modelo moderado, se debe tener en cuenta que se está analizando un modelo de clasificación para detectar distracciones. Por ende, el RMSE y el MAE no son las métricas más adecuadas para evaluar este problema. Es preferible utilizar precision, recall, f1-score y support, con los cuales se obtiene un rendimiento BUENO, dado un accuracy del 84%.
+
 ### Resultados
 
 * El modelo aprendió de manera correcta después de 50 épocas y más de 7 horas de entrenamiento, alcanzando una precisión del 84% en la validación.
@@ -828,22 +841,57 @@ Se calculó la precisión y el recall:
 
 Esto permite evaluar si el sistema es capaz de recomendar correctamente destinos que el usuario realmente visitaría, usando solo información previa a ese destino.
 
-#### Resultados numericos:
+#### Métricas de Evaluación:
 
-* **Precisión promedio**: 0.06
+* RMSE (Root Mean Square Error): 0.1889
+Las predicciones de ratings se desvían en promedio 0.1889 unidades de los valores reales.
+Un RMSE tan bajo indica predicciones muy precisas
+* MAE (Mean Absolute Error): 0.1265
+En promedio, las predicciones se desvían 0.1265 unidades de los ratings reales. Un MAE tan bajo muestra alta precisión
 
-En promedio, solo el 6% de las recomendaciones contienen el destino que el usuario realmente visitó, dentro del top 3 sugerido.
+#### Comparación de Métricas:
 
-* **Recall promedio**: 0.17
+* RMSE (0.1889) > MAE (0.1265): Esto es normal y esperado
+* Diferencia pequeña: Indica que hay pocos errores grandes (outliers)
+* Consistencia: Ambas métricas muestran excelente rendimiento
 
-En promedio, el sistema logra recomendar el destino relevante en el 17% de los casos.
+#### Métricas de Clasificación:
 
-* **Pocos destinos**: Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.
+* Precisión promedio: 0.06 (6%)
+Solo el 6% de las recomendaciones contienen el destino relevante. Necesita mejora.
+* Recall promedio: 0.17 (17%)
+El sistema logra recomendar el destino relevante en el 17% de los casos. Necesita mejora.
 
-* **Simulación**: El sistema no está "adivinando" lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.
+#### Análisis General del Sistema:
+
+* **Fortalezas:**
+  * Predicción de ratings: Excelente (RMSE: 0.1889, MAE: 0.1265)
+  * Sistema híbrido: Combina filtrado colaborativo y por contenido
+  * Validación cruzada: Implementada correctamente
+  * Feedback del usuario: Sistema de calificación integrado
+
+* **Limitaciones:**
+  * Baja precisión de recomendaciones: 6% precision, 17% recall
+  * Pocos destinos: Dataset limitado en diversidad
+  * Datos simulados: Pueden no reflejar patrones reales
+  * Falta de personalización: Recomendaciones muy genéricas
 
 **Entendemos que es dificil recomendarle algo completamente bueno para el usuario con tan poca muestra y lo mejor es recomendarle dependiendo de lo que quiere el usuario y teniendo encuenta su historial por ende haremos una funcion, que haga las preguntas a las cosas mas importantes para recomendarle unos lugares al usuario, si de lo que elige no hay ninguna opcion buena recomienda el top 3 de lugares mejor rankeado que no haya visitado el usuario.**
 
+#### Recomendaciónes y cosas a mejorar:
+
+El modelo es adecuado para predecir calificaciones pero necesita mejoras significativas en la generación de recomendaciones. 
+Considera:
+
+* Expandir el dataset con más destinos
+
+* Implementar algoritmos más sofisticados (SVD, NMF)
+
+* Mejorar la personalización basada en preferencias específicas
+
+* Con pocos destinos, la diversidad es baja y es difícil acertar exactamente el destino relevante.
+
+* El sistema no está "adivinando" lo que el usuario quiere, sino que intenta predecir el pasado, lo cual no siempre es realista.
 
 ### Ejemplos de recomendaciones generadas
 
@@ -866,7 +914,7 @@ La efectividad del sistema de recomendación se analiza en términos de su capac
 # Herramienta Web
 La herramienta web es el punto de integración de los tres módulos de aprendizaje profundo, proporcionando una interfaz amigable para interactuar con los modelos y visualizar sus resultados.
 
-{{< video demo_web.mp4 >}}
+{{< video demo_web2.mp4 >}}
 
 ## Descripción de la interfaz
 La interfaz de usuario está diseñada para ser intuitiva y fácil de navegar, con secciones claramente definidas para cada módulo. El diseño general es limpio y moderno.
