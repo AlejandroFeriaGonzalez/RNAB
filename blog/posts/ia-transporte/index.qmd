@@ -843,23 +843,23 @@ Esto permite evaluar si el sistema es capaz de recomendar correctamente destinos
 
 #### Métricas de Evaluación:
 
-* RMSE (Root Mean Square Error): 0.1889
+* **RMSE (Root Mean Square Error):** 0.1889
 Las predicciones de ratings se desvían en promedio 0.1889 unidades de los valores reales.
 Un RMSE tan bajo indica predicciones muy precisas
-* MAE (Mean Absolute Error): 0.1265
+* **MAE (Mean Absolute Error):** 0.1265
 En promedio, las predicciones se desvían 0.1265 unidades de los ratings reales. Un MAE tan bajo muestra alta precisión
 
 #### Comparación de Métricas:
 
-* RMSE (0.1889) > MAE (0.1265): Esto es normal y esperado
-* Diferencia pequeña: Indica que hay pocos errores grandes (outliers)
-* Consistencia: Ambas métricas muestran excelente rendimiento
+* **RMSE (0.1889) > MAE (0.1265):** Esto es normal y esperado
+* **Diferencia pequeña:** Indica que hay pocos errores grandes (outliers)
+* **Consistencia:** Ambas métricas muestran excelente rendimiento
 
 #### Métricas de Clasificación:
 
-* Precisión promedio: 0.06 (6%)
+* **Precisión promedio:** 0.06 (6%)
 Solo el 6% de las recomendaciones contienen el destino relevante. Necesita mejora.
-* Recall promedio: 0.17 (17%)
+* **Recall promedio:** 0.17 (17%)
 El sistema logra recomendar el destino relevante en el 17% de los casos. Necesita mejora.
 
 #### Análisis General del Sistema:
@@ -880,8 +880,7 @@ El sistema logra recomendar el destino relevante en el 17% de los casos. Necesit
 
 #### Recomendaciónes y cosas a mejorar:
 
-El modelo es adecuado para predecir calificaciones pero necesita mejoras significativas en la generación de recomendaciones. 
-Considera:
+El modelo es adecuado para predecir calificaciones pero necesita mejoras significativas en la generación de recomendaciones.
 
 * Expandir el dataset con más destinos
 
