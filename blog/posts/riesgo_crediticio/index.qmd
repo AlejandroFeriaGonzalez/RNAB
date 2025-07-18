@@ -1,9 +1,7 @@
 ---
-title: "trabajo2"
+title: "Predicción del Riesgo de Incumplimiento Crediticio mediante Redes Neuronales"
 author:
   - name: "Alejandro Feria González, aferiag@unal.edu.co"
-  - name: "Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co"
-  - name: "Abraham David Miguel Cardenas, amiguel@unal.edu.co"
   - name: "Santiago Molina Munoz, smolinam@unal.edu.co"
 date: "2025-06-30"
 categories: [Redes Neuronales, Algoritmos bioinspirados]
@@ -97,35 +95,68 @@ La metodología del trabajo consta de las siguientes etapas:
 * Discusión sobre aplicabilidad práctica del modelo.
 * Redacción del reporte técnico con normas APA y presentación audiovisual.
 
-```python
-import pandas as pd
-import numpy as np
+# Preparación del conjunto de datos
 
-# 2. Ver número de filas y columnas
-print(f"Filas: {df.shape[0]}, Columnas: {df.shape[1]}")
+## Construcción de la Variable Objetivo
+La primera parada en nuestro viaje de modelado predictivo es la definición precisa de la variable que queremos predecir. Partimos cargando el archivo loan.csv en un DataFrame de pandas, donde la columna loan_status funge como el corazón del análisis: indica el estado final de cada préstamo.
 
-# 3. Ver distribución de la variable objetivo
-print("\nFrecuencia de loan_status:")
-print(df['loan_status'].value_counts(dropna=False))
+Sin embargo, esta columna no está lista para su uso directo. Contiene múltiples etiquetas en texto que describen distintos escenarios crediticios, desde préstamos totalmente pagados hasta aquellos en mora o incumplimiento. Para convertir este problema en una tarea de clasificación binaria clara, realizamos una transformación crucial: los estados favorables se codifican como 0 (buen pagador), mientras que los desfavorables se codifican como 1 (incumplimiento). Aquellos casos en los que el comportamiento del prestatario no es concluyente se excluyen del análisis para evitar ambigüedades.
 
-# 4. Proporción de valores nulos por variable
-nulos = df.isna().mean().sort_values(ascending=False)
-print("\nTop 20 columnas con más nulos:")
-print(nulos.head(20))
+Este paso no solo depura el conjunto de datos, sino que también garantiza que la variable objetivo sea estrictamente binaria y esté representada en un formato numérico, condición indispensable para que los algoritmos de aprendizaje automático funcionen correctamente.
 
-# 5. Filtrado de columnas útiles (menos de 30% nulos)
-columnas_utiles = nulos[nulos < 0.3].index.tolist()
-df_util = df[columnas_utiles]
+## Filtrando el Ruido: Una Poda Estratégica del Bosque de Variables
 
-# 6. Mostrar tipos de variables (numéricas vs categóricas)
-tipos = df_util.dtypes.value_counts()
-print("\nTipos de variables:")
-print(tipos)
+Antes de que cualquier modelo pueda brillar, necesita una base limpia, clara y sin distracciones. Imagínalo como afilar herramientas antes de tallar una escultura: quitar lo innecesario es tan importante como lo que se conserva. Así que emprendimos una limpieza del conjunto de datos, eliminando columnas que, aunque vistosas, no aportaban valor real para predecir el riesgo de incumplimiento.
 
-# 7. Mostrar una muestra del dataset reducido
-df_util.sample(5, random_state=42)
-```
+1. Columnas fantasma: demasiados datos faltantes
+Algunas variables parecían estar allí solo de adorno. Con más del 70% de sus valores perdidos, simplemente no tenían sustancia. Solo agregaban confusión. Eliminarlas nos permitió concentrarnos en datos sólidos, confiables y útiles para el modelo.
 
-```python
-df['loan_status'].unique()
-```
+2. Textos bonitos, pero poco útiles
+Variables como nombres, títulos, códigos postales y URLs suenan interesantes... pero para una red neuronal, son solo ruido. Son descripciones libres o identificadores únicos que no tienen patrones útiles para aprender. Preferimos decirles adiós y evitar que el modelo trate de encontrar señales en el caos.
+
+3. Prediciendo el futuro con datos del futuro (¡prohibido!)
+Algunas columnas contenían información sobre pagos, moras, recuperaciones... ¡que ocurren después de otorgar el préstamo! Incluirlas sería como hacer trampa en una adivinanza sabiendo ya la respuesta. Para evitar el temido data leakage, se descartaron completamente. Nuestro modelo solo ve lo que estaría disponible antes de tomar la decisión crediticia.
+
+4. Variables con muy poca variabilidad no ayudan a diferenciar entre buenos y malos pagadores. Si todo el mundo tiene el mismo valor, el modelo no puede aprender nada nuevo de ellas. Por eso, también se fueron.
+
+5. Datos que el usuario no conoce. Hicimos una última depuración desde el punto de vista práctico. Si estamos construyendo un modelo que se integre a una página web para predecir riesgo de forma intuitiva, no podemos pedirle al usuario cosas que no sabría sin un reporte de crédito detallado. ¿Sabes cuál es tu revol_util o tu tot_cur_bal? Por eso, todas esas variables derivadas de sistemas internos o de burós crediticios fueron descartadas para garantizar una experiencia realista, funcional y centrada en el usuario.
+
+## Codificación Inteligente y Selección Estratégica de Variables
+Construir un modelo predictivo no es solo cuestión de lanzar datos al algoritmo. Es como armar un equipo: hay que elegir bien a los jugadores y asegurarse de que hablen el mismo idioma. En esta etapa, transformamos variables clave y seleccionamos aquellas que realmente pueden marcar la diferencia al anticipar el incumplimiento de un préstamo.
+
+**Codificación rápida**: pequeñas mejoras, gran impacto
+Algunas variables necesitan un pequeño ajuste para hablar el lenguaje del modelo:
+
+**verification_status** ¿Los ingresos del solicitante fueron verificados? Esta pregunta sencilla puede decir mucho. Por eso la codificamos de forma binaria.
+
+**home_ownership** ¿El usuario arrienda, es dueño o tiene hipoteca? Estas categorías sí aportan información. Sin embargo, eliminamos los valores NONE y ANY por ser escasos y ambiguos, evitando introducir ruido innecesario.
+
+**Variables que entran al juego**: posibles predictores
+Estas variables fueron seleccionadas por su relevancia, interpretabilidad y disponibilidad anticipada al momento de la solicitud:
+
+**loan_amnt**: El monto solicitado por el prestatario. Una cifra clave para entender la magnitud del riesgo.
+
+**annual_inc**: Ingreso anual declarado. Un indicador directo de la capacidad de pago.
+
+**emp_length**: Años en el empleo actual. La estabilidad laboral influye en la solvencia.
+
+**verification_status**: Como se explicó antes, es una señal de confianza sobre los ingresos.
+
+**home_ownership**: Estado de vivienda que puede estar relacionado con el nivel de estabilidad financiera.
+
+**purpose**: La razón por la cual se solicita el préstamo (educación, consolidación de deuda, auto, etc.). Aunque compleja de modelar, puede contener patrones valiosos que vale la pena explorar.
+
+Codificación binaria: traduciendo categorías al lenguaje de las máquinas.Para que las variables categóricas se integren al modelo, aplicamos codificación binaria, que transforma cada categoría en su propia columna booleana.
+
+
+# Analisis Descriptivo e Hipotesis
+Antes de construir modelos y lanzar predicciones, es esencial conocer el terreno. El análisis del riesgo crediticio no es solo una cuestión de números: es una radiografía del comportamiento financiero. Aquí exploramos los datos con lupa para descubrir patrones ocultos y validar intuiciones sobre qué variables realmente influyen en el incumplimiento de un préstamo.
+
+## Variable Objetivo: loan_status
+El eje central de este análisis es el estado del préstamo:
+
+0 = El préstamo fue pagado completamente
+
+1 = El préstamo fue impagado, en mora o castigado
+
+Esta codificación binaria permite estructurar el problema como una tarea de clasificación y evaluar los factores que diferencian a quienes cumplen frente a quienes no.
