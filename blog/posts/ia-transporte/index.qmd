@@ -1075,6 +1075,8 @@ Ricci, F., Rokach, L., & Shapira, B. (Eds.). (2011). *Recommender systems handbo
 
 # Anexos
 
+* Video con los aportes de cada integrantes: [https://drive.google.com/file/d/1tnkYNpNTVe4NPTDkbZOSaxwdcPg3Hk9C/view?usp=sharing](https://drive.google.com/file/d/1tnkYNpNTVe4NPTDkbZOSaxwdcPg3Hk9C/view?usp=sharing)
+
 * Codigo fuente del proyecto: [Repositorio en GitHub](https://github.com/AlejandroFeriaGonzalez/RNAB)
 
 * Dataset de Predicción de Demanda: [https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about](https://datos.crtm.es/documents/a7210254c4514a19a51b1617cfd61f75/about)
