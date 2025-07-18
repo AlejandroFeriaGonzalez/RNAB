@@ -2452,12 +2452,10 @@ font-style: inherit;">apply</span>(normaliza_texto)</span>
   <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/llms/image.png" medium="image" type="image/png"/>
 </item>
 <item>
-  <title>Aplicaciones de grandes modelos de lenguaje</title>
+  <title>Predicción del Riesgo de Incumplimiento Crediticio mediante Redes Neuronales</title>
   <dc:creator>Alejandro Feria González, aferiag@unal.edu.co</dc:creator>
-  <dc:creator>Andres Felipe Arismendi Alzate, aarismendi@unal.edu.co</dc:creator>
-  <dc:creator>Abraham David Miguel Cardenas, amiguel@unal.edu.co</dc:creator>
   <dc:creator>Santiago Molina Munoz, smolinam@unal.edu.co</dc:creator>
-  <link>https://alejandroferiagonzalez.github.io/RNAB/posts/trabajo2/</link>
+  <link>https://alejandroferiagonzalez.github.io/RNAB/posts/riesgo_crediticio/</link>
   <description><![CDATA[ 
 
 
@@ -2549,50 +2547,1929 @@ font-style: inherit;">apply</span>(normaliza_texto)</span>
 <li>Discusión sobre aplicabilidad práctica del modelo.</li>
 <li>Redacción del reporte técnico con normas APA y presentación audiovisual.</li>
 </ul>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+</section>
+</section>
+<section id="preparación-del-conjunto-de-datos" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Preparación del conjunto de datos</h1>
+<section id="construcción-de-la-variable-objetivo" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="construcción-de-la-variable-objetivo"><span class="header-section-number">4.1</span> Construcción de la Variable Objetivo</h2>
+<p>La primera parada en nuestro viaje de modelado predictivo es la definición precisa de la variable que queremos predecir. Partimos cargando el archivo loan.csv en un DataFrame de pandas, donde la columna loan_status funge como el corazón del análisis: indica el estado final de cada préstamo.</p>
+<p>Sin embargo, esta columna no está lista para su uso directo. Contiene múltiples etiquetas en texto que describen distintos escenarios crediticios, desde préstamos totalmente pagados hasta aquellos en mora o incumplimiento. Para convertir este problema en una tarea de clasificación binaria clara, realizamos una transformación crucial: los estados favorables se codifican como 0 (buen pagador), mientras que los desfavorables se codifican como 1 (incumplimiento). Aquellos casos en los que el comportamiento del prestatario no es concluyente se excluyen del análisis para evitar ambigüedades.</p>
+<p>Este paso no solo depura el conjunto de datos, sino que también garantiza que la variable objetivo sea estrictamente binaria y esté representada en un formato numérico, condición indispensable para que los algoritmos de aprendizaje automático funcionen correctamente.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">        df <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+font-style: inherit;">=</span> pd.read_csv(csv_path)</span>
+<span id="cb1-2">        logger.info(<span class="ss" style="color: #20794D;
 background-color: null;
-font-style: inherit;">as</span> pd</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 2. Ver número de filas y columnas</span></span>
-<span id="cb1-5"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Filas: </span><span class="sc" style="color: #5E5E5E;
+font-style: inherit;">f"Datos cargados: </span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">.</span>shape[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">, Columnas: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>shape[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span>
-<span id="cb1-6"></span>
-<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+<span id="cb1-3"></span>
+<span id="cb1-4">        <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># 3. Ver distribución de la variable objetivo</span></span>
-<span id="cb1-8"><span class="bu" style="color: null;
+font-style: inherit;"># Crear variable target</span></span>
+<span id="cb1-5">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_status'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df.columns:</span>
+<span id="cb1-6">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Columna 'loan_status' no encontrada"</span>)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">        df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_status'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.STATUS_MAP)</span>
+<span id="cb1-9">        df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>].notna()].copy()</span>
+<span id="cb1-10"></span>
+<span id="cb1-11">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Datos después de filtrar: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-12">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Distribución de target: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>value_counts()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-13"></span>
+<span id="cb1-14">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Preprocesar datos</span></span>
+<span id="cb1-15">        df_clean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._clean_data(df)</span>
+<span id="cb1-16"></span>
+<span id="cb1-17">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Asegurar que todas las features necesarias estén presentes</span></span>
+<span id="cb1-18">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> col <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES:</span>
+<span id="cb1-19">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> col <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_clean.columns:</span>
+<span id="cb1-20">                df_clean[col] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-21"></span>
+<span id="cb1-22">        X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_clean[<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES].astype(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'float32'</span>)</span>
+<span id="cb1-23">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>].values.astype(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'float32'</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convertir a numpy array</span></span>
+<span id="cb1-24"></span>
+<span id="cb1-25">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Escalamiento</span></span>
+<span id="cb1-26">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> preprocessing.StandardScaler()</span>
+<span id="cb1-27">        X_scaled <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler.fit_transform(X)</span>
+<span id="cb1-28"></span>
+<span id="cb1-29">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Dividir datos</span></span>
+<span id="cb1-30">        X_train, X_test, y_train, y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(</span>
+<span id="cb1-31">            X_scaled, y,</span>
+<span id="cb1-32">            test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.test_size,</span>
+<span id="cb1-33">            stratify<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>y,</span>
+<span id="cb1-34">            random_state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.random_state</span>
+<span id="cb1-35">        )</span></code></pre></div>
+</section>
+<section id="filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables"><span class="header-section-number">4.2</span> Filtrando el Ruido: Una Poda Estratégica del Bosque de Variables</h2>
+<p>Antes de que cualquier modelo pueda brillar, necesita una base limpia, clara y sin distracciones. Imagínalo como afilar herramientas antes de tallar una escultura: quitar lo innecesario es tan importante como lo que se conserva. Así que emprendimos una limpieza del conjunto de datos, eliminando columnas que, aunque vistosas, no aportaban valor real para predecir el riesgo de incumplimiento.</p>
+<ol type="1">
+<li><p>Columnas fantasma: demasiados datos faltantes Algunas variables parecían estar allí solo de adorno. Con más del 70% de sus valores perdidos, simplemente no tenían sustancia. Solo agregaban confusión. Eliminarlas nos permitió concentrarnos en datos sólidos, confiables y útiles para el modelo.</p></li>
+<li><p>Textos bonitos, pero poco útiles Variables como nombres, títulos, códigos postales y URLs suenan interesantes… pero para una red neuronal, son solo ruido. Son descripciones libres o identificadores únicos que no tienen patrones útiles para aprender. Preferimos decirles adiós y evitar que el modelo trate de encontrar señales en el caos.</p></li>
+<li><p>Prediciendo el futuro con datos del futuro (¡prohibido!) Algunas columnas contenían información sobre pagos, moras, recuperaciones… ¡que ocurren después de otorgar el préstamo! Incluirlas sería como hacer trampa en una adivinanza sabiendo ya la respuesta. Para evitar el temido data leakage, se descartaron completamente. Nuestro modelo solo ve lo que estaría disponible antes de tomar la decisión crediticia.</p></li>
+<li><p>Variables con muy poca variabilidad no ayudan a diferenciar entre buenos y malos pagadores. Si todo el mundo tiene el mismo valor, el modelo no puede aprender nada nuevo de ellas. Por eso, también se fueron.</p></li>
+<li><p>Datos que el usuario no conoce. Hicimos una última depuración desde el punto de vista práctico. Si estamos construyendo un modelo que se integre a una página web para predecir riesgo de forma intuitiva, no podemos pedirle al usuario cosas que no sabría sin un reporte de crédito detallado. ¿Sabes cuál es tu revol_util o tu tot_cur_bal? Por eso, todas esas variables derivadas de sistemas internos o de burós crediticios fueron descartadas para garantizar una experiencia realista, funcional y centrada en el usuario.</p></li>
+</ol>
+</section>
+<section id="codificación-inteligente-y-selección-estratégica-de-variables" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="codificación-inteligente-y-selección-estratégica-de-variables"><span class="header-section-number">4.3</span> Codificación Inteligente y Selección Estratégica de Variables</h2>
+<p>Construir un modelo predictivo no es solo cuestión de lanzar datos al algoritmo. Es como armar un equipo: hay que elegir bien a los jugadores y asegurarse de que hablen el mismo idioma. En esta etapa, transformamos variables clave y seleccionamos aquellas que realmente pueden marcar la diferencia al anticipar el incumplimiento de un préstamo.</p>
+<p><strong>Codificación rápida</strong>: pequeñas mejoras, gran impacto Algunas variables necesitan un pequeño ajuste para hablar el lenguaje del modelo:</p>
+<p><strong>verification_status</strong> ¿Los ingresos del solicitante fueron verificados? Esta pregunta sencilla puede decir mucho. Por eso la codificamos de forma binaria.</p>
+<p><strong>home_ownership</strong> ¿El usuario arrienda, es dueño o tiene hipoteca? Estas categorías sí aportan información. Sin embargo, eliminamos los valores NONE y ANY por ser escasos y ambiguos, evitando introducir ruido innecesario.</p>
+<p><strong>Variables que entran al juego</strong>: posibles predictores Estas variables fueron seleccionadas por su relevancia, interpretabilidad y disponibilidad anticipada al momento de la solicitud:</p>
+<p><strong>loan_amnt</strong>: El monto solicitado por el prestatario. Una cifra clave para entender la magnitud del riesgo.</p>
+<p><strong>annual_inc</strong>: Ingreso anual declarado. Un indicador directo de la capacidad de pago.</p>
+<p><strong>emp_length</strong>: Años en el empleo actual. La estabilidad laboral influye en la solvencia.</p>
+<p><strong>verification_status</strong>: Como se explicó antes, es una señal de confianza sobre los ingresos.</p>
+<p><strong>home_ownership</strong>: Estado de vivienda que puede estar relacionado con el nivel de estabilidad financiera.</p>
+<p><strong>purpose</strong>: La razón por la cual se solicita el préstamo (educación, consolidación de deuda, auto, etc.). Aunque compleja de modelar, puede contener patrones valiosos que vale la pena explorar.</p>
+<p>Codificación binaria: traduciendo categorías al lenguaje de las máquinas.Para que las variables categóricas se integren al modelo, aplicamos codificación binaria, que transforma cada categoría en su propia columna booleana.</p>
+</section>
+</section>
+<section id="analisis-descriptivo-e-hipotesis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Analisis Descriptivo e Hipotesis</h1>
+<p>Antes de construir modelos y lanzar predicciones, es esencial conocer el terreno. El análisis del riesgo crediticio no es solo una cuestión de números: es una radiografía del comportamiento financiero. Aquí exploramos los datos con lupa para descubrir patrones ocultos y validar intuiciones sobre qué variables realmente influyen en el incumplimiento de un préstamo.</p>
+<section id="variable-objetivo-loan_status" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="variable-objetivo-loan_status"><span class="header-section-number">5.1</span> Variable Objetivo: loan_status</h2>
+<p>El eje central de este análisis es el estado del préstamo:</p>
+<p>0 = El préstamo fue pagado completamente</p>
+<p>1 = El préstamo fue impagado, en mora o castigado</p>
+<p>Esta codificación binaria permite estructurar el problema como una tarea de clasificación y evaluar los factores que diferencian a quienes cumplen frente a quienes no.</p>
+</section>
+</section>
+<section id="aplicacion-web" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Aplicacion web</h1>
+<p>Para hacer accesible el modelo de predicción de riesgo crediticio, se desarrolló una aplicación web interactiva. Esta herramienta permite a los usuarios ingresar sus características finan cieras y obtener una estimación de su probabilidad de incumplimiento, expresada en forma de score crediticio.</p>
+<p>La aplicación está diseñada para ser intuitiva y fácil de usar, sin requerir conocimientos técnicos previos. Los usuarios pueden ingresar los datos y a partir de esta información, el modelo predictivo calcula la probabilidad de incumplimiento y genera un score crediticio en una escala de 300 a 850.</p>
+<ul>
+<li>La aplicación web, desarrollada con FastAPI en el backend, HTML, Tailwind CSS para los estilos y HTMX para la interactividad.</li>
+<li>La interfaz de usuario presenta un formulario claro con campos de entrada bien definidos para los datos del solicitante.</li>
+<li>Los elementos visuales están organizados para una fácil navegación y comprensión, utilizando Tailwind CSS para un diseño limpio.</li>
+<li>El backend de FastAPI expone un endpoint /predict que recibe los datos de entrada del usuario, los preprocesa utilizando la lógica definida en model_service.py, y devuelve la predicción de riesgo. El procesamiento de los datos de entrada por parte del ModelService incluye la limpieza, la creación de características y el escalamiento para que sean compatibles con el modelo de red neuronal.</li>
+<li>La aplicación contiene los enlaces al reporte técnico y el material publicitario</li>
+</ul>
+</section>
+<section id="codigo-del-modelo" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Codigo del modelo</h1>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> os</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb2-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> joblib</span>
+<span id="cb2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> logging</span>
+<span id="cb2-6"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pathlib <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Path</span>
+<span id="cb2-7"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Dict, List, Optional, Union, Tuple</span>
+<span id="cb2-8"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> dataclasses <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> dataclass</span>
+<span id="cb2-9"></span>
+<span id="cb2-10"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb2-11"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> keras</span>
+<span id="cb2-12"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> layers</span>
+<span id="cb2-13"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> train_test_split</span>
+<span id="cb2-14"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> preprocessing</span>
+<span id="cb2-15"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.metrics <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> roc_auc_score, classification_report, confusion_matrix, ConfusionMatrixDisplay</span>
+<span id="cb2-16"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb2-17"></span>
+<span id="cb2-18"></span>
+<span id="cb2-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Configurar logging</span></span>
+<span id="cb2-20">logging.basicConfig(level<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>logging.INFO, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%(asctime)s</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> - </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%(levelname)s</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> - </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%(message)s</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>)</span>
+<span id="cb2-21">logger <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> logging.getLogger(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">__name__</span>)</span>
+<span id="cb2-22"></span>
+<span id="cb2-23"></span>
+<span id="cb2-24"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@dataclass</span></span>
+<span id="cb2-25"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> ModelConfig:</span>
+<span id="cb2-26">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Configuración del modelo"""</span></span>
+<span id="cb2-27">    model_path: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'credit_risk_model.h5'</span></span>
+<span id="cb2-28">    features_path: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'features.pkl'</span></span>
+<span id="cb2-29">    scaler_path: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'scaler.joblib'</span></span>
+<span id="cb2-30">    encoder_path: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'label_encoder.pkl'</span></span>
+<span id="cb2-31">    test_size: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span></span>
+<span id="cb2-32">    validation_split: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span></span>
+<span id="cb2-33">    epochs: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span></span>
+<span id="cb2-34">    batch_size: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">256</span></span>
+<span id="cb2-35">    random_state: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span></span>
+<span id="cb2-36"></span>
+<span id="cb2-37"></span>
+<span id="cb2-38"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> CreditRiskPredictor:</span>
+<span id="cb2-39">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Predictor de riesgo crediticio mejorado"""</span></span>
+<span id="cb2-40"></span>
+<span id="cb2-41">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Variables más importantes según KBest</span></span>
+<span id="cb2-42">    TOP_FEATURES <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-43">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_principal_paid'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_rec_prncp'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_amnt'</span>,</span>
+<span id="cb2-44">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'recoveries'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_pymnt'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_pymnt_inv'</span>,</span>
+<span id="cb2-45">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'out_prncp'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'out_prncp_inv'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'int_rate'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_term_paid'</span></span>
+<span id="cb2-46">    ]</span>
+<span id="cb2-47"></span>
+<span id="cb2-48">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Mapeo de estados de préstamo</span></span>
+<span id="cb2-49">    STATUS_MAP <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb2-50">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Fully Paid"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb2-51">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Charged Off"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb2-52">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Late (31-120 days)"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb2-53">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Default"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb2-54">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Does not meet the credit policy. Status:Fully Paid"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb2-55">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Does not meet the credit policy. Status:Charged Off"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-56">    }</span>
+<span id="cb2-57"></span>
+<span id="cb2-58">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, config: Optional[ModelConfig] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>):</span>
+<span id="cb2-59">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-60"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Inicializa el predictor de riesgo crediticio</span></span>
+<span id="cb2-61"></span>
+<span id="cb2-62"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-63"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            config: Configuración del modelo</span></span>
+<span id="cb2-64"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-65">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> config <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> ModelConfig()</span>
+<span id="cb2-66">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb2-67">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.selected_features <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb2-68">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb2-69">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.label_encoder <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb2-70"></span>
+<span id="cb2-71">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Crear directorio para modelos si no existe</span></span>
+<span id="cb2-72">        os.makedirs(os.path.dirname(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.model_path) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.'</span>, exist_ok<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-73"></span>
+<span id="cb2-74">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> load_model_and_artifacts(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">bool</span>:</span>
+<span id="cb2-75">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-76"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Carga el modelo y artefactos necesarios</span></span>
+<span id="cb2-77"></span>
+<span id="cb2-78"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-79"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            bool: True si la carga fue exitosa</span></span>
+<span id="cb2-80"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-81">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">try</span>:</span>
+<span id="cb2-82">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> os.path.exists(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.model_path):</span>
+<span id="cb2-83">                logger.error(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Modelo no encontrado en </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>config<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>model_path<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-84">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span></span>
+<span id="cb2-85"></span>
+<span id="cb2-86">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.models.load_model(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.model_path)</span>
+<span id="cb2-87">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.selected_features <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> joblib.load(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.features_path)</span>
+<span id="cb2-88"></span>
+<span id="cb2-89">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> os.path.exists(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.scaler_path):</span>
+<span id="cb2-90">                <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> joblib.load(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.scaler_path)</span>
+<span id="cb2-91"></span>
+<span id="cb2-92">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> os.path.exists(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.encoder_path):</span>
+<span id="cb2-93">                <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.label_encoder <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> joblib.load(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.encoder_path)</span>
+<span id="cb2-94"></span>
+<span id="cb2-95">            logger.info(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Modelo y artefactos cargados exitosamente"</span>)</span>
+<span id="cb2-96">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span></span>
+<span id="cb2-97"></span>
+<span id="cb2-98">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">except</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Exception</span> <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> e:</span>
+<span id="cb2-99">            logger.error(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Error al cargar modelo: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(e)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-100">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span></span>
+<span id="cb2-101"></span>
+<span id="cb2-102">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> _validate_dataframe(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, df: pd.DataFrame) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-103">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-104"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Valida y limpia el DataFrame de entrada</span></span>
+<span id="cb2-105"></span>
+<span id="cb2-106"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-107"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            df: DataFrame a validar</span></span>
+<span id="cb2-108"></span>
+<span id="cb2-109"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-110"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            DataFrame validado</span></span>
+<span id="cb2-111"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-112">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> df.empty:</span>
+<span id="cb2-113">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"DataFrame está vacío"</span>)</span>
+<span id="cb2-114"></span>
+<span id="cb2-115">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Verificar tipos de datos</span></span>
+<span id="cb2-116">        numeric_columns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.select_dtypes(include<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[np.number]).columns</span>
+<span id="cb2-117">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(numeric_columns) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb2-118">            logger.warning(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"No se encontraron columnas numéricas"</span>)</span>
+<span id="cb2-119"></span>
+<span id="cb2-120">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> df</span>
+<span id="cb2-121"></span>
+<span id="cb2-122">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> _clean_data(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, df: pd.DataFrame) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-123">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-124"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Limpia y preprocesa los datos</span></span>
+<span id="cb2-125"></span>
+<span id="cb2-126"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-127"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            df: DataFrame a limpiar</span></span>
+<span id="cb2-128"></span>
+<span id="cb2-129"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-130"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            DataFrame limpio</span></span>
+<span id="cb2-131"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-132">        df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._validate_dataframe(df.copy())</span>
+<span id="cb2-133"></span>
+<span id="cb2-134">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Columnas a eliminar</span></span>
+<span id="cb2-135">        cols_to_remove <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-136">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'earliest_cr_line'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_credit_pull_d'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_d'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'emp_length'</span>,</span>
+<span id="cb2-137">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'next_pymnt_d'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'verification_status_joint'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'desc'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'emp_title'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'title'</span>,</span>
+<span id="cb2-138">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'id'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'member_id'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'url'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'zip_code'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_status'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'application_type'</span></span>
+<span id="cb2-139">        ]</span>
+<span id="cb2-140">        df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.drop(columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>cols_to_remove, errors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ignore'</span>)</span>
+<span id="cb2-141"></span>
+<span id="cb2-142">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Crear feature: porcentaje de principal pagado</span></span>
+<span id="cb2-143">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_rec_prncp'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df.columns <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">and</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_amnt'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df.columns:</span>
+<span id="cb2-144">            df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_principal_paid'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.where(</span>
+<span id="cb2-145">                df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_amnt'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb2-146">                df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_rec_prncp'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_amnt'</span>],</span>
+<span id="cb2-147">                <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb2-148">            )</span>
+<span id="cb2-149"></span>
+<span id="cb2-150">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Crear feature: porcentaje de término completado</span></span>
+<span id="cb2-151">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'issue_d'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_d'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'term'</span>}.issubset(df.columns):</span>
+<span id="cb2-152">            df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._create_temporal_features(df)</span>
+<span id="cb2-153"></span>
+<span id="cb2-154">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Codificar variables categóricas</span></span>
+<span id="cb2-155">        categorical_cols <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.select_dtypes(include<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'object'</span>]).columns</span>
+<span id="cb2-156">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(categorical_cols) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb2-157">            df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.get_dummies(df, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>categorical_cols, drop_first<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-158"></span>
+<span id="cb2-159">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Manejo de valores faltantes</span></span>
+<span id="cb2-160">        numeric_cols <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.select_dtypes(include<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[np.number]).columns</span>
+<span id="cb2-161">        df[numeric_cols] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[numeric_cols].fillna(df[numeric_cols].median())</span>
+<span id="cb2-162"></span>
+<span id="cb2-163">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> df</span>
+<span id="cb2-164"></span>
+<span id="cb2-165">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> _create_temporal_features(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, df: pd.DataFrame) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-166">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-167"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Crea features temporales</span></span>
+<span id="cb2-168"></span>
+<span id="cb2-169"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-170"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            df: DataFrame con columnas temporales</span></span>
+<span id="cb2-171"></span>
+<span id="cb2-172"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-173"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            DataFrame con nuevas features</span></span>
+<span id="cb2-174"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-175">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">try</span>:</span>
+<span id="cb2-176">            df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'issue_d'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.to_datetime(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'issue_d'</span>], errors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'coerce'</span>)</span>
+<span id="cb2-177">            df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_d'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.to_datetime(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_d'</span>], errors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'coerce'</span>)</span>
+<span id="cb2-178"></span>
+<span id="cb2-179">            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calcular meses transcurridos</span></span>
+<span id="cb2-180">            df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'meses_transcurridos'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (</span>
+<span id="cb2-181">                (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_d'</span>].dt.year <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'issue_d'</span>].dt.year) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-182">                (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_d'</span>].dt.month <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'issue_d'</span>].dt.month)</span>
+<span id="cb2-183">            ).clip(lower<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb2-184"></span>
+<span id="cb2-185">            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extraer número de meses del término</span></span>
+<span id="cb2-186">            df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'term_meses'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'term'</span>].astype(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>).<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>.extract(<span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r'</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">(</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\d</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>).astype(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>)</span>
+<span id="cb2-187"></span>
+<span id="cb2-188">            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calcular porcentaje de término pagado</span></span>
+<span id="cb2-189">            df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_term_paid'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.where(</span>
+<span id="cb2-190">                df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'term_meses'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb2-191">                df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'meses_transcurridos'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'term_meses'</span>],</span>
+<span id="cb2-192">                <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb2-193">            )</span>
+<span id="cb2-194"></span>
+<span id="cb2-195">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">except</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Exception</span> <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> e:</span>
+<span id="cb2-196">            logger.warning(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Error creando features temporales: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(e)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-197"></span>
+<span id="cb2-198">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> df</span>
+<span id="cb2-199"></span>
+<span id="cb2-200">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> preprocess_input(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, df: pd.DataFrame) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-201">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-202"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Preprocesa datos de entrada para predicción</span></span>
+<span id="cb2-203"></span>
+<span id="cb2-204"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-205"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            df: DataFrame a procesar</span></span>
+<span id="cb2-206"></span>
+<span id="cb2-207"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-208"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            DataFrame procesado</span></span>
+<span id="cb2-209"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-210">        df_clean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._clean_data(df)</span>
+<span id="cb2-211"></span>
+<span id="cb2-212">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Asegurar que todas las features necesarias estén presentes</span></span>
+<span id="cb2-213">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> col <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES:</span>
+<span id="cb2-214">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> col <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_clean.columns:</span>
+<span id="cb2-215">                df_clean[col] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb2-216"></span>
+<span id="cb2-217">        X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_clean[<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES].astype(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'float32'</span>)</span>
+<span id="cb2-218"></span>
+<span id="cb2-219">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Aplicar escalamiento si existe</span></span>
+<span id="cb2-220">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb2-221">            X_scaled <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler.transform(X)</span>
+<span id="cb2-222">            X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(X_scaled, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES, index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>X.index)</span>
+<span id="cb2-223"></span>
+<span id="cb2-224">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> X</span>
+<span id="cb2-225"></span>
+<span id="cb2-226">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> _create_model(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, input_shape: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> keras.Model:</span>
+<span id="cb2-227">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-228"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Crea la arquitectura del modelo</span></span>
+<span id="cb2-229"></span>
+<span id="cb2-230"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-231"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            input_shape: Forma de entrada</span></span>
+<span id="cb2-232"></span>
+<span id="cb2-233"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-234"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            Modelo compilado</span></span>
+<span id="cb2-235"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-236">        model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.Sequential([</span>
+<span id="cb2-237">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>, input_shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(input_shape,)),</span>
+<span id="cb2-238">            layers.BatchNormalization(),</span>
+<span id="cb2-239">            layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>),</span>
+<span id="cb2-240"></span>
+<span id="cb2-241">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb2-242">            layers.BatchNormalization(),</span>
+<span id="cb2-243">            layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>),</span>
+<span id="cb2-244"></span>
+<span id="cb2-245">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb2-246">            layers.BatchNormalization(),</span>
+<span id="cb2-247">            layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>),</span>
+<span id="cb2-248"></span>
+<span id="cb2-249">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb2-250">            layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>),</span>
+<span id="cb2-251"></span>
+<span id="cb2-252">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sigmoid'</span>)</span>
+<span id="cb2-253">        ])</span>
+<span id="cb2-254"></span>
+<span id="cb2-255">        model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb2-256">            optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>keras.optimizers.Adam(learning_rate<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span>),</span>
+<span id="cb2-257">            loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'binary_crossentropy'</span>,</span>
+<span id="cb2-258">            metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>, keras.metrics.AUC(name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'auc'</span>)]</span>
+<span id="cb2-259">        )</span>
+<span id="cb2-260"></span>
+<span id="cb2-261">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> model</span>
+<span id="cb2-262"></span>
+<span id="cb2-263">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> train_model(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, csv_path: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Dict[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>]:</span>
+<span id="cb2-264">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-265"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Entrena el modelo con datos del CSV</span></span>
+<span id="cb2-266"></span>
+<span id="cb2-267"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-268"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            csv_path: Ruta al archivo CSV</span></span>
+<span id="cb2-269"></span>
+<span id="cb2-270"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-271"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            Diccionario con métricas de evaluación</span></span>
+<span id="cb2-272"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-273">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Iniciando entrenamiento con datos de </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>csv_path<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-274"></span>
+<span id="cb2-275">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Cargar datos</span></span>
+<span id="cb2-276">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> os.path.exists(csv_path):</span>
+<span id="cb2-277">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">FileNotFoundError</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Archivo no encontrado: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>csv_path<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-278"></span>
+<span id="cb2-279">        df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(csv_path)</span>
+<span id="cb2-280">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Datos cargados: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-281"></span>
+<span id="cb2-282">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Crear variable target</span></span>
+<span id="cb2-283">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_status'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df.columns:</span>
+<span id="cb2-284">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Columna 'loan_status' no encontrada"</span>)</span>
+<span id="cb2-285"></span>
+<span id="cb2-286">        df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loan_status'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.STATUS_MAP)</span>
+<span id="cb2-287">        df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>].notna()].copy()</span>
+<span id="cb2-288"></span>
+<span id="cb2-289">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Datos después de filtrar: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-290">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Distribución de target: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>value_counts()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-291"></span>
+<span id="cb2-292">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Preprocesar datos</span></span>
+<span id="cb2-293">        df_clean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._clean_data(df)</span>
+<span id="cb2-294"></span>
+<span id="cb2-295">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Asegurar que todas las features necesarias estén presentes</span></span>
+<span id="cb2-296">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> col <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES:</span>
+<span id="cb2-297">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> col <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_clean.columns:</span>
+<span id="cb2-298">                df_clean[col] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb2-299"></span>
+<span id="cb2-300">        X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_clean[<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES].astype(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'float32'</span>)</span>
+<span id="cb2-301">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'target'</span>].values.astype(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'float32'</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convertir a numpy array</span></span>
+<span id="cb2-302"></span>
+<span id="cb2-303">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Escalamiento</span></span>
+<span id="cb2-304">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> preprocessing.StandardScaler()</span>
+<span id="cb2-305">        X_scaled <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler.fit_transform(X)</span>
+<span id="cb2-306"></span>
+<span id="cb2-307">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Dividir datos</span></span>
+<span id="cb2-308">        X_train, X_test, y_train, y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(</span>
+<span id="cb2-309">            X_scaled, y,</span>
+<span id="cb2-310">            test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.test_size,</span>
+<span id="cb2-311">            stratify<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>y,</span>
+<span id="cb2-312">            random_state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.random_state</span>
+<span id="cb2-313">        )</span>
+<span id="cb2-314"></span>
+<span id="cb2-315">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Datos de entrenamiento: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>X_train<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-316">        logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Datos de prueba: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>X_test<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-317"></span>
+<span id="cb2-318">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Crear y entrenar modelo</span></span>
+<span id="cb2-319">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._create_model(X_train.shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])</span>
+<span id="cb2-320"></span>
+<span id="cb2-321">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Callbacks</span></span>
+<span id="cb2-322">        callbacks <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-323">            keras.callbacks.EarlyStopping(</span>
+<span id="cb2-324">                monitor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'val_loss'</span>,</span>
+<span id="cb2-325">                patience<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span id="cb2-326">                restore_best_weights<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb2-327">                verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-328">            ),</span>
+<span id="cb2-329">            keras.callbacks.ReduceLROnPlateau(</span>
+<span id="cb2-330">                monitor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'val_loss'</span>,</span>
+<span id="cb2-331">                factor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb2-332">                patience<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb2-333">                min_lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-6</span>,</span>
+<span id="cb2-334">                verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-335">            )</span>
+<span id="cb2-336">        ]</span>
+<span id="cb2-337"></span>
+<span id="cb2-338">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Entrenar modelo</span></span>
+<span id="cb2-339">        history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model.fit(</span>
+<span id="cb2-340">            X_train, y_train,</span>
+<span id="cb2-341">            epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.epochs,</span>
+<span id="cb2-342">            batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.batch_size,</span>
+<span id="cb2-343">            validation_split<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.validation_split,</span>
+<span id="cb2-344">            callbacks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>callbacks,</span>
+<span id="cb2-345">            verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-346">        )</span>
+<span id="cb2-347"></span>
+<span id="cb2-348">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Evaluar modelo</span></span>
+<span id="cb2-349">        metrics <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._evaluate_model(X_test, y_test)</span>
+<span id="cb2-350"></span>
+<span id="cb2-351">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Guardar artefactos</span></span>
+<span id="cb2-352">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._save_artifacts()</span>
+<span id="cb2-353"></span>
+<span id="cb2-354">        logger.info(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Entrenamiento completado"</span>)</span>
+<span id="cb2-355">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> metrics</span>
+<span id="cb2-356"></span>
+<span id="cb2-357">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> _evaluate_model(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, X_test: np.ndarray, y_test: np.ndarray) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Dict[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>]:</span>
+<span id="cb2-358">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-359"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Evalúa el modelo</span></span>
+<span id="cb2-360"></span>
+<span id="cb2-361"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-362"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            X_test: Datos de prueba</span></span>
+<span id="cb2-363"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            y_test: Etiquetas de prueba</span></span>
+<span id="cb2-364"></span>
+<span id="cb2-365"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-366"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            Diccionario con métricas</span></span>
+<span id="cb2-367"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-368">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Asegurar que y_test sea un array numpy 1D</span></span>
+<span id="cb2-369">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">hasattr</span>(y_test, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'values'</span>):</span>
+<span id="cb2-370">            y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_test.values</span>
+<span id="cb2-371">        y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.asarray(y_test).ravel()</span>
+<span id="cb2-372"></span>
+<span id="cb2-373">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Realizar predicciones</span></span>
+<span id="cb2-374">        y_pred_prob <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model.predict(X_test, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb2-375">        y_pred_prob <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_pred_prob.ravel()  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Asegurar que sea 1D</span></span>
+<span id="cb2-376">        y_pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (y_pred_prob <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>).astype(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>)</span>
+<span id="cb2-377"></span>
+<span id="cb2-378">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calcular métricas</span></span>
+<span id="cb2-379">        auc_score <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> roc_auc_score(y_test, y_pred_prob)</span>
+<span id="cb2-380"></span>
+<span id="cb2-381">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'='</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-382">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"EVALUACIÓN DEL MODELO"</span>)</span>
+<span id="cb2-383">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'='</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-384">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"AUC Score: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>auc_score<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-385">        <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -2600,99 +4477,782 @@ font-style: inherit;">"</span><span class="ch" style="color: #20794D;
 background-color: null;
 font-style: inherit;">\n</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">Frecuencia de loan_status:"</span>)</span>
-<span id="cb1-9"><span class="bu" style="color: null;
+font-style: inherit;">Reporte de Clasificación:"</span>)</span>
+<span id="cb2-386">        <span class="bu" style="color: null;
 background-color: null;
-font-style: inherit;">print</span>(df[<span class="st" style="color: #20794D;
+font-style: inherit;">print</span>(classification_report(y_test, y_pred))</span>
+<span id="cb2-387"></span>
+<span id="cb2-388">        <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">'loan_status'</span>].value_counts(dropna<span class="op" style="color: #5E5E5E;
+font-style: inherit;"># Mostrar matriz de confusión</span></span>
+<span id="cb2-389">        cm <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
+font-style: inherit;">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb2-390">        disp <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">False</span>))</span>
-<span id="cb1-10"></span>
-<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+font-style: inherit;">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># 4. Proporción de valores nulos por variable</span></span>
-<span id="cb1-12">nulos <span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span>cm, display_labels<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span> df.isna().mean().sort_values(ascending<span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'No Default'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Default'</span>])</span>
+<span id="cb2-391">        disp.plot(cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Blues'</span>)</span>
+<span id="cb2-392">        plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Matriz de Confusión'</span>)</span>
+<span id="cb2-393">        plt.show()</span>
+<span id="cb2-394"></span>
+<span id="cb2-395">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calcular métricas de forma segura</span></span>
+<span id="cb2-396">        accuracy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.mean(y_pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> y_test)</span>
+<span id="cb2-397"></span>
+<span id="cb2-398">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Precision</span></span>
+<span id="cb2-399">        true_positives <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>((y_pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb2-400">        predicted_positives <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(y_pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-401">        precision <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> true_positives <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> predicted_positives <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> predicted_positives <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span></span>
+<span id="cb2-402"></span>
+<span id="cb2-403">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Recall</span></span>
+<span id="cb2-404">        actual_positives <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-405">        recall <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> true_positives <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> actual_positives <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> actual_positives <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span></span>
+<span id="cb2-406"></span>
+<span id="cb2-407">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> {</span>
+<span id="cb2-408">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'auc_score'</span>: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(auc_score),</span>
+<span id="cb2-409">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(accuracy),</span>
+<span id="cb2-410">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'precision'</span>: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(precision),</span>
+<span id="cb2-411">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'recall'</span>: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(recall)</span>
+<span id="cb2-412">        }</span>
+<span id="cb2-413"></span>
+<span id="cb2-414">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> _save_artifacts(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb2-415">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Guarda todos los artefactos del modelo"""</span></span>
+<span id="cb2-416">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model.save(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.model_path)</span>
+<span id="cb2-417">        joblib.dump(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.features_path)</span>
+<span id="cb2-418">        joblib.dump(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.config.scaler_path)</span>
+<span id="cb2-419">        logger.info(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Artefactos guardados exitosamente"</span>)</span>
+<span id="cb2-420"></span>
+<span id="cb2-421">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> predict_default_probability(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, input_data: Union[Dict, pd.DataFrame]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> np.ndarray:</span>
+<span id="cb2-422">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-423"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Predice la probabilidad de incumplimiento</span></span>
+<span id="cb2-424"></span>
+<span id="cb2-425"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-426"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            input_data: Datos de entrada (dict o DataFrame)</span></span>
+<span id="cb2-427"></span>
+<span id="cb2-428"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-429"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            Array con probabilidades</span></span>
+<span id="cb2-430"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-431">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.scaler <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb2-432">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.load_model_and_artifacts():</span>
+<span id="cb2-433">                <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">RuntimeError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"No se pudo cargar el modelo"</span>)</span>
+<span id="cb2-434"></span>
+<span id="cb2-435">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convertir entrada a DataFrame si es necesario</span></span>
+<span id="cb2-436">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(input_data, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>):</span>
+<span id="cb2-437">            df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame([input_data])</span>
+<span id="cb2-438">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb2-439">            df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> input_data.copy()</span>
+<span id="cb2-440"></span>
+<span id="cb2-441">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Preprocesar datos</span></span>
+<span id="cb2-442">        X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.preprocess_input(df)</span>
+<span id="cb2-443"></span>
+<span id="cb2-444">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Hacer predicción</span></span>
+<span id="cb2-445">        probabilities <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model.predict(X, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb2-446">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> probabilities.ravel()</span>
+<span id="cb2-447"></span>
+<span id="cb2-448">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> convert_prob_to_score(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, prob: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>, min_score: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>, max_score: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">850</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>:</span>
+<span id="cb2-449">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-450"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Convierte probabilidad a score crediticio</span></span>
+<span id="cb2-451"></span>
+<span id="cb2-452"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Args:</span></span>
+<span id="cb2-453"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            prob: Probabilidad de incumplimiento</span></span>
+<span id="cb2-454"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            min_score: Score mínimo</span></span>
+<span id="cb2-455"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            max_score: Score máximo</span></span>
+<span id="cb2-456"></span>
+<span id="cb2-457"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-458"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            Score crediticio</span></span>
+<span id="cb2-459"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-460">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> min_score <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (max_score <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> min_score) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> prob)</span>
+<span id="cb2-461"></span>
+<span id="cb2-462">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> get_feature_importance(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-463">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb2-464"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Obtiene la importancia de las features (aproximada)</span></span>
+<span id="cb2-465"></span>
+<span id="cb2-466"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        Returns:</span></span>
+<span id="cb2-467"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">            DataFrame con importancia de features</span></span>
+<span id="cb2-468"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        """</span></span>
+<span id="cb2-469">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb2-470">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">RuntimeError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Modelo no cargado"</span>)</span>
+<span id="cb2-471"></span>
+<span id="cb2-472">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Obtener pesos de la primera capa</span></span>
+<span id="cb2-473">        weights <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.model.layers[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>].get_weights()[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb2-474">        importance <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(weights).mean(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-475"></span>
+<span id="cb2-476">        feature_importance <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame({</span>
+<span id="cb2-477">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'feature'</span>: <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.TOP_FEATURES,</span>
+<span id="cb2-478">            <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'importance'</span>: importance</span>
+<span id="cb2-479">        }).sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'importance'</span>, ascending<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">False</span>)</span>
-<span id="cb1-13"><span class="bu" style="color: null;
+<span id="cb2-480"></span>
+<span id="cb2-481">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> feature_importance</span>
+<span id="cb2-482"></span>
+<span id="cb2-483"></span>
+<span id="cb2-484"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> main():</span>
+<span id="cb2-485">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Función principal para entrenamiento y pruebas"""</span></span>
+<span id="cb2-486">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Configurar ruta de datos</span></span>
+<span id="cb2-487">    data_path <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'/content/drive/MyDrive/2025_1/trabajo_2_redes/loan.csv'</span></span>
+<span id="cb2-488"></span>
+<span id="cb2-489">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Limpiar archivos existentes</span></span>
+<span id="cb2-490">    config <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ModelConfig()</span>
+<span id="cb2-491">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> file_path <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [config.model_path, config.features_path, config.scaler_path]:</span>
+<span id="cb2-492">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> os.path.exists(file_path):</span>
+<span id="cb2-493">            os.remove(file_path)</span>
+<span id="cb2-494">            logger.info(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Archivo </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>file_path<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> eliminado"</span>)</span>
+<span id="cb2-495"></span>
+<span id="cb2-496">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Crear y entrenar modelo</span></span>
+<span id="cb2-497">    predictor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> CreditRiskPredictor(config)</span>
+<span id="cb2-498"></span>
+<span id="cb2-499">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">try</span>:</span>
+<span id="cb2-500">        metrics <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> predictor.train_model(data_path)</span>
+<span id="cb2-501">        logger.info(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Modelo entrenado y guardado exitosamente"</span>)</span>
+<span id="cb2-502"></span>
+<span id="cb2-503">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Casos de prueba</span></span>
+<span id="cb2-504">        test_cases <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-505">            {</span>
+<span id="cb2-506">                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_principal_paid'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_rec_prncp'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12000</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_amnt'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>,</span>
+<span id="cb2-507">                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'recoveries'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_pymnt'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13000</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_pymnt_inv'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13000</span>,</span>
+<span id="cb2-508">                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'out_prncp'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'out_prncp_inv'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'int_rate'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10.0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_term_paid'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span>
+<span id="cb2-509">            },</span>
+<span id="cb2-510">            {</span>
+<span id="cb2-511">                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_principal_paid'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_rec_prncp'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'last_pymnt_amnt'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb2-512">                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'recoveries'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_pymnt'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1200</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'total_pymnt_inv'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1200</span>,</span>
+<span id="cb2-513">                <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'out_prncp'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9000</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'out_prncp_inv'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9000</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'int_rate'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18.0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pct_term_paid'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span></span>
+<span id="cb2-514">            }</span>
+<span id="cb2-515">        ]</span>
+<span id="cb2-516"></span>
+<span id="cb2-517">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'='</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-518">        <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+font-style: inherit;">"PREDICCIONES DE PRUEBA"</span>)</span>
+<span id="cb2-519">        <span class="bu" style="color: null;
 background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
-font-style: inherit;">Top 20 columnas con más nulos:"</span>)</span>
-<span id="cb1-14"><span class="bu" style="color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">print</span>(nulos.head(<span class="dv" style="color: #AD0000;
+font-style: inherit;">{</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">20</span>))</span>
-<span id="cb1-15"></span>
-<span id="cb1-16"><span class="co" style="color: #5E5E5E;
+font-style: inherit;">'='</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># 5. Filtrado de columnas útiles (menos de 30% nulos)</span></span>
-<span id="cb1-17">columnas_utiles <span class="op" style="color: #5E5E5E;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">=</span> nulos[nulos <span class="op" style="color: #5E5E5E;
+font-style: inherit;">50</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&lt;</span> <span class="fl" style="color: #AD0000;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
-font-style: inherit;">0.3</span>].index.tolist()</span>
-<span id="cb1-18">df_util <span class="op" style="color: #5E5E5E;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-520"></span>
+<span id="cb2-521">        <span class="cf" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">=</span> df[columnas_utiles]</span>
-<span id="cb1-19"></span>
-<span id="cb1-20"><span class="co" style="color: #5E5E5E;
+font-weight: bold;
+font-style: inherit;">for</span> i, case <span class="kw" style="color: #003B4F;
 background-color: null;
-font-style: inherit;"># 6. Mostrar tipos de variables (numéricas vs categóricas)</span></span>
-<span id="cb1-21">tipos <span class="op" style="color: #5E5E5E;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
-font-style: inherit;">=</span> df_util.dtypes.value_counts()</span>
-<span id="cb1-22"><span class="bu" style="color: null;
+font-style: inherit;">enumerate</span>(test_cases, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb2-522">            prob <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> predictor.predict_default_probability(case)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb2-523">            score <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> predictor.convert_prob_to_score(prob)</span>
+<span id="cb2-524">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Ejemplo </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: Probabilidad = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>prob<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2%}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, Score = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>score<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-525"></span>
+<span id="cb2-526">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Mostrar importancia de features</span></span>
+<span id="cb2-527">        feature_importance <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> predictor.get_feature_importance()</span>
+<span id="cb2-528">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'='</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-529">        <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+font-style: inherit;">"IMPORTANCIA DE FEATURES"</span>)</span>
+<span id="cb2-530">        <span class="bu" style="color: null;
 background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
-font-style: inherit;">Tipos de variables:"</span>)</span>
-<span id="cb1-23"><span class="bu" style="color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">print</span>(tipos)</span>
-<span id="cb1-24"></span>
-<span id="cb1-25"><span class="co" style="color: #5E5E5E;
+font-style: inherit;">{</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;"># 7. Mostrar una muestra del dataset reducido</span></span>
-<span id="cb1-26">df_util.sample(<span class="dv" style="color: #AD0000;
+font-style: inherit;">'='</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">5</span>, random_state<span class="op" style="color: #5E5E5E;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+font-style: inherit;">50</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">42</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df[<span class="st" style="color: #20794D;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'loan_status'</span>].unique()</span></code></pre></div>
+font-style: inherit;">"</span>)</span>
+<span id="cb2-531">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(feature_importance)</span>
+<span id="cb2-532"></span>
+<span id="cb2-533">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">except</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Exception</span> <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> e:</span>
+<span id="cb2-534">        logger.error(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Error en el entrenamiento: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(e)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-535">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span></span></code></pre></div>
 
 
-</section>
 </section>
 
  ]]></description>
   <category>Redes Neuronales</category>
   <category>Algoritmos bioinspirados</category>
-  <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/trabajo2/</guid>
+  <guid>https://alejandroferiagonzalez.github.io/RNAB/posts/riesgo_crediticio/</guid>
   <pubDate>Mon, 30 Jun 2025 05:00:00 GMT</pubDate>
-  <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/trabajo2/image.png" medium="image" type="image/png"/>
+  <media:content url="https://alejandroferiagonzalez.github.io/RNAB/posts/riesgo_crediticio/image.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Bienvenidos</title>

@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alejandro Feria González, aferiag@unal.edu.co">
+<meta name="author" content="Santiago Molina Munoz, smolinam@unal.edu.co">
+<meta name="dcterms.date" content="2025-06-30">
+
+<title>Predicción del Riesgo de Incumplimiento Crediticio mediante Redes Neuronales – Redes Neuronales y Algoritmos Bioinspirados.</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ebd8daedd9a06b75d3ddf6b0552b5a29.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Redes Neuronales y Algoritmos Bioinspirados.</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-right">
+      <h1 class="title">Predicción del Riesgo de Incumplimiento Crediticio mediante Redes Neuronales</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Redes Neuronales</div>
+                <div class="quarto-category">Algoritmos bioinspirados</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-right">
+
+      <div>
+      <div class="quarto-title-meta-heading">Authors</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alejandro Feria González, aferiag@unal.edu.co </p>
+               <p>Santiago Molina Munoz, smolinam@unal.edu.co </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 30, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenido</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> 1. Introducción</a></li>
+  <li><a href="#evaluación-y-gestión-del-riesgo-de-crédito" id="toc-evaluación-y-gestión-del-riesgo-de-crédito" class="nav-link" data-scroll-target="#evaluación-y-gestión-del-riesgo-de-crédito"><span class="header-section-number">2</span> 2. Evaluación y Gestión del Riesgo de Crédito</a></li>
+  <li><a href="#delimitación-del-problema-y-metodología" id="toc-delimitación-del-problema-y-metodología" class="nav-link" data-scroll-target="#delimitación-del-problema-y-metodología"><span class="header-section-number">3</span> 3. Delimitación del Problema y Metodología</a>
+  <ul class="collapse">
+  <li><a href="#delimitación-del-problema" id="toc-delimitación-del-problema" class="nav-link" data-scroll-target="#delimitación-del-problema"><span class="header-section-number">3.1</span> Delimitación del Problema</a></li>
+  <li><a href="#metodología" id="toc-metodología" class="nav-link" data-scroll-target="#metodología"><span class="header-section-number">3.2</span> Metodología</a></li>
+  </ul></li>
+  <li><a href="#preparación-del-conjunto-de-datos" id="toc-preparación-del-conjunto-de-datos" class="nav-link" data-scroll-target="#preparación-del-conjunto-de-datos"><span class="header-section-number">4</span> Preparación del conjunto de datos</a>
+  <ul class="collapse">
+  <li><a href="#construcción-de-la-variable-objetivo" id="toc-construcción-de-la-variable-objetivo" class="nav-link" data-scroll-target="#construcción-de-la-variable-objetivo"><span class="header-section-number">4.1</span> Construcción de la Variable Objetivo</a></li>
+  <li><a href="#filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables" id="toc-filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables" class="nav-link" data-scroll-target="#filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables"><span class="header-section-number">4.2</span> Filtrando el Ruido: Una Poda Estratégica del Bosque de Variables</a></li>
+  <li><a href="#codificación-inteligente-y-selección-estratégica-de-variables" id="toc-codificación-inteligente-y-selección-estratégica-de-variables" class="nav-link" data-scroll-target="#codificación-inteligente-y-selección-estratégica-de-variables"><span class="header-section-number">4.3</span> Codificación Inteligente y Selección Estratégica de Variables</a></li>
+  </ul></li>
+  <li><a href="#analisis-descriptivo-e-hipotesis" id="toc-analisis-descriptivo-e-hipotesis" class="nav-link" data-scroll-target="#analisis-descriptivo-e-hipotesis"><span class="header-section-number">5</span> Analisis Descriptivo e Hipotesis</a>
+  <ul class="collapse">
+  <li><a href="#variable-objetivo-loan_status" id="toc-variable-objetivo-loan_status" class="nav-link" data-scroll-target="#variable-objetivo-loan_status"><span class="header-section-number">5.1</span> Variable Objetivo: loan_status</a></li>
+  </ul></li>
+  <li><a href="#aplicacion-web" id="toc-aplicacion-web" class="nav-link" data-scroll-target="#aplicacion-web"><span class="header-section-number">6</span> Aplicacion web</a></li>
+  <li><a href="#codigo-del-modelo" id="toc-codigo-del-modelo" class="nav-link" data-scroll-target="#codigo-del-modelo"><span class="header-section-number">7</span> Codigo del modelo</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-right" id="quarto-document-content">
+
+
+
+
+<nav id="TOC-body" role="doc-toc">
+    <h2 id="toc-title">Tabla de contenido</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción"><span class="header-section-number">1</span> 1. Introducción</a></li>
+  <li><a href="#evaluación-y-gestión-del-riesgo-de-crédito" id="toc-evaluación-y-gestión-del-riesgo-de-crédito"><span class="header-section-number">2</span> 2. Evaluación y Gestión del Riesgo de Crédito</a></li>
+  <li><a href="#delimitación-del-problema-y-metodología" id="toc-delimitación-del-problema-y-metodología"><span class="header-section-number">3</span> 3. Delimitación del Problema y Metodología</a>
+  <ul>
+  <li><a href="#delimitación-del-problema" id="toc-delimitación-del-problema"><span class="header-section-number">3.1</span> Delimitación del Problema</a></li>
+  <li><a href="#metodología" id="toc-metodología"><span class="header-section-number">3.2</span> Metodología</a></li>
+  </ul></li>
+  <li><a href="#preparación-del-conjunto-de-datos" id="toc-preparación-del-conjunto-de-datos"><span class="header-section-number">4</span> Preparación del conjunto de datos</a>
+  <ul>
+  <li><a href="#construcción-de-la-variable-objetivo" id="toc-construcción-de-la-variable-objetivo"><span class="header-section-number">4.1</span> Construcción de la Variable Objetivo</a></li>
+  <li><a href="#filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables" id="toc-filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables"><span class="header-section-number">4.2</span> Filtrando el Ruido: Una Poda Estratégica del Bosque de Variables</a></li>
+  <li><a href="#codificación-inteligente-y-selección-estratégica-de-variables" id="toc-codificación-inteligente-y-selección-estratégica-de-variables"><span class="header-section-number">4.3</span> Codificación Inteligente y Selección Estratégica de Variables</a></li>
+  </ul></li>
+  <li><a href="#analisis-descriptivo-e-hipotesis" id="toc-analisis-descriptivo-e-hipotesis"><span class="header-section-number">5</span> Analisis Descriptivo e Hipotesis</a>
+  <ul>
+  <li><a href="#variable-objetivo-loan_status" id="toc-variable-objetivo-loan_status"><span class="header-section-number">5.1</span> Variable Objetivo: loan_status</a></li>
+  </ul></li>
+  <li><a href="#aplicacion-web" id="toc-aplicacion-web"><span class="header-section-number">6</span> Aplicacion web</a></li>
+  <li><a href="#codigo-del-modelo" id="toc-codigo-del-modelo"><span class="header-section-number">7</span> Codigo del modelo</a></li>
+  </ul>
+</nav>
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 1. Introducción</h1>
+<p>El acceso al crédito es un pilar fundamental en la inclusión financiera y el crecimiento económico de las sociedades modernas. Sin embargo, otorgar crédito implica inherentemente un riesgo para las instituciones financieras: la posibilidad de que un prestatario no cumpla con sus obligaciones. En este contexto, la capacidad para predecir el incumplimiento de pagos se convierte en un componente esencial de una gestión crediticia efectiva.</p>
+<p>El presente trabajo aborda el desarrollo de un modelo de predicción de la probabilidad de incumplimiento en créditos individuales utilizando redes neuronales artificiales aplicadas a datos tabulares. Se emplea como caso de estudio el conjunto de datos denominado Credit Risk Dataset, disponible en la plataforma Kaggle. Este dataset incluye una amplia variedad de características sociodemográficas, financieras y crediticias que permiten modelar el comportamiento de pago de los clientes.</p>
+<p>Más allá del modelo predictivo, el trabajo propone una representación en forma de scorecard —una herramienta ampliamente utilizada en la industria financiera para comunicar riesgos de manera simple y comprensible—, así como una aplicación web interactiva que permite a los usuarios explorar su nivel de riesgo frente al resto de la población analizada. Esta integración entre inteligencia artificial, visualización y accesibilidad promueve una comprensión activa del riesgo crediticio tanto para entidades como para individuos.</p>
+</section>
+<section id="evaluación-y-gestión-del-riesgo-de-crédito" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 2. Evaluación y Gestión del Riesgo de Crédito</h1>
+<p>La evaluación del riesgo de crédito busca estimar la probabilidad de que un solicitante de crédito incumpla sus obligaciones contractuales, lo cual tiene implicaciones directas en la rentabilidad, sostenibilidad y solvencia de las instituciones financieras. Tradicionalmente, esta evaluación se ha basado en análisis estadísticos y expertos humanos, pero los avances recientes en ciencia de datos permiten la implementación de modelos más complejos y adaptativos, como las redes neuronales.</p>
+<p>La gestión del riesgo crediticio abarca no solo la predicción del incumplimiento, sino también su monitoreo continuo, la segmentación de clientes, la definición de políticas de originación, y el cálculo de provisiones y capital regulatorio. En este sentido, los modelos predictivos contribuyen a:</p>
+<ul>
+<li>Reducir la morosidad mediante decisiones informadas de otorgamiento.</li>
+<li>Asignar precios al riesgo de forma diferenciada.</li>
+<li>Optimizar el portafolio de cartera balanceando riesgo y retorno.</li>
+</ul>
+<p>En este trabajo se sigue una lógica propia del scoring de crédito, enfocada en estimar la probabilidad de ser “malo” (default), una perspectiva crítica para prevenir pérdidas esperadas. La transformación de la variable loan_status en una variable binaria facilita este enfoque, permitiendo excluir casos inciertos y concentrar el análisis en observaciones con historial conocido.</p>
+<p>La metodología propuesta tiene un enfoque práctico, que puede ser fácilmente adaptado por cooperativas, fondos de empleados y fintechs interesadas en mejorar sus esquemas de evaluación crediticia mediante herramientas basadas en aprendizaje automático.</p>
+</section>
+<section id="delimitación-del-problema-y-metodología" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 3. Delimitación del Problema y Metodología</h1>
+<section id="delimitación-del-problema" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="delimitación-del-problema"><span class="header-section-number">3.1</span> Delimitación del Problema</h2>
+<p>El presente trabajo se enfoca en la predicción del riesgo de incumplimiento crediticio individual a partir de información sociodemográfica, financiera y crediticia contenida en el Credit Risk Dataset. Se define como problema principal la estimación de la probabilidad de que un cliente sea “malo”, es decir, que no pague su crédito de manera completa o que presente morosidades graves.</p>
+<p>Para ello, se construye una variable objetivo binaria en la que:</p>
+<ul>
+<li>1 representa un cliente que incumple (por ejemplo, estados como Charged Off, Default, o Late 31-120 days),</li>
+<li>0 representa un cliente que cumple (por ejemplo, Fully Paid o equivalentes),</li>
+<li>Casos con estados como Current, Issued, In Grace Period, o con información ambigua son excluidos del entrenamiento.</li>
+</ul>
+<p>La tarea se delimita como un problema de clasificación supervisada binaria, donde el objetivo es modelar la probabilidad condicional de ser un mal pagador dadas sus características observadas. No se aborda en este trabajo la estimación de pérdida esperada ni la severidad del incumplimiento, sino únicamente su ocurrencia.</p>
+<p>Además, el trabajo se centra en el desarrollo y análisis de modelos basados en redes neuronales artificiales aplicadas a datos tabulares. Si bien se incluye un modelo de referencia más simple (como regresión logística), el foco principal es la exploración y optimización de arquitecturas de redes para mejorar el poder predictivo.</p>
+</section>
+<section id="metodología" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="metodología"><span class="header-section-number">3.2</span> Metodología</h2>
+<p>La metodología del trabajo consta de las siguientes etapas:</p>
+<ol type="1">
+<li>Preparación del conjunto de datos</li>
+</ol>
+<ul>
+<li>Carga del dataset y exploración preliminar.</li>
+<li>Transformación de la variable loan_status a formato binario.</li>
+<li>Tratamiento de valores faltantes y codificación de variables categóricas.</li>
+<li>Normalización de variables numéricas según requerimientos de la red neuronal.</li>
+</ul>
+<ol start="2" type="1">
+<li>Análisis exploratorio</li>
+</ol>
+<ul>
+<li>Descripción estadística de variables clave.</li>
+<li>Visualización de relaciones entre variables y la clase objetivo.</li>
+<li>Generación de hipótesis iniciales sobre factores de riesgo.</li>
+</ul>
+<ol start="3" type="1">
+<li>Construcción y validación de modelos</li>
+</ol>
+<ul>
+<li>Implementación de un modelo de referencia (regresión logística o árbol).</li>
+<li>Diseño y entrenamiento de una red neuronal feedforward (MLP).</li>
+<li>Optimización de hiperparámetros (número de capas, neuronas, función de activación, regularización, tasa de aprendizaje).</li>
+<li>Evaluación del desempeño mediante métricas como AUC, precisión, recall y matriz de confusión sobre conjuntos de validación y prueba.</li>
+</ul>
+<ol start="4" type="1">
+<li>Interpretabilidad y scorecard</li>
+</ol>
+<ul>
+<li>Aproximación de la red neuronal mediante métodos interpretables.</li>
+<li>Conversión de salidas en una escala de score (por ejemplo, 300–850).</li>
+<li>Visualización del score en comparación con la población general.</li>
+</ul>
+<ol start="5" type="1">
+<li>Despliegue web</li>
+</ol>
+<ul>
+<li>Desarrollo de una aplicación interactiva que permite ingresar características individuales y visualizar el score.</li>
+<li>Inclusión de visualizaciones comparativas y mensajes interpretativos.</li>
+<li>Enlace a reporte técnico y video promocional.</li>
+</ul>
+<ol start="6" type="1">
+<li>Evaluación y documentación</li>
+</ol>
+<ul>
+<li>Análisis de resultados y aprendizajes clave.</li>
+<li>Discusión sobre aplicabilidad práctica del modelo.</li>
+<li>Redacción del reporte técnico con normas APA y presentación audiovisual.</li>
+</ul>
+</section>
+</section>
+<section id="preparación-del-conjunto-de-datos" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Preparación del conjunto de datos</h1>
+<section id="construcción-de-la-variable-objetivo" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="construcción-de-la-variable-objetivo"><span class="header-section-number">4.1</span> Construcción de la Variable Objetivo</h2>
+<p>La primera parada en nuestro viaje de modelado predictivo es la definición precisa de la variable que queremos predecir. Partimos cargando el archivo loan.csv en un DataFrame de pandas, donde la columna loan_status funge como el corazón del análisis: indica el estado final de cada préstamo.</p>
+<p>Sin embargo, esta columna no está lista para su uso directo. Contiene múltiples etiquetas en texto que describen distintos escenarios crediticios, desde préstamos totalmente pagados hasta aquellos en mora o incumplimiento. Para convertir este problema en una tarea de clasificación binaria clara, realizamos una transformación crucial: los estados favorables se codifican como 0 (buen pagador), mientras que los desfavorables se codifican como 1 (incumplimiento). Aquellos casos en los que el comportamiento del prestatario no es concluyente se excluyen del análisis para evitar ambigüedades.</p>
+<p>Este paso no solo depura el conjunto de datos, sino que también garantiza que la variable objetivo sea estrictamente binaria y esté representada en un formato numérico, condición indispensable para que los algoritmos de aprendizaje automático funcionen correctamente.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> pd.read_csv(csv_path)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Datos cargados: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear variable target</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'loan_status'</span> <span class="kw">not</span> <span class="kw">in</span> df.columns:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Columna 'loan_status' no encontrada"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">'target'</span>] <span class="op">=</span> df[<span class="st">'loan_status'</span>].<span class="bu">map</span>(<span class="va">self</span>.STATUS_MAP)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> df[df[<span class="st">'target'</span>].notna()].copy()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Datos después de filtrar: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Distribución de target: </span><span class="sc">{</span>df[<span class="st">'target'</span>]<span class="sc">.</span>value_counts()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Preprocesar datos</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        df_clean <span class="op">=</span> <span class="va">self</span>._clean_data(df)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Asegurar que todas las features necesarias estén presentes</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> <span class="va">self</span>.TOP_FEATURES:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> df_clean.columns:</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                df_clean[col] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> df_clean[<span class="va">self</span>.TOP_FEATURES].astype(<span class="st">'float32'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> df[<span class="st">'target'</span>].values.astype(<span class="st">'float32'</span>)  <span class="co"># Convertir a numpy array</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Escalamiento</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.scaler <span class="op">=</span> preprocessing.StandardScaler()</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        X_scaled <span class="op">=</span> <span class="va">self</span>.scaler.fit_transform(X)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Dividir datos</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            X_scaled, y,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            test_size<span class="op">=</span><span class="va">self</span>.config.test_size,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            stratify<span class="op">=</span>y,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            random_state<span class="op">=</span><span class="va">self</span>.config.random_state</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="filtrando-el-ruido-una-poda-estratégica-del-bosque-de-variables"><span class="header-section-number">4.2</span> Filtrando el Ruido: Una Poda Estratégica del Bosque de Variables</h2>
+<p>Antes de que cualquier modelo pueda brillar, necesita una base limpia, clara y sin distracciones. Imagínalo como afilar herramientas antes de tallar una escultura: quitar lo innecesario es tan importante como lo que se conserva. Así que emprendimos una limpieza del conjunto de datos, eliminando columnas que, aunque vistosas, no aportaban valor real para predecir el riesgo de incumplimiento.</p>
+<ol type="1">
+<li><p>Columnas fantasma: demasiados datos faltantes Algunas variables parecían estar allí solo de adorno. Con más del 70% de sus valores perdidos, simplemente no tenían sustancia. Solo agregaban confusión. Eliminarlas nos permitió concentrarnos en datos sólidos, confiables y útiles para el modelo.</p></li>
+<li><p>Textos bonitos, pero poco útiles Variables como nombres, títulos, códigos postales y URLs suenan interesantes… pero para una red neuronal, son solo ruido. Son descripciones libres o identificadores únicos que no tienen patrones útiles para aprender. Preferimos decirles adiós y evitar que el modelo trate de encontrar señales en el caos.</p></li>
+<li><p>Prediciendo el futuro con datos del futuro (¡prohibido!) Algunas columnas contenían información sobre pagos, moras, recuperaciones… ¡que ocurren después de otorgar el préstamo! Incluirlas sería como hacer trampa en una adivinanza sabiendo ya la respuesta. Para evitar el temido data leakage, se descartaron completamente. Nuestro modelo solo ve lo que estaría disponible antes de tomar la decisión crediticia.</p></li>
+<li><p>Variables con muy poca variabilidad no ayudan a diferenciar entre buenos y malos pagadores. Si todo el mundo tiene el mismo valor, el modelo no puede aprender nada nuevo de ellas. Por eso, también se fueron.</p></li>
+<li><p>Datos que el usuario no conoce. Hicimos una última depuración desde el punto de vista práctico. Si estamos construyendo un modelo que se integre a una página web para predecir riesgo de forma intuitiva, no podemos pedirle al usuario cosas que no sabría sin un reporte de crédito detallado. ¿Sabes cuál es tu revol_util o tu tot_cur_bal? Por eso, todas esas variables derivadas de sistemas internos o de burós crediticios fueron descartadas para garantizar una experiencia realista, funcional y centrada en el usuario.</p></li>
+</ol>
+</section>
+<section id="codificación-inteligente-y-selección-estratégica-de-variables" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="codificación-inteligente-y-selección-estratégica-de-variables"><span class="header-section-number">4.3</span> Codificación Inteligente y Selección Estratégica de Variables</h2>
+<p>Construir un modelo predictivo no es solo cuestión de lanzar datos al algoritmo. Es como armar un equipo: hay que elegir bien a los jugadores y asegurarse de que hablen el mismo idioma. En esta etapa, transformamos variables clave y seleccionamos aquellas que realmente pueden marcar la diferencia al anticipar el incumplimiento de un préstamo.</p>
+<p><strong>Codificación rápida</strong>: pequeñas mejoras, gran impacto Algunas variables necesitan un pequeño ajuste para hablar el lenguaje del modelo:</p>
+<p><strong>verification_status</strong> ¿Los ingresos del solicitante fueron verificados? Esta pregunta sencilla puede decir mucho. Por eso la codificamos de forma binaria.</p>
+<p><strong>home_ownership</strong> ¿El usuario arrienda, es dueño o tiene hipoteca? Estas categorías sí aportan información. Sin embargo, eliminamos los valores NONE y ANY por ser escasos y ambiguos, evitando introducir ruido innecesario.</p>
+<p><strong>Variables que entran al juego</strong>: posibles predictores Estas variables fueron seleccionadas por su relevancia, interpretabilidad y disponibilidad anticipada al momento de la solicitud:</p>
+<p><strong>loan_amnt</strong>: El monto solicitado por el prestatario. Una cifra clave para entender la magnitud del riesgo.</p>
+<p><strong>annual_inc</strong>: Ingreso anual declarado. Un indicador directo de la capacidad de pago.</p>
+<p><strong>emp_length</strong>: Años en el empleo actual. La estabilidad laboral influye en la solvencia.</p>
+<p><strong>verification_status</strong>: Como se explicó antes, es una señal de confianza sobre los ingresos.</p>
+<p><strong>home_ownership</strong>: Estado de vivienda que puede estar relacionado con el nivel de estabilidad financiera.</p>
+<p><strong>purpose</strong>: La razón por la cual se solicita el préstamo (educación, consolidación de deuda, auto, etc.). Aunque compleja de modelar, puede contener patrones valiosos que vale la pena explorar.</p>
+<p>Codificación binaria: traduciendo categorías al lenguaje de las máquinas.Para que las variables categóricas se integren al modelo, aplicamos codificación binaria, que transforma cada categoría en su propia columna booleana.</p>
+</section>
+</section>
+<section id="analisis-descriptivo-e-hipotesis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Analisis Descriptivo e Hipotesis</h1>
+<p>Antes de construir modelos y lanzar predicciones, es esencial conocer el terreno. El análisis del riesgo crediticio no es solo una cuestión de números: es una radiografía del comportamiento financiero. Aquí exploramos los datos con lupa para descubrir patrones ocultos y validar intuiciones sobre qué variables realmente influyen en el incumplimiento de un préstamo.</p>
+<section id="variable-objetivo-loan_status" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="variable-objetivo-loan_status"><span class="header-section-number">5.1</span> Variable Objetivo: loan_status</h2>
+<p>El eje central de este análisis es el estado del préstamo:</p>
+<p>0 = El préstamo fue pagado completamente</p>
+<p>1 = El préstamo fue impagado, en mora o castigado</p>
+<p>Esta codificación binaria permite estructurar el problema como una tarea de clasificación y evaluar los factores que diferencian a quienes cumplen frente a quienes no.</p>
+</section>
+</section>
+<section id="aplicacion-web" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Aplicacion web</h1>
+<p>Para hacer accesible el modelo de predicción de riesgo crediticio, se desarrolló una aplicación web interactiva. Esta herramienta permite a los usuarios ingresar sus características finan cieras y obtener una estimación de su probabilidad de incumplimiento, expresada en forma de score crediticio.</p>
+<p>La aplicación está diseñada para ser intuitiva y fácil de usar, sin requerir conocimientos técnicos previos. Los usuarios pueden ingresar los datos y a partir de esta información, el modelo predictivo calcula la probabilidad de incumplimiento y genera un score crediticio en una escala de 300 a 850.</p>
+<ul>
+<li>La aplicación web, desarrollada con FastAPI en el backend, HTML, Tailwind CSS para los estilos y HTMX para la interactividad.</li>
+<li>La interfaz de usuario presenta un formulario claro con campos de entrada bien definidos para los datos del solicitante.</li>
+<li>Los elementos visuales están organizados para una fácil navegación y comprensión, utilizando Tailwind CSS para un diseño limpio.</li>
+<li>El backend de FastAPI expone un endpoint /predict que recibe los datos de entrada del usuario, los preprocesa utilizando la lógica definida en model_service.py, y devuelve la predicción de riesgo. El procesamiento de los datos de entrada por parte del ModelService incluye la limpieza, la creación de características y el escalamiento para que sean compatibles con el modelo de red neuronal.</li>
+<li>La aplicación contiene los enlaces al reporte técnico y el material publicitario</li>
+</ul>
+</section>
+<section id="codigo-del-modelo" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Codigo del modelo</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Dict, List, Optional, Union, Tuple</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow <span class="im">import</span> keras</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras <span class="im">import</span> layers</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> preprocessing</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score, classification_report, confusion_matrix, ConfusionMatrixDisplay</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar logging</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>logging.basicConfig(level<span class="op">=</span>logging.INFO, <span class="bu">format</span><span class="op">=</span><span class="st">'</span><span class="sc">%(asctime)s</span><span class="st"> - </span><span class="sc">%(levelname)s</span><span class="st"> - </span><span class="sc">%(message)s</span><span class="st">'</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>logger <span class="op">=</span> logging.getLogger(<span class="va">__name__</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ModelConfig:</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Configuración del modelo"""</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    model_path: <span class="bu">str</span> <span class="op">=</span> <span class="st">'credit_risk_model.h5'</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    features_path: <span class="bu">str</span> <span class="op">=</span> <span class="st">'features.pkl'</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    scaler_path: <span class="bu">str</span> <span class="op">=</span> <span class="st">'scaler.joblib'</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    encoder_path: <span class="bu">str</span> <span class="op">=</span> <span class="st">'label_encoder.pkl'</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    test_size: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    validation_split: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    epochs: <span class="bu">int</span> <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    batch_size: <span class="bu">int</span> <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    random_state: <span class="bu">int</span> <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CreditRiskPredictor:</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Predictor de riesgo crediticio mejorado"""</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Variables más importantes según KBest</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    TOP_FEATURES <span class="op">=</span> [</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">'pct_principal_paid'</span>, <span class="st">'total_rec_prncp'</span>, <span class="st">'last_pymnt_amnt'</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">'recoveries'</span>, <span class="st">'total_pymnt'</span>, <span class="st">'total_pymnt_inv'</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">'out_prncp'</span>, <span class="st">'out_prncp_inv'</span>, <span class="st">'int_rate'</span>, <span class="st">'pct_term_paid'</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mapeo de estados de préstamo</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    STATUS_MAP <span class="op">=</span> {</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Fully Paid"</span>: <span class="dv">0</span>,</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Charged Off"</span>: <span class="dv">1</span>,</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Late (31-120 days)"</span>: <span class="dv">1</span>,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Default"</span>: <span class="dv">1</span>,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Does not meet the credit policy. Status:Fully Paid"</span>: <span class="dv">0</span>,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Does not meet the credit policy. Status:Charged Off"</span>: <span class="dv">1</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, config: Optional[ModelConfig] <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co">        Inicializa el predictor de riesgo crediticio</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co">            config: Configuración del modelo</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.config <span class="op">=</span> config <span class="kw">or</span> ModelConfig()</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.selected_features <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.scaler <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.label_encoder <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear directorio para modelos si no existe</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>        os.makedirs(os.path.dirname(<span class="va">self</span>.config.model_path) <span class="kw">or</span> <span class="st">'.'</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> load_model_and_artifacts(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="co">        Carga el modelo y artefactos necesarios</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="co">            bool: True si la carga fue exitosa</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> os.path.exists(<span class="va">self</span>.config.model_path):</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>                logger.error(<span class="ss">f"Modelo no encontrado en </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>config<span class="sc">.</span>model_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.model <span class="op">=</span> keras.models.load_model(<span class="va">self</span>.config.model_path)</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.selected_features <span class="op">=</span> joblib.load(<span class="va">self</span>.config.features_path)</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> os.path.exists(<span class="va">self</span>.config.scaler_path):</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.scaler <span class="op">=</span> joblib.load(<span class="va">self</span>.config.scaler_path)</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> os.path.exists(<span class="va">self</span>.config.encoder_path):</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.label_encoder <span class="op">=</span> joblib.load(<span class="va">self</span>.config.encoder_path)</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>            logger.info(<span class="st">"Modelo y artefactos cargados exitosamente"</span>)</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>            logger.error(<span class="ss">f"Error al cargar modelo: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _validate_dataframe(<span class="va">self</span>, df: pd.DataFrame) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="co">        Valida y limpia el DataFrame de entrada</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="co">            df: DataFrame a validar</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="co">            DataFrame validado</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> df.empty:</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"DataFrame está vacío"</span>)</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Verificar tipos de datos</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>        numeric_columns <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[np.number]).columns</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(numeric_columns) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>            logger.warning(<span class="st">"No se encontraron columnas numéricas"</span>)</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> df</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _clean_data(<span class="va">self</span>, df: pd.DataFrame) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="co">        Limpia y preprocesa los datos</span></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="co">            df: DataFrame a limpiar</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="co">            DataFrame limpio</span></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> <span class="va">self</span>._validate_dataframe(df.copy())</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Columnas a eliminar</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>        cols_to_remove <span class="op">=</span> [</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>            <span class="st">'earliest_cr_line'</span>, <span class="st">'last_credit_pull_d'</span>, <span class="st">'last_pymnt_d'</span>, <span class="st">'emp_length'</span>,</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>            <span class="st">'next_pymnt_d'</span>, <span class="st">'verification_status_joint'</span>, <span class="st">'desc'</span>, <span class="st">'emp_title'</span>, <span class="st">'title'</span>,</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>            <span class="st">'id'</span>, <span class="st">'member_id'</span>, <span class="st">'url'</span>, <span class="st">'zip_code'</span>, <span class="st">'loan_status'</span>, <span class="st">'application_type'</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> df.drop(columns<span class="op">=</span>cols_to_remove, errors<span class="op">=</span><span class="st">'ignore'</span>)</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear feature: porcentaje de principal pagado</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'total_rec_prncp'</span> <span class="kw">in</span> df.columns <span class="kw">and</span> <span class="st">'loan_amnt'</span> <span class="kw">in</span> df.columns:</span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>            df[<span class="st">'pct_principal_paid'</span>] <span class="op">=</span> np.where(</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>                df[<span class="st">'loan_amnt'</span>] <span class="op">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>                df[<span class="st">'total_rec_prncp'</span>] <span class="op">/</span> df[<span class="st">'loan_amnt'</span>],</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>                <span class="dv">0</span></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear feature: porcentaje de término completado</span></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> {<span class="st">'issue_d'</span>, <span class="st">'last_pymnt_d'</span>, <span class="st">'term'</span>}.issubset(df.columns):</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> <span class="va">self</span>._create_temporal_features(df)</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Codificar variables categóricas</span></span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>        categorical_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>]).columns</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(categorical_cols) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> pd.get_dummies(df, columns<span class="op">=</span>categorical_cols, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Manejo de valores faltantes</span></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>        numeric_cols <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[np.number]).columns</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>        df[numeric_cols] <span class="op">=</span> df[numeric_cols].fillna(df[numeric_cols].median())</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> df</span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _create_temporal_features(<span class="va">self</span>, df: pd.DataFrame) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="co">        Crea features temporales</span></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a><span class="co">            df: DataFrame con columnas temporales</span></span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="co">            DataFrame con nuevas features</span></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>            df[<span class="st">'issue_d'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'issue_d'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a>            df[<span class="st">'last_pymnt_d'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'last_pymnt_d'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calcular meses transcurridos</span></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>            df[<span class="st">'meses_transcurridos'</span>] <span class="op">=</span> (</span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>                (df[<span class="st">'last_pymnt_d'</span>].dt.year <span class="op">-</span> df[<span class="st">'issue_d'</span>].dt.year) <span class="op">*</span> <span class="dv">12</span> <span class="op">+</span></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a>                (df[<span class="st">'last_pymnt_d'</span>].dt.month <span class="op">-</span> df[<span class="st">'issue_d'</span>].dt.month)</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>            ).clip(lower<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extraer número de meses del término</span></span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a>            df[<span class="st">'term_meses'</span>] <span class="op">=</span> df[<span class="st">'term'</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.extract(<span class="vs">r'</span><span class="kw">(</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="vs">'</span>).astype(<span class="bu">float</span>)</span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calcular porcentaje de término pagado</span></span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a>            df[<span class="st">'pct_term_paid'</span>] <span class="op">=</span> np.where(</span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>                df[<span class="st">'term_meses'</span>] <span class="op">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>                df[<span class="st">'meses_transcurridos'</span>] <span class="op">/</span> df[<span class="st">'term_meses'</span>],</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>                <span class="dv">0</span></span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>            logger.warning(<span class="ss">f"Error creando features temporales: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> df</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> preprocess_input(<span class="va">self</span>, df: pd.DataFrame) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a><span class="co">        Preprocesa datos de entrada para predicción</span></span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a><span class="co">            df: DataFrame a procesar</span></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="co">            DataFrame procesado</span></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>        df_clean <span class="op">=</span> <span class="va">self</span>._clean_data(df)</span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Asegurar que todas las features necesarias estén presentes</span></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> <span class="va">self</span>.TOP_FEATURES:</span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> df_clean.columns:</span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>                df_clean[col] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> df_clean[<span class="va">self</span>.TOP_FEATURES].astype(<span class="st">'float32'</span>)</span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Aplicar escalamiento si existe</span></span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.scaler <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>            X_scaled <span class="op">=</span> <span class="va">self</span>.scaler.transform(X)</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>            X <span class="op">=</span> pd.DataFrame(X_scaled, columns<span class="op">=</span><span class="va">self</span>.TOP_FEATURES, index<span class="op">=</span>X.index)</span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> X</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _create_model(<span class="va">self</span>, input_shape: <span class="bu">int</span>) <span class="op">-&gt;</span> keras.Model:</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a><span class="co">        Crea la arquitectura del modelo</span></span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a><span class="co">            input_shape: Forma de entrada</span></span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a><span class="co">            Modelo compilado</span></span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> keras.Sequential([</span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a>            layers.Dense(<span class="dv">128</span>, activation<span class="op">=</span><span class="st">'relu'</span>, input_shape<span class="op">=</span>(input_shape,)),</span>
+<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a>            layers.BatchNormalization(),</span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a>            layers.Dropout(<span class="fl">0.3</span>),</span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a>            layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>),</span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a>            layers.BatchNormalization(),</span>
+<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a>            layers.Dropout(<span class="fl">0.2</span>),</span>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a>            layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>),</span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a>            layers.BatchNormalization(),</span>
+<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a>            layers.Dropout(<span class="fl">0.1</span>),</span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a>            layers.Dense(<span class="dv">16</span>, activation<span class="op">=</span><span class="st">'relu'</span>),</span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a>            layers.Dropout(<span class="fl">0.1</span>),</span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a>            layers.Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>)</span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a>        ])</span>
+<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a>        model.<span class="bu">compile</span>(</span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a>            optimizer<span class="op">=</span>keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.001</span>),</span>
+<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a>            loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>,</span>
+<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a>            metrics<span class="op">=</span>[<span class="st">'accuracy'</span>, keras.metrics.AUC(name<span class="op">=</span><span class="st">'auc'</span>)]</span>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> model</span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> train_model(<span class="va">self</span>, csv_path: <span class="bu">str</span>) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, <span class="bu">float</span>]:</span>
+<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a><span class="co">        Entrena el modelo con datos del CSV</span></span>
+<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a><span class="co">            csv_path: Ruta al archivo CSV</span></span>
+<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-270"><a href="#cb2-270" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-271"><a href="#cb2-271" aria-hidden="true" tabindex="-1"></a><span class="co">            Diccionario con métricas de evaluación</span></span>
+<span id="cb2-272"><a href="#cb2-272" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-273"><a href="#cb2-273" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Iniciando entrenamiento con datos de </span><span class="sc">{</span>csv_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-274"><a href="#cb2-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Cargar datos</span></span>
+<span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> os.path.exists(csv_path):</span>
+<span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="ss">f"Archivo no encontrado: </span><span class="sc">{</span>csv_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> pd.read_csv(csv_path)</span>
+<span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Datos cargados: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-282"><a href="#cb2-282" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear variable target</span></span>
+<span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'loan_status'</span> <span class="kw">not</span> <span class="kw">in</span> df.columns:</span>
+<span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Columna 'loan_status' no encontrada"</span>)</span>
+<span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">'target'</span>] <span class="op">=</span> df[<span class="st">'loan_status'</span>].<span class="bu">map</span>(<span class="va">self</span>.STATUS_MAP)</span>
+<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> df[df[<span class="st">'target'</span>].notna()].copy()</span>
+<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Datos después de filtrar: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Distribución de target: </span><span class="sc">{</span>df[<span class="st">'target'</span>]<span class="sc">.</span>value_counts()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Preprocesar datos</span></span>
+<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a>        df_clean <span class="op">=</span> <span class="va">self</span>._clean_data(df)</span>
+<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Asegurar que todas las features necesarias estén presentes</span></span>
+<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> <span class="va">self</span>.TOP_FEATURES:</span>
+<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> df_clean.columns:</span>
+<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a>                df_clean[col] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> df_clean[<span class="va">self</span>.TOP_FEATURES].astype(<span class="st">'float32'</span>)</span>
+<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> df[<span class="st">'target'</span>].values.astype(<span class="st">'float32'</span>)  <span class="co"># Convertir a numpy array</span></span>
+<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Escalamiento</span></span>
+<span id="cb2-304"><a href="#cb2-304" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.scaler <span class="op">=</span> preprocessing.StandardScaler()</span>
+<span id="cb2-305"><a href="#cb2-305" aria-hidden="true" tabindex="-1"></a>        X_scaled <span class="op">=</span> <span class="va">self</span>.scaler.fit_transform(X)</span>
+<span id="cb2-306"><a href="#cb2-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-307"><a href="#cb2-307" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Dividir datos</span></span>
+<span id="cb2-308"><a href="#cb2-308" aria-hidden="true" tabindex="-1"></a>        X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb2-309"><a href="#cb2-309" aria-hidden="true" tabindex="-1"></a>            X_scaled, y,</span>
+<span id="cb2-310"><a href="#cb2-310" aria-hidden="true" tabindex="-1"></a>            test_size<span class="op">=</span><span class="va">self</span>.config.test_size,</span>
+<span id="cb2-311"><a href="#cb2-311" aria-hidden="true" tabindex="-1"></a>            stratify<span class="op">=</span>y,</span>
+<span id="cb2-312"><a href="#cb2-312" aria-hidden="true" tabindex="-1"></a>            random_state<span class="op">=</span><span class="va">self</span>.config.random_state</span>
+<span id="cb2-313"><a href="#cb2-313" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-314"><a href="#cb2-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-315"><a href="#cb2-315" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Datos de entrenamiento: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-316"><a href="#cb2-316" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="ss">f"Datos de prueba: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-317"><a href="#cb2-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-318"><a href="#cb2-318" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear y entrenar modelo</span></span>
+<span id="cb2-319"><a href="#cb2-319" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> <span class="va">self</span>._create_model(X_train.shape[<span class="dv">1</span>])</span>
+<span id="cb2-320"><a href="#cb2-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-321"><a href="#cb2-321" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Callbacks</span></span>
+<span id="cb2-322"><a href="#cb2-322" aria-hidden="true" tabindex="-1"></a>        callbacks <span class="op">=</span> [</span>
+<span id="cb2-323"><a href="#cb2-323" aria-hidden="true" tabindex="-1"></a>            keras.callbacks.EarlyStopping(</span>
+<span id="cb2-324"><a href="#cb2-324" aria-hidden="true" tabindex="-1"></a>                monitor<span class="op">=</span><span class="st">'val_loss'</span>,</span>
+<span id="cb2-325"><a href="#cb2-325" aria-hidden="true" tabindex="-1"></a>                patience<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb2-326"><a href="#cb2-326" aria-hidden="true" tabindex="-1"></a>                restore_best_weights<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-327"><a href="#cb2-327" aria-hidden="true" tabindex="-1"></a>                verbose<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb2-328"><a href="#cb2-328" aria-hidden="true" tabindex="-1"></a>            ),</span>
+<span id="cb2-329"><a href="#cb2-329" aria-hidden="true" tabindex="-1"></a>            keras.callbacks.ReduceLROnPlateau(</span>
+<span id="cb2-330"><a href="#cb2-330" aria-hidden="true" tabindex="-1"></a>                monitor<span class="op">=</span><span class="st">'val_loss'</span>,</span>
+<span id="cb2-331"><a href="#cb2-331" aria-hidden="true" tabindex="-1"></a>                factor<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb2-332"><a href="#cb2-332" aria-hidden="true" tabindex="-1"></a>                patience<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb2-333"><a href="#cb2-333" aria-hidden="true" tabindex="-1"></a>                min_lr<span class="op">=</span><span class="fl">1e-6</span>,</span>
+<span id="cb2-334"><a href="#cb2-334" aria-hidden="true" tabindex="-1"></a>                verbose<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb2-335"><a href="#cb2-335" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-336"><a href="#cb2-336" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-337"><a href="#cb2-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-338"><a href="#cb2-338" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Entrenar modelo</span></span>
+<span id="cb2-339"><a href="#cb2-339" aria-hidden="true" tabindex="-1"></a>        history <span class="op">=</span> <span class="va">self</span>.model.fit(</span>
+<span id="cb2-340"><a href="#cb2-340" aria-hidden="true" tabindex="-1"></a>            X_train, y_train,</span>
+<span id="cb2-341"><a href="#cb2-341" aria-hidden="true" tabindex="-1"></a>            epochs<span class="op">=</span><span class="va">self</span>.config.epochs,</span>
+<span id="cb2-342"><a href="#cb2-342" aria-hidden="true" tabindex="-1"></a>            batch_size<span class="op">=</span><span class="va">self</span>.config.batch_size,</span>
+<span id="cb2-343"><a href="#cb2-343" aria-hidden="true" tabindex="-1"></a>            validation_split<span class="op">=</span><span class="va">self</span>.config.validation_split,</span>
+<span id="cb2-344"><a href="#cb2-344" aria-hidden="true" tabindex="-1"></a>            callbacks<span class="op">=</span>callbacks,</span>
+<span id="cb2-345"><a href="#cb2-345" aria-hidden="true" tabindex="-1"></a>            verbose<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb2-346"><a href="#cb2-346" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-347"><a href="#cb2-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-348"><a href="#cb2-348" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Evaluar modelo</span></span>
+<span id="cb2-349"><a href="#cb2-349" aria-hidden="true" tabindex="-1"></a>        metrics <span class="op">=</span> <span class="va">self</span>._evaluate_model(X_test, y_test)</span>
+<span id="cb2-350"><a href="#cb2-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-351"><a href="#cb2-351" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Guardar artefactos</span></span>
+<span id="cb2-352"><a href="#cb2-352" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._save_artifacts()</span>
+<span id="cb2-353"><a href="#cb2-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-354"><a href="#cb2-354" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="st">"Entrenamiento completado"</span>)</span>
+<span id="cb2-355"><a href="#cb2-355" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> metrics</span>
+<span id="cb2-356"><a href="#cb2-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-357"><a href="#cb2-357" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _evaluate_model(<span class="va">self</span>, X_test: np.ndarray, y_test: np.ndarray) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, <span class="bu">float</span>]:</span>
+<span id="cb2-358"><a href="#cb2-358" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-359"><a href="#cb2-359" aria-hidden="true" tabindex="-1"></a><span class="co">        Evalúa el modelo</span></span>
+<span id="cb2-360"><a href="#cb2-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-361"><a href="#cb2-361" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-362"><a href="#cb2-362" aria-hidden="true" tabindex="-1"></a><span class="co">            X_test: Datos de prueba</span></span>
+<span id="cb2-363"><a href="#cb2-363" aria-hidden="true" tabindex="-1"></a><span class="co">            y_test: Etiquetas de prueba</span></span>
+<span id="cb2-364"><a href="#cb2-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-365"><a href="#cb2-365" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-366"><a href="#cb2-366" aria-hidden="true" tabindex="-1"></a><span class="co">            Diccionario con métricas</span></span>
+<span id="cb2-367"><a href="#cb2-367" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-368"><a href="#cb2-368" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Asegurar que y_test sea un array numpy 1D</span></span>
+<span id="cb2-369"><a href="#cb2-369" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">hasattr</span>(y_test, <span class="st">'values'</span>):</span>
+<span id="cb2-370"><a href="#cb2-370" aria-hidden="true" tabindex="-1"></a>            y_test <span class="op">=</span> y_test.values</span>
+<span id="cb2-371"><a href="#cb2-371" aria-hidden="true" tabindex="-1"></a>        y_test <span class="op">=</span> np.asarray(y_test).ravel()</span>
+<span id="cb2-372"><a href="#cb2-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-373"><a href="#cb2-373" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Realizar predicciones</span></span>
+<span id="cb2-374"><a href="#cb2-374" aria-hidden="true" tabindex="-1"></a>        y_pred_prob <span class="op">=</span> <span class="va">self</span>.model.predict(X_test, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-375"><a href="#cb2-375" aria-hidden="true" tabindex="-1"></a>        y_pred_prob <span class="op">=</span> y_pred_prob.ravel()  <span class="co"># Asegurar que sea 1D</span></span>
+<span id="cb2-376"><a href="#cb2-376" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> (y_pred_prob <span class="op">&gt;</span> <span class="fl">0.5</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb2-377"><a href="#cb2-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-378"><a href="#cb2-378" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calcular métricas</span></span>
+<span id="cb2-379"><a href="#cb2-379" aria-hidden="true" tabindex="-1"></a>        auc_score <span class="op">=</span> roc_auc_score(y_test, y_pred_prob)</span>
+<span id="cb2-380"><a href="#cb2-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-381"><a href="#cb2-381" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">50</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-382"><a href="#cb2-382" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"EVALUACIÓN DEL MODELO"</span>)</span>
+<span id="cb2-383"><a href="#cb2-383" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">50</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-384"><a href="#cb2-384" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"AUC Score: </span><span class="sc">{</span>auc_score<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb2-385"><a href="#cb2-385" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Reporte de Clasificación:"</span>)</span>
+<span id="cb2-386"><a href="#cb2-386" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(classification_report(y_test, y_pred))</span>
+<span id="cb2-387"><a href="#cb2-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-388"><a href="#cb2-388" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mostrar matriz de confusión</span></span>
+<span id="cb2-389"><a href="#cb2-389" aria-hidden="true" tabindex="-1"></a>        cm <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb2-390"><a href="#cb2-390" aria-hidden="true" tabindex="-1"></a>        disp <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm, display_labels<span class="op">=</span>[<span class="st">'No Default'</span>, <span class="st">'Default'</span>])</span>
+<span id="cb2-391"><a href="#cb2-391" aria-hidden="true" tabindex="-1"></a>        disp.plot(cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb2-392"><a href="#cb2-392" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="st">'Matriz de Confusión'</span>)</span>
+<span id="cb2-393"><a href="#cb2-393" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb2-394"><a href="#cb2-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-395"><a href="#cb2-395" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calcular métricas de forma segura</span></span>
+<span id="cb2-396"><a href="#cb2-396" aria-hidden="true" tabindex="-1"></a>        accuracy <span class="op">=</span> np.mean(y_pred <span class="op">==</span> y_test)</span>
+<span id="cb2-397"><a href="#cb2-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-398"><a href="#cb2-398" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Precision</span></span>
+<span id="cb2-399"><a href="#cb2-399" aria-hidden="true" tabindex="-1"></a>        true_positives <span class="op">=</span> np.<span class="bu">sum</span>((y_pred <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (y_test <span class="op">==</span> <span class="dv">1</span>))</span>
+<span id="cb2-400"><a href="#cb2-400" aria-hidden="true" tabindex="-1"></a>        predicted_positives <span class="op">=</span> np.<span class="bu">sum</span>(y_pred <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-401"><a href="#cb2-401" aria-hidden="true" tabindex="-1"></a>        precision <span class="op">=</span> true_positives <span class="op">/</span> predicted_positives <span class="cf">if</span> predicted_positives <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="fl">0.0</span></span>
+<span id="cb2-402"><a href="#cb2-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-403"><a href="#cb2-403" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Recall</span></span>
+<span id="cb2-404"><a href="#cb2-404" aria-hidden="true" tabindex="-1"></a>        actual_positives <span class="op">=</span> np.<span class="bu">sum</span>(y_test <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-405"><a href="#cb2-405" aria-hidden="true" tabindex="-1"></a>        recall <span class="op">=</span> true_positives <span class="op">/</span> actual_positives <span class="cf">if</span> actual_positives <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="fl">0.0</span></span>
+<span id="cb2-406"><a href="#cb2-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-407"><a href="#cb2-407" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb2-408"><a href="#cb2-408" aria-hidden="true" tabindex="-1"></a>            <span class="st">'auc_score'</span>: <span class="bu">float</span>(auc_score),</span>
+<span id="cb2-409"><a href="#cb2-409" aria-hidden="true" tabindex="-1"></a>            <span class="st">'accuracy'</span>: <span class="bu">float</span>(accuracy),</span>
+<span id="cb2-410"><a href="#cb2-410" aria-hidden="true" tabindex="-1"></a>            <span class="st">'precision'</span>: <span class="bu">float</span>(precision),</span>
+<span id="cb2-411"><a href="#cb2-411" aria-hidden="true" tabindex="-1"></a>            <span class="st">'recall'</span>: <span class="bu">float</span>(recall)</span>
+<span id="cb2-412"><a href="#cb2-412" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-413"><a href="#cb2-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-414"><a href="#cb2-414" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _save_artifacts(<span class="va">self</span>):</span>
+<span id="cb2-415"><a href="#cb2-415" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Guarda todos los artefactos del modelo"""</span></span>
+<span id="cb2-416"><a href="#cb2-416" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model.save(<span class="va">self</span>.config.model_path)</span>
+<span id="cb2-417"><a href="#cb2-417" aria-hidden="true" tabindex="-1"></a>        joblib.dump(<span class="va">self</span>.TOP_FEATURES, <span class="va">self</span>.config.features_path)</span>
+<span id="cb2-418"><a href="#cb2-418" aria-hidden="true" tabindex="-1"></a>        joblib.dump(<span class="va">self</span>.scaler, <span class="va">self</span>.config.scaler_path)</span>
+<span id="cb2-419"><a href="#cb2-419" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="st">"Artefactos guardados exitosamente"</span>)</span>
+<span id="cb2-420"><a href="#cb2-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-421"><a href="#cb2-421" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict_default_probability(<span class="va">self</span>, input_data: Union[Dict, pd.DataFrame]) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb2-422"><a href="#cb2-422" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-423"><a href="#cb2-423" aria-hidden="true" tabindex="-1"></a><span class="co">        Predice la probabilidad de incumplimiento</span></span>
+<span id="cb2-424"><a href="#cb2-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-425"><a href="#cb2-425" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-426"><a href="#cb2-426" aria-hidden="true" tabindex="-1"></a><span class="co">            input_data: Datos de entrada (dict o DataFrame)</span></span>
+<span id="cb2-427"><a href="#cb2-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-428"><a href="#cb2-428" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-429"><a href="#cb2-429" aria-hidden="true" tabindex="-1"></a><span class="co">            Array con probabilidades</span></span>
+<span id="cb2-430"><a href="#cb2-430" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-431"><a href="#cb2-431" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.model <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> <span class="va">self</span>.scaler <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb2-432"><a href="#cb2-432" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>.load_model_and_artifacts():</span>
+<span id="cb2-433"><a href="#cb2-433" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"No se pudo cargar el modelo"</span>)</span>
+<span id="cb2-434"><a href="#cb2-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-435"><a href="#cb2-435" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Convertir entrada a DataFrame si es necesario</span></span>
+<span id="cb2-436"><a href="#cb2-436" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(input_data, <span class="bu">dict</span>):</span>
+<span id="cb2-437"><a href="#cb2-437" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> pd.DataFrame([input_data])</span>
+<span id="cb2-438"><a href="#cb2-438" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb2-439"><a href="#cb2-439" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> input_data.copy()</span>
+<span id="cb2-440"><a href="#cb2-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-441"><a href="#cb2-441" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Preprocesar datos</span></span>
+<span id="cb2-442"><a href="#cb2-442" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> <span class="va">self</span>.preprocess_input(df)</span>
+<span id="cb2-443"><a href="#cb2-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-444"><a href="#cb2-444" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Hacer predicción</span></span>
+<span id="cb2-445"><a href="#cb2-445" aria-hidden="true" tabindex="-1"></a>        probabilities <span class="op">=</span> <span class="va">self</span>.model.predict(X, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-446"><a href="#cb2-446" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> probabilities.ravel()</span>
+<span id="cb2-447"><a href="#cb2-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-448"><a href="#cb2-448" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> convert_prob_to_score(<span class="va">self</span>, prob: <span class="bu">float</span>, min_score: <span class="bu">int</span> <span class="op">=</span> <span class="dv">300</span>, max_score: <span class="bu">int</span> <span class="op">=</span> <span class="dv">850</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb2-449"><a href="#cb2-449" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-450"><a href="#cb2-450" aria-hidden="true" tabindex="-1"></a><span class="co">        Convierte probabilidad a score crediticio</span></span>
+<span id="cb2-451"><a href="#cb2-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-452"><a href="#cb2-452" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb2-453"><a href="#cb2-453" aria-hidden="true" tabindex="-1"></a><span class="co">            prob: Probabilidad de incumplimiento</span></span>
+<span id="cb2-454"><a href="#cb2-454" aria-hidden="true" tabindex="-1"></a><span class="co">            min_score: Score mínimo</span></span>
+<span id="cb2-455"><a href="#cb2-455" aria-hidden="true" tabindex="-1"></a><span class="co">            max_score: Score máximo</span></span>
+<span id="cb2-456"><a href="#cb2-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-457"><a href="#cb2-457" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-458"><a href="#cb2-458" aria-hidden="true" tabindex="-1"></a><span class="co">            Score crediticio</span></span>
+<span id="cb2-459"><a href="#cb2-459" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-460"><a href="#cb2-460" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> min_score <span class="op">+</span> (max_score <span class="op">-</span> min_score) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> prob)</span>
+<span id="cb2-461"><a href="#cb2-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-462"><a href="#cb2-462" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_feature_importance(<span class="va">self</span>) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb2-463"><a href="#cb2-463" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb2-464"><a href="#cb2-464" aria-hidden="true" tabindex="-1"></a><span class="co">        Obtiene la importancia de las features (aproximada)</span></span>
+<span id="cb2-465"><a href="#cb2-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-466"><a href="#cb2-466" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb2-467"><a href="#cb2-467" aria-hidden="true" tabindex="-1"></a><span class="co">            DataFrame con importancia de features</span></span>
+<span id="cb2-468"><a href="#cb2-468" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-469"><a href="#cb2-469" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.model <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb2-470"><a href="#cb2-470" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Modelo no cargado"</span>)</span>
+<span id="cb2-471"><a href="#cb2-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-472"><a href="#cb2-472" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Obtener pesos de la primera capa</span></span>
+<span id="cb2-473"><a href="#cb2-473" aria-hidden="true" tabindex="-1"></a>        weights <span class="op">=</span> <span class="va">self</span>.model.layers[<span class="dv">0</span>].get_weights()[<span class="dv">0</span>]</span>
+<span id="cb2-474"><a href="#cb2-474" aria-hidden="true" tabindex="-1"></a>        importance <span class="op">=</span> np.<span class="bu">abs</span>(weights).mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-475"><a href="#cb2-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-476"><a href="#cb2-476" aria-hidden="true" tabindex="-1"></a>        feature_importance <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb2-477"><a href="#cb2-477" aria-hidden="true" tabindex="-1"></a>            <span class="st">'feature'</span>: <span class="va">self</span>.TOP_FEATURES,</span>
+<span id="cb2-478"><a href="#cb2-478" aria-hidden="true" tabindex="-1"></a>            <span class="st">'importance'</span>: importance</span>
+<span id="cb2-479"><a href="#cb2-479" aria-hidden="true" tabindex="-1"></a>        }).sort_values(<span class="st">'importance'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-480"><a href="#cb2-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-481"><a href="#cb2-481" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> feature_importance</span>
+<span id="cb2-482"><a href="#cb2-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-483"><a href="#cb2-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-484"><a href="#cb2-484" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb2-485"><a href="#cb2-485" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Función principal para entrenamiento y pruebas"""</span></span>
+<span id="cb2-486"><a href="#cb2-486" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Configurar ruta de datos</span></span>
+<span id="cb2-487"><a href="#cb2-487" aria-hidden="true" tabindex="-1"></a>    data_path <span class="op">=</span> <span class="st">'/content/drive/MyDrive/2025_1/trabajo_2_redes/loan.csv'</span></span>
+<span id="cb2-488"><a href="#cb2-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-489"><a href="#cb2-489" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Limpiar archivos existentes</span></span>
+<span id="cb2-490"><a href="#cb2-490" aria-hidden="true" tabindex="-1"></a>    config <span class="op">=</span> ModelConfig()</span>
+<span id="cb2-491"><a href="#cb2-491" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> file_path <span class="kw">in</span> [config.model_path, config.features_path, config.scaler_path]:</span>
+<span id="cb2-492"><a href="#cb2-492" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> os.path.exists(file_path):</span>
+<span id="cb2-493"><a href="#cb2-493" aria-hidden="true" tabindex="-1"></a>            os.remove(file_path)</span>
+<span id="cb2-494"><a href="#cb2-494" aria-hidden="true" tabindex="-1"></a>            logger.info(<span class="ss">f"Archivo </span><span class="sc">{</span>file_path<span class="sc">}</span><span class="ss"> eliminado"</span>)</span>
+<span id="cb2-495"><a href="#cb2-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-496"><a href="#cb2-496" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Crear y entrenar modelo</span></span>
+<span id="cb2-497"><a href="#cb2-497" aria-hidden="true" tabindex="-1"></a>    predictor <span class="op">=</span> CreditRiskPredictor(config)</span>
+<span id="cb2-498"><a href="#cb2-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-499"><a href="#cb2-499" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-500"><a href="#cb2-500" aria-hidden="true" tabindex="-1"></a>        metrics <span class="op">=</span> predictor.train_model(data_path)</span>
+<span id="cb2-501"><a href="#cb2-501" aria-hidden="true" tabindex="-1"></a>        logger.info(<span class="st">"Modelo entrenado y guardado exitosamente"</span>)</span>
+<span id="cb2-502"><a href="#cb2-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-503"><a href="#cb2-503" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Casos de prueba</span></span>
+<span id="cb2-504"><a href="#cb2-504" aria-hidden="true" tabindex="-1"></a>        test_cases <span class="op">=</span> [</span>
+<span id="cb2-505"><a href="#cb2-505" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb2-506"><a href="#cb2-506" aria-hidden="true" tabindex="-1"></a>                <span class="st">'pct_principal_paid'</span>: <span class="fl">1.0</span>, <span class="st">'total_rec_prncp'</span>: <span class="dv">12000</span>, <span class="st">'last_pymnt_amnt'</span>: <span class="dv">100</span>,</span>
+<span id="cb2-507"><a href="#cb2-507" aria-hidden="true" tabindex="-1"></a>                <span class="st">'recoveries'</span>: <span class="dv">0</span>, <span class="st">'total_pymnt'</span>: <span class="dv">13000</span>, <span class="st">'total_pymnt_inv'</span>: <span class="dv">13000</span>,</span>
+<span id="cb2-508"><a href="#cb2-508" aria-hidden="true" tabindex="-1"></a>                <span class="st">'out_prncp'</span>: <span class="dv">0</span>, <span class="st">'out_prncp_inv'</span>: <span class="dv">0</span>, <span class="st">'int_rate'</span>: <span class="fl">10.0</span>, <span class="st">'pct_term_paid'</span>: <span class="fl">1.0</span></span>
+<span id="cb2-509"><a href="#cb2-509" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb2-510"><a href="#cb2-510" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb2-511"><a href="#cb2-511" aria-hidden="true" tabindex="-1"></a>                <span class="st">'pct_principal_paid'</span>: <span class="fl">0.1</span>, <span class="st">'total_rec_prncp'</span>: <span class="dv">1000</span>, <span class="st">'last_pymnt_amnt'</span>: <span class="dv">0</span>,</span>
+<span id="cb2-512"><a href="#cb2-512" aria-hidden="true" tabindex="-1"></a>                <span class="st">'recoveries'</span>: <span class="dv">0</span>, <span class="st">'total_pymnt'</span>: <span class="dv">1200</span>, <span class="st">'total_pymnt_inv'</span>: <span class="dv">1200</span>,</span>
+<span id="cb2-513"><a href="#cb2-513" aria-hidden="true" tabindex="-1"></a>                <span class="st">'out_prncp'</span>: <span class="dv">9000</span>, <span class="st">'out_prncp_inv'</span>: <span class="dv">9000</span>, <span class="st">'int_rate'</span>: <span class="fl">18.0</span>, <span class="st">'pct_term_paid'</span>: <span class="fl">0.2</span></span>
+<span id="cb2-514"><a href="#cb2-514" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-515"><a href="#cb2-515" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-516"><a href="#cb2-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-517"><a href="#cb2-517" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">50</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-518"><a href="#cb2-518" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"PREDICCIONES DE PRUEBA"</span>)</span>
+<span id="cb2-519"><a href="#cb2-519" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">50</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-520"><a href="#cb2-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-521"><a href="#cb2-521" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i, case <span class="kw">in</span> <span class="bu">enumerate</span>(test_cases, <span class="dv">1</span>):</span>
+<span id="cb2-522"><a href="#cb2-522" aria-hidden="true" tabindex="-1"></a>            prob <span class="op">=</span> predictor.predict_default_probability(case)[<span class="dv">0</span>]</span>
+<span id="cb2-523"><a href="#cb2-523" aria-hidden="true" tabindex="-1"></a>            score <span class="op">=</span> predictor.convert_prob_to_score(prob)</span>
+<span id="cb2-524"><a href="#cb2-524" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Ejemplo </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: Probabilidad = </span><span class="sc">{</span>prob<span class="sc">:.2%}</span><span class="ss">, Score = </span><span class="sc">{</span>score<span class="sc">:.0f}</span><span class="ss">"</span>)</span>
+<span id="cb2-525"><a href="#cb2-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-526"><a href="#cb2-526" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mostrar importancia de features</span></span>
+<span id="cb2-527"><a href="#cb2-527" aria-hidden="true" tabindex="-1"></a>        feature_importance <span class="op">=</span> predictor.get_feature_importance()</span>
+<span id="cb2-528"><a href="#cb2-528" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">50</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-529"><a href="#cb2-529" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"IMPORTANCIA DE FEATURES"</span>)</span>
+<span id="cb2-530"><a href="#cb2-530" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'='</span><span class="op">*</span><span class="dv">50</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-531"><a href="#cb2-531" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(feature_importance)</span>
+<span id="cb2-532"><a href="#cb2-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-533"><a href="#cb2-533" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb2-534"><a href="#cb2-534" aria-hidden="true" tabindex="-1"></a>        logger.error(<span class="ss">f"Error en el entrenamiento: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-535"><a href="#cb2-535" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/alejandroferiagonzalez\.github\.io\/RNAB\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
