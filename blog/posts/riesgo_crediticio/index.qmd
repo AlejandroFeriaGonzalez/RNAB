@@ -5,7 +5,7 @@ author:
   - name: "Santiago Molina Munoz, smolinam@unal.edu.co"
 date: "2025-06-30"
 categories: [Redes Neuronales, Algoritmos bioinspirados]
-image: "image.png"
+image: "web3.png"
 format:
   html:
     number-sections: true
@@ -200,6 +200,9 @@ El eje central de este análisis es el estado del préstamo:
 Esta codificación binaria permite estructurar el problema como una tarea de clasificación y evaluar los factores que diferencian a quienes cumplen frente a quienes no.
 
 # Aplicacion web
+
+![Web App](./web3.png)
+
 Para hacer accesible el modelo de predicción de riesgo crediticio, se desarrolló una aplicación web interactiva. Esta herramienta permite a los usuarios ingresar sus características finan cieras y obtener una estimación de su probabilidad de incumplimiento, expresada en forma de score crediticio.
 
 La aplicación está diseñada para ser intuitiva y fácil de usar, sin requerir conocimientos técnicos previos. Los usuarios pueden ingresar los datos y a partir de esta información, el modelo predictivo calcula la probabilidad de incumplimiento y genera un score crediticio en una escala de 300 a 850.
@@ -209,6 +212,8 @@ La aplicación está diseñada para ser intuitiva y fácil de usar, sin requerir
 * Los elementos visuales están organizados para una fácil navegación y comprensión, utilizando Tailwind CSS para un diseño limpio.
 * El backend de FastAPI expone un endpoint /predict que recibe los datos de entrada del usuario, los preprocesa utilizando la lógica definida en model_service.py, y devuelve la predicción de riesgo. El procesamiento de los datos de entrada por parte del ModelService incluye la limpieza, la creación de características y el escalamiento para que sean compatibles con el modelo de red neuronal.
 * La aplicación contiene los enlaces al reporte técnico y el material publicitario
+
+![Respuesta](./web2.png)
 
 # Codigo del modelo
 ```python
