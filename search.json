@@ -263,7 +263,7 @@
     "href": "posts/riesgo_crediticio/index.html",
     "title": "Predicción del Riesgo de Incumplimiento Crediticio mediante Redes Neuronales",
     "section": "",
-    "text": "1 1. Introducción\n  2 2. Evaluación y Gestión del Riesgo de Crédito\n  3 3. Delimitación del Problema y Metodología\n  \n  3.1 Delimitación del Problema\n  3.2 Metodología\n  \n  4 Preparación del conjunto de datos\n  \n  4.1 Construcción de la Variable Objetivo\n  4.2 Filtrando el Ruido: Una Poda Estratégica del Bosque de Variables\n  4.3 Codificación Inteligente y Selección Estratégica de Variables\n  \n  5 Analisis Descriptivo e Hipotesis\n  \n  5.1 Variable Objetivo: loan_status\n  \n  6 Aplicacion web\n  7 Codigo del modelo"
+    "text": "1 1. Introducción\n  2 2. Evaluación y Gestión del Riesgo de Crédito\n  3 3. Delimitación del Problema y Metodología\n  \n  3.1 Delimitación del Problema\n  3.2 Metodología\n  \n  4 Preparación del conjunto de datos\n  \n  4.1 Construcción de la Variable Objetivo\n  4.2 Filtrando el Ruido: Una Poda Estratégica del Bosque de Variables\n  4.3 Codificación Inteligente y Selección Estratégica de Variables\n  \n  5 Analisis Descriptivo e Hipotesis\n  \n  5.1 Variable Objetivo: loan_status\n  \n  6 Análisis de las variables predictoras\n  7 Función de Pérdida\n  8 Resultados del Modelo\n  9 Métricas de desempeño\n  10 Importancia de las variables\n  11 Caso de Uso del Modelo\n  12 Aplicacion web\n  13 Conclusiones\n  14 Codigo del modelo"
   },
   {
     "objectID": "posts/riesgo_crediticio/index.html#delimitación-del-problema",

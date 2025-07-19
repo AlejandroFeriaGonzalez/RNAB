@@ -207,8 +207,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#variable-objetivo-loan_status" id="toc-variable-objetivo-loan_status" class="nav-link" data-scroll-target="#variable-objetivo-loan_status"><span class="header-section-number">5.1</span> Variable Objetivo: loan_status</a></li>
   </ul></li>
-  <li><a href="#aplicacion-web" id="toc-aplicacion-web" class="nav-link" data-scroll-target="#aplicacion-web"><span class="header-section-number">6</span> Aplicacion web</a></li>
-  <li><a href="#codigo-del-modelo" id="toc-codigo-del-modelo" class="nav-link" data-scroll-target="#codigo-del-modelo"><span class="header-section-number">7</span> Codigo del modelo</a></li>
+  <li><a href="#análisis-de-las-variables-predictoras" id="toc-análisis-de-las-variables-predictoras" class="nav-link" data-scroll-target="#análisis-de-las-variables-predictoras"><span class="header-section-number">6</span> Análisis de las variables predictoras</a></li>
+  <li><a href="#función-de-pérdida" id="toc-función-de-pérdida" class="nav-link" data-scroll-target="#función-de-pérdida"><span class="header-section-number">7</span> Función de Pérdida</a></li>
+  <li><a href="#resultados-del-modelo" id="toc-resultados-del-modelo" class="nav-link" data-scroll-target="#resultados-del-modelo"><span class="header-section-number">8</span> Resultados del Modelo</a></li>
+  <li><a href="#métricas-de-desempeño" id="toc-métricas-de-desempeño" class="nav-link" data-scroll-target="#métricas-de-desempeño"><span class="header-section-number">9</span> Métricas de desempeño</a></li>
+  <li><a href="#importancia-de-las-variables" id="toc-importancia-de-las-variables" class="nav-link" data-scroll-target="#importancia-de-las-variables"><span class="header-section-number">10</span> Importancia de las variables</a></li>
+  <li><a href="#caso-de-uso-del-modelo" id="toc-caso-de-uso-del-modelo" class="nav-link" data-scroll-target="#caso-de-uso-del-modelo"><span class="header-section-number">11</span> Caso de Uso del Modelo</a></li>
+  <li><a href="#aplicacion-web" id="toc-aplicacion-web" class="nav-link" data-scroll-target="#aplicacion-web"><span class="header-section-number">12</span> Aplicacion web</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">13</span> Conclusiones</a></li>
+  <li><a href="#codigo-del-modelo" id="toc-codigo-del-modelo" class="nav-link" data-scroll-target="#codigo-del-modelo"><span class="header-section-number">14</span> Codigo del modelo</a></li>
   </ul>
 </nav>
 </nav>
@@ -243,8 +250,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#variable-objetivo-loan_status" id="toc-variable-objetivo-loan_status"><span class="header-section-number">5.1</span> Variable Objetivo: loan_status</a></li>
   </ul></li>
-  <li><a href="#aplicacion-web" id="toc-aplicacion-web"><span class="header-section-number">6</span> Aplicacion web</a></li>
-  <li><a href="#codigo-del-modelo" id="toc-codigo-del-modelo"><span class="header-section-number">7</span> Codigo del modelo</a></li>
+  <li><a href="#análisis-de-las-variables-predictoras" id="toc-análisis-de-las-variables-predictoras"><span class="header-section-number">6</span> Análisis de las variables predictoras</a></li>
+  <li><a href="#función-de-pérdida" id="toc-función-de-pérdida"><span class="header-section-number">7</span> Función de Pérdida</a></li>
+  <li><a href="#resultados-del-modelo" id="toc-resultados-del-modelo"><span class="header-section-number">8</span> Resultados del Modelo</a></li>
+  <li><a href="#métricas-de-desempeño" id="toc-métricas-de-desempeño"><span class="header-section-number">9</span> Métricas de desempeño</a></li>
+  <li><a href="#importancia-de-las-variables" id="toc-importancia-de-las-variables"><span class="header-section-number">10</span> Importancia de las variables</a></li>
+  <li><a href="#caso-de-uso-del-modelo" id="toc-caso-de-uso-del-modelo"><span class="header-section-number">11</span> Caso de Uso del Modelo</a></li>
+  <li><a href="#aplicacion-web" id="toc-aplicacion-web"><span class="header-section-number">12</span> Aplicacion web</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones"><span class="header-section-number">13</span> Conclusiones</a></li>
+  <li><a href="#codigo-del-modelo" id="toc-codigo-del-modelo"><span class="header-section-number">14</span> Codigo del modelo</a></li>
   </ul>
 </nav>
 <section id="introducción" class="level1" data-number="1">
@@ -401,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>verification_status</strong>: Como se explicó antes, es una señal de confianza sobre los ingresos.</p>
 <p><strong>home_ownership</strong>: Estado de vivienda que puede estar relacionado con el nivel de estabilidad financiera.</p>
 <p><strong>purpose</strong>: La razón por la cual se solicita el préstamo (educación, consolidación de deuda, auto, etc.). Aunque compleja de modelar, puede contener patrones valiosos que vale la pena explorar.</p>
-<p>Codificación binaria: traduciendo categorías al lenguaje de las máquinas.Para que las variables categóricas se integren al modelo, aplicamos codificación binaria, que transforma cada categoría en su propia columna booleana.</p>
+<p><strong>Codificación binaria</strong>: traduciendo categorías al lenguaje de las máquinas.Para que las variables categóricas se integren al modelo, aplicamos codificación binaria, que transforma cada categoría en su propia columna booleana.</p>
 </section>
 </section>
 <section id="analisis-descriptivo-e-hipotesis" class="level1" data-number="5">
@@ -415,8 +429,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Esta codificación binaria permite estructurar el problema como una tarea de clasificación y evaluar los factores que diferencian a quienes cumplen frente a quienes no.</p>
 </section>
 </section>
-<section id="aplicacion-web" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Aplicacion web</h1>
+<section id="análisis-de-las-variables-predictoras" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Análisis de las variables predictoras</h1>
+<p>La variable target es de tipo categórica binaria y representa el estado del préstamo: 0 para los préstamos pagados y 1 para los impagos. Es la variable objetivo del análisis y sirve como base para entrenar modelos de clasificación supervisada. Analizar su distribución mediante un gráfico de pastel permite identificar posibles desbalances entre clases, lo cual es crucial, ya que un predominio de préstamos pagados podría sesgar el modelo hacia la clase mayoritaria. En este caso, el 78.1% de los registros corresponde a préstamos pagados y el 21.9% a impagos, lo que confirma un desbalance moderado. Además, esta variable define el concepto de incumplimiento sobre el cual se construyen tanto las predicciones como la lógica de score crediticio.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./grafico1.png" class="img-fluid figure-img"></p>
+<figcaption>Grafico 1</figcaption>
+</figure>
+</div>
+<p>El análisis de las variables predictoras permite comprender los factores que influyen en el comportamiento de pago de los solicitantes de crédito. Una de las variables más relevantes es la tasa de interés (int_rate), ya que refleja el nivel de riesgo que la entidad financiera asigna al prestatario. En general, los créditos con tasas más altas están asociados a perfiles de mayor riesgo. Comparar esta variable entre préstamos pagados e impagos permite validar si esta relación se materializa en los datos, reforzando su utilidad como variable explicativa en el modelo.</p>
+<p>Otra variable clave es el índice de endeudamiento (dti, Debt-to-Income Ratio), que indica qué proporción de los ingresos del solicitante está comprometida en el pago de otras deudas. Altos niveles de DTI sugieren una menor capacidad de pago, lo que naturalmente incrementa el riesgo de incumplimiento. Observar la distribución de esta variable según el estado del préstamo permite identificar si los impagos se concentran en prestatarios con mayor carga financiera.</p>
+<p>Finalmente, la variable grade representa una clasificación de riesgo asignada internamente por la entidad, y se considera de tipo categórica ordinal, yendo de A (mejor calificación) a G (peor). Evaluar la proporción de impagos por cada nivel permite verificar si esta evaluación interna está alineada con el comportamiento real. Una tendencia ascendente en los incumplimientos a medida que se desciende en el grado de crédito sería una fuerte evidencia de que esta segmentación es efectiva como herramienta de evaluación previa.</p>
+<p>Modelado Predictivo Para la etapa de modelado se empleó una red neuronal artificial construida con Keras, una interfaz de alto nivel que facilita el diseño y entrenamiento de modelos de aprendizaje profundo. El backend utilizado fue TensorFlow, lo que permitió aprovechar capacidades optimizadas de cómputo para entrenar redes densas con múltiples capas ocultas, normalización por lotes (batch normalization) y mecanismos de regularización como dropout para evitar sobreajuste.</p>
+<p>Dado que el objetivo del modelo es predecir el incumplimiento de pago (clase minoritaria), fue necesario prestar especial atención a la selección de métricas. En lugar de priorizar únicamente la precisión global (accuracy), se dio mayor relevancia a métricas como la curva ROC-AUC, recall y precisión, que permiten evaluar el desempeño del modelo en identificar correctamente a los potenciales deudores morosos. Asimismo, se exploraron técnicas de ajuste para el desbalance de clases, como la estratificación en la partición de entrenamiento y validación, y la evaluación de estrategias adicionales como ponderación de clases (class weighting) o sobremuestreo, aunque no se implementaron en la versión final del modelo base.</p>
+<p>Definición de Métricas Clave Dado que este es un problema de clasificación binaria orientado a predecir el riesgo de incumplimiento crediticio, se definió como variable objetivo un valor de 1 para aquellos clientes que no pagaron su préstamo. En este contexto, resulta crítico maximizar la capacidad del modelo para identificar correctamente a los solicitantes que realmente no cumplirán con sus obligaciones. Por ello, se prioriza el uso del Recall (también conocido como sensibilidad o true positive rate) como métrica principal. Este indicador mide la proporción de casos de incumplimiento correctamente identificados frente al total de incumplidores reales, minimizando así el riesgo financiero asociado a prestar a clientes de alto riesgo.</p>
+<p>Además del Recall, se emplearon otras métricas complementarias para comparar y seleccionar modelos. En particular, se utilizó el AUC-PR (área bajo la curva Precision-Recall), una métrica más adecuada que el AUC-ROC en contextos de clases desbalanceadas, ya que se enfoca en la calidad de las predicciones sobre la clase minoritaria (los no pagadores). El valor del AUC-PR se interpreta en relación con un baseline determinado por la proporción de incumplimientos reales en la muestra. De forma complementaria, también se analizaron el AUC-ROC y la accuracy general, aunque estas métricas tienen menor relevancia en escenarios donde los costos de clasificación errónea no son simétricos. En resumen, la elección del modelo final se basará en una combinación de Recall, AUC-PR, AUC-ROC y Accuracy.</p>
+</section>
+<section id="función-de-pérdida" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Función de Pérdida</h1>
+<p>Se seleccionó la entropía cruzada binaria (Binary Cross-Entropy, BCE) como función de pérdida, debido a su idoneidad para problemas de clasificación binaria cuando se combina con una función de activación sigmoide en la capa de salida. Esta elección se basa en fundamentos de máxima verosimilitud, ya que modela la probabilidad de pertenencia a la clase positiva mediante una distribución de Bernoulli. La BCE penaliza de forma asimétrica los errores, castigando más fuertemente aquellas predicciones con alta confianza que resultan incorrectas, lo cual resulta deseable en el contexto del riesgo crediticio. Además, presenta propiedades matemáticas que facilitan el entrenamiento: es convexa bajo la activación sigmoide, sus derivadas son suaves y estables, y su implementación es eficiente y robusta desde el punto de vista computacional, contribuyendo a una convergencia más efectiva durante la optimización del modelo.</p>
+</section>
+<section id="resultados-del-modelo" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Resultados del Modelo</h1>
+<p>El modelo de red neuronal propuesto fue entrenado con un conjunto de datos preprocesado y balanceado de manera parcial mediante estratificación. El objetivo fue predecir la probabilidad de incumplimiento crediticio (target = 1) a partir de variables financieras, contractuales y comportamentales. A continuación, se presentan los principales hallazgos y métricas obtenidas durante el entrenamiento y validación del modelo.</p>
+<p>Comportamiento durante el entrenamiento La función de pérdida utilizada fue la entropía binaria cruzada (Binary Cross-Entropy), la cual demostró una convergencia eficiente a lo largo de las épocas. Como se observa en la siguiente figura, tanto la pérdida de entrenamiento como la de validación disminuyen de forma constante, sin evidencias de sobreajuste.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./grafico2.png" class="img-fluid figure-img"></p>
+<figcaption>Gráfico de Pérdida</figcaption>
+</figure>
+</div>
+<p>La métrica AUC (Área bajo la curva ROC) también muestra una tendencia creciente y estable, alcanzando valores muy cercanos al máximo teórico de 1.0 desde las primeras épocas. La curva de validación incluso supera consistentemente a la curva de entrenamiento, lo que indica buena capacidad generalizadora del modelo.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./grafico3.png" class="img-fluid figure-img"></p>
+<figcaption>Gráfico de AUC</figcaption>
+</figure>
+</div>
+</section>
+<section id="métricas-de-desempeño" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Métricas de desempeño</h1>
+<p>La evaluación final del modelo sobre el conjunto de prueba arrojó métricas altamente satisfactorias:</p>
+<p>AUC Score: 0.9998</p>
+<p>Accuracy: 100%</p>
+<p>Recall para clase 1 (no pagadores): 99%</p>
+<p>Precision para clase 1: 100%</p>
+<p>F1-score clase 1: 1.00</p>
+<p>Estos resultados confirman la excelente capacidad del modelo para identificar correctamente a los clientes con alto riesgo de incumplimiento. En particular, el alto recall indica que la mayoría de los impagos fueron detectados correctamente, lo que es clave desde una perspectiva de gestión de riesgo financiero.</p>
+<p>La matriz de confusión ilustra la distribución de predicciones correctas e incorrectas. El modelo cometió solo 61 falsos negativos (clientes que incumplieron pero fueron clasificados como buenos pagadores) y 45 falsos positivos (clientes buenos que fueron clasificados como impagadores), lo cual es un margen de error extremadamente bajo dada la magnitud de la muestra.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./matrix.png" class="img-fluid figure-img"></p>
+<figcaption>matrix</figcaption>
+</figure>
+</div>
+</section>
+<section id="importancia-de-las-variables" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Importancia de las variables</h1>
+<p>El análisis de pesos de la primera capa de la red neuronal reveló cuáles fueron las variables con mayor influencia en la predicción. Las más relevantes fueron:</p>
+<p>recoveries: monto recuperado luego de impago.</p>
+<p>pct_principal_paid: porcentaje del capital cancelado.</p>
+<p>last_pymnt_amnt: valor del último pago realizado.</p>
+<p>out_prncp_inv: saldo de capital pendiente.</p>
+<p>int_rate: tasa de interés otorgada.</p>
+<p>Estas variables reflejan una combinación de historial de pago, términos del préstamo y comportamiento reciente, lo cual respalda la robustez del modelo en términos interpretativos.</p>
+</section>
+<section id="caso-de-uso-del-modelo" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Caso de Uso del Modelo</h1>
+<p>Este modelo predictivo de riesgo crediticio puede ser implementado por una cooperativa de ahorro y crédito o una fintech especializada en préstamos personales, como herramienta central en su proceso de evaluación de solicitudes de crédito. Su objetivo principal sería anticipar la probabilidad de que un solicitante incumpla con el pago de su deuda, permitiendo tomar decisiones más informadas y reducir los niveles de morosidad en la cartera.</p>
+<p>Etapa 1: Evaluación inicial del solicitante Cuando una persona diligencia una solicitud de crédito, la aplicación web desarrollada por el equipo captura sus características relevantes (ingresos, tasa, saldo pendiente, último pago, etc.). Estas variables se ingresan al modelo, el cual retorna una probabilidad de incumplimiento que es convertida en un score crediticio entre 300 y 850, facilitando su interpretación por parte del analista y del mismo cliente.</p>
+<p>Etapa 2: Toma de decisiones crediticias Con base en el score calculado, la entidad puede:</p>
+<p>Aprobar, rechazar o condicionar la solicitud según umbrales definidos internamente (por ejemplo, score &lt; 600 → rechazo).</p>
+<p>Ajustar las condiciones del crédito, como el monto aprobado, el plazo o la tasa de interés ofrecida.</p>
+<p>Solicitar garantías adicionales si el riesgo es moderado pero mitigable.</p>
+<p>Este enfoque aporta objetividad, reduce la discrecionalidad y permite alinear decisiones con el apetito de riesgo institucional.</p>
+<p>Etapa 3: Educación financiera y retroalimentación al cliente Gracias a la interfaz web, el solicitante también puede entender de forma simple qué factores afectan su score y cómo se compara frente a la población general. Esta transparencia fomenta la educación financiera, impulsa comportamientos más responsables y permite que el modelo no solo sea una herramienta de evaluación, sino también de formación financiera personalizada.</p>
+<p>Impacto esperado La implementación del modelo permitiría:</p>
+<p>Disminuir la tasa de mora temprana (por ejemplo, dentro de los primeros 6 meses).</p>
+<p>Mejorar la rentabilidad ajustada al riesgo de la cartera.</p>
+<p>Aumentar la eficiencia en los tiempos de análisis.</p>
+<p>Fortalecer la confianza del cliente en el proceso de evaluación crediticia.</p>
+</section>
+<section id="aplicacion-web" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Aplicacion web</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./web3.png" class="img-fluid figure-img"></p>
+<figcaption>Web App</figcaption>
+</figure>
+</div>
 <p>Para hacer accesible el modelo de predicción de riesgo crediticio, se desarrolló una aplicación web interactiva. Esta herramienta permite a los usuarios ingresar sus características finan cieras y obtener una estimación de su probabilidad de incumplimiento, expresada en forma de score crediticio.</p>
 <p>La aplicación está diseñada para ser intuitiva y fácil de usar, sin requerir conocimientos técnicos previos. Los usuarios pueden ingresar los datos y a partir de esta información, el modelo predictivo calcula la probabilidad de incumplimiento y genera un score crediticio en una escala de 300 a 850.</p>
 <ul>
@@ -426,9 +528,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>El backend de FastAPI expone un endpoint /predict que recibe los datos de entrada del usuario, los preprocesa utilizando la lógica definida en model_service.py, y devuelve la predicción de riesgo. El procesamiento de los datos de entrada por parte del ModelService incluye la limpieza, la creación de características y el escalamiento para que sean compatibles con el modelo de red neuronal.</li>
 <li>La aplicación contiene los enlaces al reporte técnico y el material publicitario</li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./web2.png" class="img-fluid figure-img"></p>
+<figcaption>Respuesta</figcaption>
+</figure>
+</div>
 </section>
-<section id="codigo-del-modelo" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Codigo del modelo</h1>
+<section id="conclusiones" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Conclusiones</h1>
+<p>Los resultados obtenidos demuestran que el modelo de red neuronal artificial desarrollado es altamente efectivo para predecir el riesgo de incumplimiento crediticio. Con un AUC cercano a 1.0 y métricas de clasificación casi perfectas, se valida su capacidad para discriminar entre clientes que probablemente cumplirán con sus obligaciones y aquellos que representan un riesgo significativo de impago.</p>
+<p>Desde el punto de vista operativo, el modelo no solo logró una alta precisión general, sino que también mantuvo un recall elevado sobre la clase minoritaria, lo cual es fundamental para aplicaciones reales en originación de crédito, donde el costo de prestar a un cliente riesgoso puede ser considerablemente mayor que el de rechazar a uno solvente.</p>
+<p>Además, el análisis de importancia de variables sugiere que el modelo basa sus decisiones en variables financieramente interpretables, como el porcentaje del capital pagado, el monto del último pago y la tasa de interés, lo cual refuerza su confiabilidad como herramienta de apoyo en procesos crediticios.</p>
+<p>En síntesis, el modelo es técnicamente sólido, empíricamente robusto y operacionalmente interpretable. Representa una solución viable y escalable para mejorar los procesos de evaluación crediticia, minimizar el riesgo de cartera y tomar decisiones más informadas en el otorgamiento de préstamos.</p>
+</section>
+<section id="codigo-del-modelo" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> Codigo del modelo</h1>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
