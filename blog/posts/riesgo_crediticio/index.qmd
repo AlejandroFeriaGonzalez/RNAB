@@ -20,14 +20,20 @@ execute:
 jupyter: python3
 ---
 
-# 1. Introducción
+# Entregables:
+- Codigo del modelo: [https://colab.research.google.com/drive/1i5uVRMeWWiBeWyYSGzBtYClNv0eK_Xzm](https://colab.research.google.com/drive/1i5uVRMeWWiBeWyYSGzBtYClNv0eK_Xzm?authuser=1#scrollTo=khbJTojTXB1D)
+- Aplicacion web: [http://wk0wwg80ww8so000ko04g44g.35.206.85.70.sslip.io/](http://wk0wwg80ww8so000ko04g44g.35.206.85.70.sslip.io/)
+- Codigo fuente Aplicacion web: [https://github.com/AlejandroFeriaGonzalez/trabajo2](https://github.com/AlejandroFeriaGonzalez/trabajo2)
+- Video promocional (aportes individuales al final del video): [https://www.canva.com/design/DAGtk08jN1Q/3e6gKxl3VIvNhhAKrri6PA/watch?utm_content=DAGtk08jN1Q&utm_campaign=share_your_design&utm_medium=link2&utm_source=shareyourdesignpanel](https://www.canva.com/design/DAGtk08jN1Q/3e6gKxl3VIvNhhAKrri6PA/watch?utm_content=DAGtk08jN1Q&utm_campaign=share_your_design&utm_medium=link2&utm_source=shareyourdesignpanel)
+
+# Introducción
 El acceso al crédito es un pilar fundamental en la inclusión financiera y el crecimiento económico de las sociedades modernas. Sin embargo, otorgar crédito implica inherentemente un riesgo para las instituciones financieras: la posibilidad de que un prestatario no cumpla con sus obligaciones. En este contexto, la capacidad para predecir el incumplimiento de pagos se convierte en un componente esencial de una gestión crediticia efectiva.
 
 El presente trabajo aborda el desarrollo de un modelo de predicción de la probabilidad de incumplimiento en créditos individuales utilizando redes neuronales artificiales aplicadas a datos tabulares. Se emplea como caso de estudio el conjunto de datos denominado Credit Risk Dataset, disponible en la plataforma Kaggle. Este dataset incluye una amplia variedad de características sociodemográficas, financieras y crediticias que permiten modelar el comportamiento de pago de los clientes.
 
 Más allá del modelo predictivo, el trabajo propone una representación en forma de scorecard —una herramienta ampliamente utilizada en la industria financiera para comunicar riesgos de manera simple y comprensible—, así como una aplicación web interactiva que permite a los usuarios explorar su nivel de riesgo frente al resto de la población analizada. Esta integración entre inteligencia artificial, visualización y accesibilidad promueve una comprensión activa del riesgo crediticio tanto para entidades como para individuos.
 
-# 2. Evaluación y Gestión del Riesgo de Crédito
+# Evaluación y Gestión del Riesgo de Crédito
 La evaluación del riesgo de crédito busca estimar la probabilidad de que un solicitante de crédito incumpla sus obligaciones contractuales, lo cual tiene implicaciones directas en la rentabilidad, sostenibilidad y solvencia de las instituciones financieras. Tradicionalmente, esta evaluación se ha basado en análisis estadísticos y expertos humanos, pero los avances recientes en ciencia de datos permiten la implementación de modelos más complejos y adaptativos, como las redes neuronales.
 
 La gestión del riesgo crediticio abarca no solo la predicción del incumplimiento, sino también su monitoreo continuo, la segmentación de clientes, la definición de políticas de originación, y el cálculo de provisiones y capital regulatorio. En este sentido, los modelos predictivos contribuyen a:
@@ -40,7 +46,7 @@ En este trabajo se sigue una lógica propia del scoring de crédito, enfocada en
 
 La metodología propuesta tiene un enfoque práctico, que puede ser fácilmente adaptado por cooperativas, fondos de empleados y fintechs interesadas en mejorar sus esquemas de evaluación crediticia mediante herramientas basadas en aprendizaje automático.
 
-# 3. Delimitación del Problema y Metodología
+# Delimitación del Problema y Metodología
 ## Delimitación del Problema
 El presente trabajo se enfoca en la predicción del riesgo de incumplimiento crediticio individual a partir de información sociodemográfica, financiera y crediticia contenida en el Credit Risk Dataset. Se define como problema principal la estimación de la probabilidad de que un cliente sea “malo”, es decir, que no pague su crédito de manera completa o que presente morosidades graves.
 
@@ -329,6 +335,10 @@ Desde el punto de vista operativo, el modelo no solo logró una alta precisión 
 Además, el análisis de importancia de variables sugiere que el modelo basa sus decisiones en variables financieramente interpretables, como el porcentaje del capital pagado, el monto del último pago y la tasa de interés, lo cual refuerza su confiabilidad como herramienta de apoyo en procesos crediticios.
 
 En síntesis, el modelo es técnicamente sólido, empíricamente robusto y operacionalmente interpretable. Representa una solución viable y escalable para mejorar los procesos de evaluación crediticia, minimizar el riesgo de cartera y tomar decisiones más informadas en el otorgamiento de préstamos.
+
+# Video promocional y aportes individuales
+
+![video](./video.mp4)
 
 # Codigo del modelo
 ```python
