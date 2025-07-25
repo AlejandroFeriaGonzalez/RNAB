@@ -22,7 +22,7 @@ execute:
 jupyter: python3
 ---
 
-# Reporte Técnico: Agente Creativo de Generación de Historias con LLMs
+Link de la aplicación web: [http://nw8cks084kowgsow0wwgksk0.35.206.85.70.sslip.io/](http://nw8cks084kowgsow0wwgksk0.35.206.85.70.sslip.io/)
 
 # Introducción
 
@@ -42,6 +42,8 @@ El presente trabajo describe el diseño, implementación y evaluación de un age
 El agente desarrollado permite a los usuarios generar historias de distintos géneros, integrando elementos como personajes, escenarios, tono, conflicto y longitud. La aplicación ofrece una interfaz web intuitiva, validación de entradas, manejo de memoria conversacional y opciones para regenerar historias o limpiar el contexto.
 
 # Arquitectura y Componentes
+
+La arquitectura de este proyecto se basa en un enfoque modular, utilizando LangChain para la interacción con el modelo de lenguaje y FastAPI para la interfaz web. Se hizo con la idea de que fuera facilmente extensible y mantenible, permitiendo agregar nuevos géneros o parámetros narrativos sin complicaciones, intuitivo y fácil de usar, y robusto en el manejo de errores y validaciones.
 
 ## Procesamiento de Entradas
 
@@ -289,6 +291,46 @@ El manejo de memoria conversacional se realiza mediante el objeto `ConversationB
 
 Además, existe el método `reset_memory`, que permite limpiar el historial cuando se requiere iniciar una nueva conversación sin contexto anterior. Esto mejora la experiencia del usuario y la calidad narrativa de las historias generadas.
 
+# Ejemplos de Historias Generadas
+A continuación, se presentan ejemplos de historias generadas por el agente en distintos géneros y configuraciones:
+
+## Ejemplo 1
+Historia de aventura y drama para jóvenes adultos (15-25 años): el personaje, una cartógrafa rebelde de 19 años, debe cruzar un escenario de selva flotante en mini-buques de hojas gigantes; el conflicto surge cuando descubre que su mapa ancestral marca un tesoro que podría hundir la selva para siempre. Tono épico-ecologista; palabras clave: historia, personaje, escenario, conflicto, aventura, drama
+
+![ejemplo1](ejemplo1.png)
+
+## Ejemplo 2
+
+Historia de misterio psicológico para adultos (30-45 años): el personaje, un neurocirujano amnésico, despierta en un escenario de hospital abandonado donde cada habitación recrea sus recuerdos rotos; el conflicto es que un “drama interno” cobra forma física y quiere borrarlo por completo. Tono oscuro-introspectivo; palabras clave: historia, personaje, escenario, conflicto, drama, misterio.
+
+![ejemplo2](ejemplo2.png)
+
+## Ejemplo 3: Usando historia interactiva
+
+Historia de aventura cómica para pre-adolescentes (8-12 años): el personaje, un niño inventor de 11 años, viaja en un escenario subterráneo de túneles de caramelo; el conflicto estalla cuando su robot dulce-secuestrador se vuelve adicto al azúcar y pone en riesgo la fábrica de sueños. Tono juguetón y colorido; palabras clave: historia, personaje, escenario, conflicto, aventura.
+
+![ejemplo3](ejemplo3.png)
+
+continuación de la historia al seleccionar la opción B:
+
+![ejemplo31](ejemplo3b.png)
+
+## Ejemplo 4
+
+Historia de drama histórico-futurista para adultos (25-55 años): el personaje, una arqueóloga cuántica en 2123, explora un escenario de Pompeya reconstruido por IA; el conflicto es que los hologramas de los antiguos habitantes comienzan a cuestionar su propia existencia y exigen justicia. Tono melancólico-reflexivo; palabras clave: historia, personaje, escenario, conflicto, drama, aventura.
+
+![ejemplo4](ejemplo4.png)
+
+
+## Ejemplo 5: Usando historia interactiva
+
+Historia de romance y supervivencia para new adults (18-30 años): el personaje, un influencer varado, queda atrapado en un escenario de isla desierta con su ex; el conflicto es que solo hay un bote de escape y los secretos del pasado amenazan con hundirlo antes que la marea. Tono intenso-emotivo; palabras clave: historia, personaje, escenario, conflicto, drama, aventura.
+
+![ejemplo5](ejemplo5.png)
+
+Se seleciona la opción A para continuar la historia:
+
+![ejemplo51](ejemplo51.png)
 
 
 # Reflexión sobre LLMs en Tareas Creativas
@@ -309,47 +351,13 @@ Los LLMs pueden reflejar sesgos culturales presentes en sus datos de entrenamien
 
 El usuario actúa como co-creador, guiando la dirección de la historia y ajustando parámetros según sus preferencias. Esto difiere de la creación puramente humana o automática, fomentando una colaboración hombre-máquina.
 
-# Ejemplos de Historias Generadas
-
-A continuación, se presentan ejemplos de historias generadas por el agente en distintos géneros y configuraciones:
-
-## Ejemplo 1: Fantasía, tono humorístico, personajes definidos
-
-> **Título:** El dragón vegetariano  
-> **Historia:** En el reino de Eldoria, el dragón Rufus era famoso no por su ferocidad, sino por su amor a las zanahorias...  
-> *(Historia completa de ~350 palabras)*
-
-## Ejemplo 2: Misterio, tono oscuro, conflicto central
-
-> **Título:** La sombra en la biblioteca  
-> **Historia:** La detective Clara llegó a la antigua biblioteca tras recibir una carta anónima...  
-> *(Historia completa de ~400 palabras)*
-
-## Ejemplo 3: Romance, escenario futurista
-
-> **Título:** Amor entre circuitos  
-> **Historia:** En el año 2145, los androides y humanos convivían en armonía, pero el amor entre Eva y el ingeniero Marco desafió todas las normas...  
-> *(Historia completa de ~500 palabras)*
-
-## Ejemplo 4: Terror, conflicto sobrenatural
-
-> **Título:** El susurro del bosque  
-> **Historia:** Nadie se atrevía a cruzar el bosque de noche, pero Lucas necesitaba respuestas...  
-> *(Historia completa de ~600 palabras)*
-
-## Ejemplo 5: Comedia, aventura, personajes excéntricos
-
-> **Título:** Los piratas del café descafeinado  
-> **Historia:** El capitán Barbaespuma y su tripulación buscaban el tesoro más raro del Caribe: el café descafeinado perfecto...  
-> *(Historia completa de ~350 palabras)*
-
 # Conclusiones
 
 El desarrollo de un agente creativo basado en LLMs demuestra el potencial de estas tecnologías para tareas narrativas, permitiendo la colaboración humano-máquina en la creación de historias personalizadas. La ingeniería de prompts y la validación de entradas son claves para obtener resultados coherentes y satisfactorios. Sin embargo, persisten desafíos en el control de longitud, consistencia y sesgos, lo que sugiere la necesidad de investigación y desarrollo continuo en este campo.
 
 # Referencias
 
-- Documentación de LangChain y Gemini
-- Artículos sobre ingeniería de prompts y generación creativa con LLMs
-- Buenas prácticas en validación de entradas y diseño de interfaces para IA
-
+- [https://python.langchain.com/docs/](https://python.langchain.com/docs/)
+- [https://ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
+- [https://www.datacamp.com/es/blog/what-is-prompt-engineering-the-future-of-ai-communication](https://www.datacamp.com/es/blog/what-is-prompt-engineering-the-future-of-ai-communication)
+- [https://www.codemotion.com/magazine/es/inteligencia-artificial/ingenieria-de-prompts-y-el-potencial-oculto-de-los-llms/](https://www.codemotion.com/magazine/es/inteligencia-artificial/ingenieria-de-prompts-y-el-potencial-oculto-de-los-llms/)
