@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -159,38 +194,48 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de contenido</h2>
    
   <ul>
-  <li><a href="#reporte-técnico-agente-creativo-de-generación-de-historias-con-llms" id="toc-reporte-técnico-agente-creativo-de-generación-de-historias-con-llms" class="nav-link active" data-scroll-target="#reporte-técnico-agente-creativo-de-generación-de-historias-con-llms"><span class="header-section-number">1</span> Reporte Técnico: Agente Creativo de Generación de Historias con LLMs</a>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje" class="nav-link" data-scroll-target="#objetivos-de-aprendizaje"><span class="header-section-number">2</span> Objetivos de Aprendizaje</a></li>
+  <li><a href="#descripción-general-del-proyecto" id="toc-descripción-general-del-proyecto" class="nav-link" data-scroll-target="#descripción-general-del-proyecto"><span class="header-section-number">3</span> Descripción General del Proyecto</a></li>
+  <li><a href="#arquitectura-y-componentes" id="toc-arquitectura-y-componentes" class="nav-link" data-scroll-target="#arquitectura-y-componentes"><span class="header-section-number">4</span> Arquitectura y Componentes</a>
   <ul class="collapse">
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">1.1</span> 1. Introducción</a></li>
-  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje" class="nav-link" data-scroll-target="#objetivos-de-aprendizaje"><span class="header-section-number">1.2</span> 2. Objetivos de Aprendizaje</a></li>
-  <li><a href="#descripción-general-del-proyecto" id="toc-descripción-general-del-proyecto" class="nav-link" data-scroll-target="#descripción-general-del-proyecto"><span class="header-section-number">1.3</span> 3. Descripción General del Proyecto</a></li>
-  <li><a href="#arquitectura-y-componentes" id="toc-arquitectura-y-componentes" class="nav-link" data-scroll-target="#arquitectura-y-componentes"><span class="header-section-number">1.4</span> 4. Arquitectura y Componentes</a>
+  <li><a href="#procesamiento-de-entradas" id="toc-procesamiento-de-entradas" class="nav-link" data-scroll-target="#procesamiento-de-entradas"><span class="header-section-number">4.1</span> Procesamiento de Entradas</a></li>
+  <li><a href="#motor-de-generación-de-historias" id="toc-motor-de-generación-de-historias" class="nav-link" data-scroll-target="#motor-de-generación-de-historias"><span class="header-section-number">4.2</span> Motor de Generación de Historias</a></li>
+  <li><a href="#interfaz-de-usuario" id="toc-interfaz-de-usuario" class="nav-link" data-scroll-target="#interfaz-de-usuario"><span class="header-section-number">4.3</span> Interfaz de Usuario</a></li>
+  <li><a href="#manejo-de-estado-y-errores" id="toc-manejo-de-estado-y-errores" class="nav-link" data-scroll-target="#manejo-de-estado-y-errores"><span class="header-section-number">4.4</span> Manejo de Estado y Errores</a></li>
+  </ul></li>
+  <li><a href="#ingeniería-de-prompts" id="toc-ingeniería-de-prompts" class="nav-link" data-scroll-target="#ingeniería-de-prompts"><span class="header-section-number">5</span> Ingeniería de Prompts</a>
   <ul class="collapse">
-  <li><a href="#procesamiento-de-entradas" id="toc-procesamiento-de-entradas" class="nav-link" data-scroll-target="#procesamiento-de-entradas"><span class="header-section-number">1.4.1</span> 4.1. Procesamiento de Entradas</a></li>
-  <li><a href="#motor-de-generación-de-historias" id="toc-motor-de-generación-de-historias" class="nav-link" data-scroll-target="#motor-de-generación-de-historias"><span class="header-section-number">1.4.2</span> 4.2. Motor de Generación de Historias</a></li>
-  <li><a href="#interfaz-de-usuario" id="toc-interfaz-de-usuario" class="nav-link" data-scroll-target="#interfaz-de-usuario"><span class="header-section-number">1.4.3</span> 4.3. Interfaz de Usuario</a></li>
-  <li><a href="#manejo-de-estado-y-errores" id="toc-manejo-de-estado-y-errores" class="nav-link" data-scroll-target="#manejo-de-estado-y-errores"><span class="header-section-number">1.4.4</span> 4.4. Manejo de Estado y Errores</a></li>
-  </ul></li>
-  <li><a href="#ingeniería-de-prompts" id="toc-ingeniería-de-prompts" class="nav-link" data-scroll-target="#ingeniería-de-prompts"><span class="header-section-number">1.5</span> 5. Ingeniería de Prompts</a></li>
-  <li><a href="#desafíos-y-soluciones" id="toc-desafíos-y-soluciones" class="nav-link" data-scroll-target="#desafíos-y-soluciones"><span class="header-section-number">1.6</span> 6. Desafíos y Soluciones</a></li>
-  <li><a href="#reflexión-sobre-llms-en-tareas-creativas" id="toc-reflexión-sobre-llms-en-tareas-creativas" class="nav-link" data-scroll-target="#reflexión-sobre-llms-en-tareas-creativas"><span class="header-section-number">1.7</span> 7. Reflexión sobre LLMs en Tareas Creativas</a>
+  <li><a href="#componentes-clave-de-la-ingeniería-de-prompt" id="toc-componentes-clave-de-la-ingeniería-de-prompt" class="nav-link" data-scroll-target="#componentes-clave-de-la-ingeniería-de-prompt"><span class="header-section-number">5.1</span> Componentes Clave de la Ingeniería de Prompt</a>
   <ul class="collapse">
-  <li><a href="#determinismo-vs.-creatividad" id="toc-determinismo-vs.-creatividad" class="nav-link" data-scroll-target="#determinismo-vs.-creatividad"><span class="header-section-number">1.7.1</span> 7.1. Determinismo vs.&nbsp;Creatividad</a></li>
-  <li><a href="#ingeniería-de-prompts-para-creatividad" id="toc-ingeniería-de-prompts-para-creatividad" class="nav-link" data-scroll-target="#ingeniería-de-prompts-para-creatividad"><span class="header-section-number">1.7.2</span> 7.2. Ingeniería de Prompts para Creatividad</a></li>
-  <li><a href="#sesgos-y-consideraciones-éticas" id="toc-sesgos-y-consideraciones-éticas" class="nav-link" data-scroll-target="#sesgos-y-consideraciones-éticas"><span class="header-section-number">1.7.3</span> 7.3. Sesgos y Consideraciones Éticas</a></li>
-  <li><a href="#rol-del-usuario" id="toc-rol-del-usuario" class="nav-link" data-scroll-target="#rol-del-usuario"><span class="header-section-number">1.7.4</span> 7.4. Rol del Usuario</a></li>
+  <li><a href="#procesamiento-de-entrada" id="toc-procesamiento-de-entrada" class="nav-link" data-scroll-target="#procesamiento-de-entrada"><span class="header-section-number">5.1.1</span> Procesamiento de Entrada</a></li>
+  <li><a href="#construcción-del-prompt" id="toc-construcción-del-prompt" class="nav-link" data-scroll-target="#construcción-del-prompt"><span class="header-section-number">5.1.2</span> Construcción del Prompt</a></li>
+  <li><a href="#reglas-narrativas" id="toc-reglas-narrativas" class="nav-link" data-scroll-target="#reglas-narrativas"><span class="header-section-number">5.1.3</span> Reglas narrativas</a></li>
+  <li><a href="#formato-de-respuesta" id="toc-formato-de-respuesta" class="nav-link" data-scroll-target="#formato-de-respuesta"><span class="header-section-number">5.1.4</span> Formato de respuesta</a></li>
   </ul></li>
-  <li><a href="#ejemplos-de-historias-generadas" id="toc-ejemplos-de-historias-generadas" class="nav-link" data-scroll-target="#ejemplos-de-historias-generadas"><span class="header-section-number">1.8</span> 8. Ejemplos de Historias Generadas</a>
+  <li><a href="#implementación-en-el-código" id="toc-implementación-en-el-código" class="nav-link" data-scroll-target="#implementación-en-el-código"><span class="header-section-number">5.2</span> Implementación en el Código</a></li>
+  </ul></li>
+  <li><a href="#desafíos-y-soluciones" id="toc-desafíos-y-soluciones" class="nav-link" data-scroll-target="#desafíos-y-soluciones"><span class="header-section-number">6</span> Desafíos y Soluciones</a>
   <ul class="collapse">
-  <li><a href="#ejemplo-1-fantasía-tono-humorístico-personajes-definidos" id="toc-ejemplo-1-fantasía-tono-humorístico-personajes-definidos" class="nav-link" data-scroll-target="#ejemplo-1-fantasía-tono-humorístico-personajes-definidos"><span class="header-section-number">1.8.1</span> Ejemplo 1: Fantasía, tono humorístico, personajes definidos</a></li>
-  <li><a href="#ejemplo-2-misterio-tono-oscuro-conflicto-central" id="toc-ejemplo-2-misterio-tono-oscuro-conflicto-central" class="nav-link" data-scroll-target="#ejemplo-2-misterio-tono-oscuro-conflicto-central"><span class="header-section-number">1.8.2</span> Ejemplo 2: Misterio, tono oscuro, conflicto central</a></li>
-  <li><a href="#ejemplo-3-romance-escenario-futurista" id="toc-ejemplo-3-romance-escenario-futurista" class="nav-link" data-scroll-target="#ejemplo-3-romance-escenario-futurista"><span class="header-section-number">1.8.3</span> Ejemplo 3: Romance, escenario futurista</a></li>
-  <li><a href="#ejemplo-4-terror-conflicto-sobrenatural" id="toc-ejemplo-4-terror-conflicto-sobrenatural" class="nav-link" data-scroll-target="#ejemplo-4-terror-conflicto-sobrenatural"><span class="header-section-number">1.8.4</span> Ejemplo 4: Terror, conflicto sobrenatural</a></li>
-  <li><a href="#ejemplo-5-comedia-aventura-personajes-excéntricos" id="toc-ejemplo-5-comedia-aventura-personajes-excéntricos" class="nav-link" data-scroll-target="#ejemplo-5-comedia-aventura-personajes-excéntricos"><span class="header-section-number">1.8.5</span> Ejemplo 5: Comedia, aventura, personajes excéntricos</a></li>
+  <li><a href="#manejo-de-memoria-conversacional" id="toc-manejo-de-memoria-conversacional" class="nav-link" data-scroll-target="#manejo-de-memoria-conversacional"><span class="header-section-number">6.1</span> Manejo de Memoria Conversacional</a></li>
   </ul></li>
-  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">1.9</span> 9. Conclusiones</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">1.10</span> 10. Referencias</a></li>
+  <li><a href="#ejemplos-de-historias-generadas" id="toc-ejemplos-de-historias-generadas" class="nav-link" data-scroll-target="#ejemplos-de-historias-generadas"><span class="header-section-number">7</span> Ejemplos de Historias Generadas</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-1" id="toc-ejemplo-1" class="nav-link" data-scroll-target="#ejemplo-1"><span class="header-section-number">7.1</span> Ejemplo 1</a></li>
+  <li><a href="#ejemplo-2" id="toc-ejemplo-2" class="nav-link" data-scroll-target="#ejemplo-2"><span class="header-section-number">7.2</span> Ejemplo 2</a></li>
+  <li><a href="#ejemplo-3-usando-historia-interactiva" id="toc-ejemplo-3-usando-historia-interactiva" class="nav-link" data-scroll-target="#ejemplo-3-usando-historia-interactiva"><span class="header-section-number">7.3</span> Ejemplo 3: Usando historia interactiva</a></li>
+  <li><a href="#ejemplo-4" id="toc-ejemplo-4" class="nav-link" data-scroll-target="#ejemplo-4"><span class="header-section-number">7.4</span> Ejemplo 4</a></li>
+  <li><a href="#ejemplo-5-usando-historia-interactiva" id="toc-ejemplo-5-usando-historia-interactiva" class="nav-link" data-scroll-target="#ejemplo-5-usando-historia-interactiva"><span class="header-section-number">7.5</span> Ejemplo 5: Usando historia interactiva</a></li>
   </ul></li>
+  <li><a href="#reflexión-sobre-llms-en-tareas-creativas" id="toc-reflexión-sobre-llms-en-tareas-creativas" class="nav-link" data-scroll-target="#reflexión-sobre-llms-en-tareas-creativas"><span class="header-section-number">8</span> Reflexión sobre LLMs en Tareas Creativas</a>
+  <ul class="collapse">
+  <li><a href="#determinismo-vs.-creatividad" id="toc-determinismo-vs.-creatividad" class="nav-link" data-scroll-target="#determinismo-vs.-creatividad"><span class="header-section-number">8.1</span> Determinismo vs.&nbsp;Creatividad</a></li>
+  <li><a href="#ingeniería-de-prompts-para-creatividad" id="toc-ingeniería-de-prompts-para-creatividad" class="nav-link" data-scroll-target="#ingeniería-de-prompts-para-creatividad"><span class="header-section-number">8.2</span> Ingeniería de Prompts para Creatividad</a></li>
+  <li><a href="#sesgos-y-consideraciones-éticas" id="toc-sesgos-y-consideraciones-éticas" class="nav-link" data-scroll-target="#sesgos-y-consideraciones-éticas"><span class="header-section-number">8.3</span> Sesgos y Consideraciones Éticas</a></li>
+  <li><a href="#rol-del-usuario" id="toc-rol-del-usuario" class="nav-link" data-scroll-target="#rol-del-usuario"><span class="header-section-number">8.4</span> Rol del Usuario</a></li>
+  </ul></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">9</span> Conclusiones</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">10</span> Referencias</a></li>
   </ul>
 </nav>
 </nav>
@@ -208,48 +253,57 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de contenido</h2>
    
   <ul>
-  <li><a href="#reporte-técnico-agente-creativo-de-generación-de-historias-con-llms" id="toc-reporte-técnico-agente-creativo-de-generación-de-historias-con-llms"><span class="header-section-number">1</span> Reporte Técnico: Agente Creativo de Generación de Historias con LLMs</a>
+  <li><a href="#introducción" id="toc-introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje"><span class="header-section-number">2</span> Objetivos de Aprendizaje</a></li>
+  <li><a href="#descripción-general-del-proyecto" id="toc-descripción-general-del-proyecto"><span class="header-section-number">3</span> Descripción General del Proyecto</a></li>
+  <li><a href="#arquitectura-y-componentes" id="toc-arquitectura-y-componentes"><span class="header-section-number">4</span> Arquitectura y Componentes</a>
   <ul>
-  <li><a href="#introducción" id="toc-introducción"><span class="header-section-number">1.1</span> 1. Introducción</a></li>
-  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje"><span class="header-section-number">1.2</span> 2. Objetivos de Aprendizaje</a></li>
-  <li><a href="#descripción-general-del-proyecto" id="toc-descripción-general-del-proyecto"><span class="header-section-number">1.3</span> 3. Descripción General del Proyecto</a></li>
-  <li><a href="#arquitectura-y-componentes" id="toc-arquitectura-y-componentes"><span class="header-section-number">1.4</span> 4. Arquitectura y Componentes</a>
+  <li><a href="#procesamiento-de-entradas" id="toc-procesamiento-de-entradas"><span class="header-section-number">4.1</span> Procesamiento de Entradas</a></li>
+  <li><a href="#motor-de-generación-de-historias" id="toc-motor-de-generación-de-historias"><span class="header-section-number">4.2</span> Motor de Generación de Historias</a></li>
+  <li><a href="#interfaz-de-usuario" id="toc-interfaz-de-usuario"><span class="header-section-number">4.3</span> Interfaz de Usuario</a></li>
+  <li><a href="#manejo-de-estado-y-errores" id="toc-manejo-de-estado-y-errores"><span class="header-section-number">4.4</span> Manejo de Estado y Errores</a></li>
+  </ul></li>
+  <li><a href="#ingeniería-de-prompts" id="toc-ingeniería-de-prompts"><span class="header-section-number">5</span> Ingeniería de Prompts</a>
   <ul>
-  <li><a href="#procesamiento-de-entradas" id="toc-procesamiento-de-entradas"><span class="header-section-number">1.4.1</span> 4.1. Procesamiento de Entradas</a></li>
-  <li><a href="#motor-de-generación-de-historias" id="toc-motor-de-generación-de-historias"><span class="header-section-number">1.4.2</span> 4.2. Motor de Generación de Historias</a></li>
-  <li><a href="#interfaz-de-usuario" id="toc-interfaz-de-usuario"><span class="header-section-number">1.4.3</span> 4.3. Interfaz de Usuario</a></li>
-  <li><a href="#manejo-de-estado-y-errores" id="toc-manejo-de-estado-y-errores"><span class="header-section-number">1.4.4</span> 4.4. Manejo de Estado y Errores</a></li>
-  </ul></li>
-  <li><a href="#ingeniería-de-prompts" id="toc-ingeniería-de-prompts"><span class="header-section-number">1.5</span> 5. Ingeniería de Prompts</a></li>
-  <li><a href="#desafíos-y-soluciones" id="toc-desafíos-y-soluciones"><span class="header-section-number">1.6</span> 6. Desafíos y Soluciones</a></li>
-  <li><a href="#reflexión-sobre-llms-en-tareas-creativas" id="toc-reflexión-sobre-llms-en-tareas-creativas"><span class="header-section-number">1.7</span> 7. Reflexión sobre LLMs en Tareas Creativas</a>
+  <li><a href="#componentes-clave-de-la-ingeniería-de-prompt" id="toc-componentes-clave-de-la-ingeniería-de-prompt"><span class="header-section-number">5.1</span> Componentes Clave de la Ingeniería de Prompt</a>
   <ul>
-  <li><a href="#determinismo-vs.-creatividad" id="toc-determinismo-vs.-creatividad"><span class="header-section-number">1.7.1</span> 7.1. Determinismo vs.&nbsp;Creatividad</a></li>
-  <li><a href="#ingeniería-de-prompts-para-creatividad" id="toc-ingeniería-de-prompts-para-creatividad"><span class="header-section-number">1.7.2</span> 7.2. Ingeniería de Prompts para Creatividad</a></li>
-  <li><a href="#sesgos-y-consideraciones-éticas" id="toc-sesgos-y-consideraciones-éticas"><span class="header-section-number">1.7.3</span> 7.3. Sesgos y Consideraciones Éticas</a></li>
-  <li><a href="#rol-del-usuario" id="toc-rol-del-usuario"><span class="header-section-number">1.7.4</span> 7.4. Rol del Usuario</a></li>
+  <li><a href="#procesamiento-de-entrada" id="toc-procesamiento-de-entrada"><span class="header-section-number">5.1.1</span> Procesamiento de Entrada</a></li>
+  <li><a href="#construcción-del-prompt" id="toc-construcción-del-prompt"><span class="header-section-number">5.1.2</span> Construcción del Prompt</a></li>
+  <li><a href="#reglas-narrativas" id="toc-reglas-narrativas"><span class="header-section-number">5.1.3</span> Reglas narrativas</a></li>
+  <li><a href="#formato-de-respuesta" id="toc-formato-de-respuesta"><span class="header-section-number">5.1.4</span> Formato de respuesta</a></li>
   </ul></li>
-  <li><a href="#ejemplos-de-historias-generadas" id="toc-ejemplos-de-historias-generadas"><span class="header-section-number">1.8</span> 8. Ejemplos de Historias Generadas</a>
+  <li><a href="#implementación-en-el-código" id="toc-implementación-en-el-código"><span class="header-section-number">5.2</span> Implementación en el Código</a></li>
+  </ul></li>
+  <li><a href="#desafíos-y-soluciones" id="toc-desafíos-y-soluciones"><span class="header-section-number">6</span> Desafíos y Soluciones</a>
   <ul>
-  <li><a href="#ejemplo-1-fantasía-tono-humorístico-personajes-definidos" id="toc-ejemplo-1-fantasía-tono-humorístico-personajes-definidos"><span class="header-section-number">1.8.1</span> Ejemplo 1: Fantasía, tono humorístico, personajes definidos</a></li>
-  <li><a href="#ejemplo-2-misterio-tono-oscuro-conflicto-central" id="toc-ejemplo-2-misterio-tono-oscuro-conflicto-central"><span class="header-section-number">1.8.2</span> Ejemplo 2: Misterio, tono oscuro, conflicto central</a></li>
-  <li><a href="#ejemplo-3-romance-escenario-futurista" id="toc-ejemplo-3-romance-escenario-futurista"><span class="header-section-number">1.8.3</span> Ejemplo 3: Romance, escenario futurista</a></li>
-  <li><a href="#ejemplo-4-terror-conflicto-sobrenatural" id="toc-ejemplo-4-terror-conflicto-sobrenatural"><span class="header-section-number">1.8.4</span> Ejemplo 4: Terror, conflicto sobrenatural</a></li>
-  <li><a href="#ejemplo-5-comedia-aventura-personajes-excéntricos" id="toc-ejemplo-5-comedia-aventura-personajes-excéntricos"><span class="header-section-number">1.8.5</span> Ejemplo 5: Comedia, aventura, personajes excéntricos</a></li>
+  <li><a href="#manejo-de-memoria-conversacional" id="toc-manejo-de-memoria-conversacional"><span class="header-section-number">6.1</span> Manejo de Memoria Conversacional</a></li>
   </ul></li>
-  <li><a href="#conclusiones" id="toc-conclusiones"><span class="header-section-number">1.9</span> 9. Conclusiones</a></li>
-  <li><a href="#referencias" id="toc-referencias"><span class="header-section-number">1.10</span> 10. Referencias</a></li>
+  <li><a href="#ejemplos-de-historias-generadas" id="toc-ejemplos-de-historias-generadas"><span class="header-section-number">7</span> Ejemplos de Historias Generadas</a>
+  <ul>
+  <li><a href="#ejemplo-1" id="toc-ejemplo-1"><span class="header-section-number">7.1</span> Ejemplo 1</a></li>
+  <li><a href="#ejemplo-2" id="toc-ejemplo-2"><span class="header-section-number">7.2</span> Ejemplo 2</a></li>
+  <li><a href="#ejemplo-3-usando-historia-interactiva" id="toc-ejemplo-3-usando-historia-interactiva"><span class="header-section-number">7.3</span> Ejemplo 3: Usando historia interactiva</a></li>
+  <li><a href="#ejemplo-4" id="toc-ejemplo-4"><span class="header-section-number">7.4</span> Ejemplo 4</a></li>
+  <li><a href="#ejemplo-5-usando-historia-interactiva" id="toc-ejemplo-5-usando-historia-interactiva"><span class="header-section-number">7.5</span> Ejemplo 5: Usando historia interactiva</a></li>
   </ul></li>
+  <li><a href="#reflexión-sobre-llms-en-tareas-creativas" id="toc-reflexión-sobre-llms-en-tareas-creativas"><span class="header-section-number">8</span> Reflexión sobre LLMs en Tareas Creativas</a>
+  <ul>
+  <li><a href="#determinismo-vs.-creatividad" id="toc-determinismo-vs.-creatividad"><span class="header-section-number">8.1</span> Determinismo vs.&nbsp;Creatividad</a></li>
+  <li><a href="#ingeniería-de-prompts-para-creatividad" id="toc-ingeniería-de-prompts-para-creatividad"><span class="header-section-number">8.2</span> Ingeniería de Prompts para Creatividad</a></li>
+  <li><a href="#sesgos-y-consideraciones-éticas" id="toc-sesgos-y-consideraciones-éticas"><span class="header-section-number">8.3</span> Sesgos y Consideraciones Éticas</a></li>
+  <li><a href="#rol-del-usuario" id="toc-rol-del-usuario"><span class="header-section-number">8.4</span> Rol del Usuario</a></li>
+  </ul></li>
+  <li><a href="#conclusiones" id="toc-conclusiones"><span class="header-section-number">9</span> Conclusiones</a></li>
+  <li><a href="#referencias" id="toc-referencias"><span class="header-section-number">10</span> Referencias</a></li>
   </ul>
 </nav>
-<section id="reporte-técnico-agente-creativo-de-generación-de-historias-con-llms" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Reporte Técnico: Agente Creativo de Generación de Historias con LLMs</h1>
-<section id="introducción" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">1.1</span> 1. Introducción</h2>
+<p>Link de la aplicación web: <a href="http://nw8cks084kowgsow0wwgksk0.35.206.85.70.sslip.io/">http://nw8cks084kowgsow0wwgksk0.35.206.85.70.sslip.io/</a></p>
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>El presente trabajo describe el diseño, implementación y evaluación de un agente interactivo basado en grandes modelos de lenguaje (LLMs) para la generación creativa de historias cortas. El objetivo principal es explorar el potencial de los LLMs en tareas creativas, específicamente en la escritura colaborativa de relatos, permitiendo a los usuarios especificar parámetros narrativos y recibir historias personalizadas y coherentes.</p>
 </section>
-<section id="objetivos-de-aprendizaje" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="objetivos-de-aprendizaje"><span class="header-section-number">1.2</span> 2. Objetivos de Aprendizaje</h2>
+<section id="objetivos-de-aprendizaje" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Objetivos de Aprendizaje</h1>
 <ul>
 <li>Comprender los principios del diseño de agentes basados en LLM.</li>
 <li>Aprender a crear prompts efectivos para tareas creativas.</li>
@@ -259,14 +313,15 @@ ul.task-list li input[type="checkbox"] {
 <li>Aplicar principios de ingeniería de software en aplicaciones de IA.</li>
 </ul>
 </section>
-<section id="descripción-general-del-proyecto" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="descripción-general-del-proyecto"><span class="header-section-number">1.3</span> 3. Descripción General del Proyecto</h2>
+<section id="descripción-general-del-proyecto" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Descripción General del Proyecto</h1>
 <p>El agente desarrollado permite a los usuarios generar historias de distintos géneros, integrando elementos como personajes, escenarios, tono, conflicto y longitud. La aplicación ofrece una interfaz web intuitiva, validación de entradas, manejo de memoria conversacional y opciones para regenerar historias o limpiar el contexto.</p>
 </section>
-<section id="arquitectura-y-componentes" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="arquitectura-y-componentes"><span class="header-section-number">1.4</span> 4. Arquitectura y Componentes</h2>
-<section id="procesamiento-de-entradas" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="procesamiento-de-entradas"><span class="header-section-number">1.4.1</span> 4.1. Procesamiento de Entradas</h3>
+<section id="arquitectura-y-componentes" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Arquitectura y Componentes</h1>
+<p>La arquitectura de este proyecto se basa en un enfoque modular, utilizando LangChain para la interacción con el modelo de lenguaje y FastAPI para la interfaz web. Se hizo con la idea de que fuera facilmente extensible y mantenible, permitiendo agregar nuevos géneros o parámetros narrativos sin complicaciones, intuitivo y fácil de usar, y robusto en el manejo de errores y validaciones.</p>
+<section id="procesamiento-de-entradas" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="procesamiento-de-entradas"><span class="header-section-number">4.1</span> Procesamiento de Entradas</h2>
 <p>El módulo <code>entrada_processor.py</code> valida y transforma las entradas del usuario, aceptando tanto formularios estructurados como descripciones libres o mixtas. Se asegura que los datos sean suficientes y relevantes para la generación de historias, proporcionando advertencias o errores útiles en caso de información incompleta.</p>
 <ul>
 <li><strong>Validación estructurada:</strong> Verifica la presencia de género, tono, personajes, escenario, conflicto y extensión.</li>
@@ -274,8 +329,8 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Mensajes de advertencia:</strong> Sugiere al usuario mejorar la entrada si faltan elementos importantes.</li>
 </ul>
 </section>
-<section id="motor-de-generación-de-historias" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="motor-de-generación-de-historias"><span class="header-section-number">1.4.2</span> 4.2. Motor de Generación de Historias</h3>
+<section id="motor-de-generación-de-historias" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="motor-de-generación-de-historias"><span class="header-section-number">4.2</span> Motor de Generación de Historias</h2>
 <p>El núcleo del agente es el módulo <code>history_ai.py</code>, que utiliza LangChain y el modelo Gemini de Google para generar historias. Se implementa una memoria conversacional para mantener el contexto y se emplea un prompt cuidadosamente diseñado que guía al modelo en la estructura, género, tono y coherencia narrativa.</p>
 <ul>
 <li><strong>Prompting estructurado:</strong> El prompt instruye explícitamente sobre la estructura (inicio, nudo, desenlace), el respeto a los géneros y la consistencia de personajes.</li>
@@ -283,8 +338,8 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Formato de salida:</strong> El modelo responde en formato JSON, facilitando el procesamiento posterior.</li>
 </ul>
 </section>
-<section id="interfaz-de-usuario" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="interfaz-de-usuario"><span class="header-section-number">1.4.3</span> 4.3. Interfaz de Usuario</h3>
+<section id="interfaz-de-usuario" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="interfaz-de-usuario"><span class="header-section-number">4.3</span> Interfaz de Usuario</h2>
 <p>La interfaz web, construida con FastAPI, Bootstrap y JavaScript, permite:</p>
 <ul>
 <li>Seleccionar entre formulario estructurado y descripción libre.</li>
@@ -293,8 +348,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Limpiar la memoria del modelo para evitar contaminación de contexto.</li>
 </ul>
 </section>
-<section id="manejo-de-estado-y-errores" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" class="anchored" data-anchor-id="manejo-de-estado-y-errores"><span class="header-section-number">1.4.4</span> 4.4. Manejo de Estado y Errores</h3>
+<section id="manejo-de-estado-y-errores" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="manejo-de-estado-y-errores"><span class="header-section-number">4.4</span> Manejo de Estado y Errores</h2>
 <ul>
 <li><strong>Gestión de memoria:</strong> El usuario puede limpiar el contexto conversacional para obtener historias independientes.</li>
 <li><strong>Manejo de errores:</strong> Se gestionan errores de validación, fallos de API y respuestas inesperadas, mostrando mensajes claros al usuario.</li>
@@ -302,8 +357,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 </section>
-<section id="ingeniería-de-prompts" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="ingeniería-de-prompts"><span class="header-section-number">1.5</span> 5. Ingeniería de Prompts</h2>
+<section id="ingeniería-de-prompts" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Ingeniería de Prompts</h1>
 <p>La ingeniería de prompts fue iterativa y fundamental para lograr historias coherentes y personalizadas. Se consideraron los siguientes aspectos:</p>
 <ul>
 <li><strong>Instrucciones específicas por género:</strong> El prompt adapta la estructura y elementos narrativos según el género seleccionado.</li>
@@ -312,9 +367,198 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Control de longitud:</strong> Se solicita explícitamente la extensión deseada.</li>
 <li><strong>Formato de salida:</strong> Se exige respuesta en JSON para facilitar el procesamiento y visualización.</li>
 </ul>
+<p>El sistema utiliza dos tipos principales de prompts:</p>
+<ul>
+<li>Prompt estándar para historias</li>
+<li>Prompt especializado para historias interactivas</li>
+</ul>
+<p>Ambos prompts se construyen dinámicamente a partir de los datos estructurados y libres proporcionados por el usuario, garantizando que la IA reciba instrucciones claras y completas.</p>
+<section id="componentes-clave-de-la-ingeniería-de-prompt" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="componentes-clave-de-la-ingeniería-de-prompt"><span class="header-section-number">5.1</span> Componentes Clave de la Ingeniería de Prompt</h2>
+<section id="procesamiento-de-entrada" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="procesamiento-de-entrada"><span class="header-section-number">5.1.1</span> Procesamiento de Entrada</h3>
+<ul>
+<li><strong>Validación de datos:</strong> Se verifica si la entrada contiene campos estructurados (género, personajes, escenario, etc.) y/o texto libre.</li>
+<li><strong>Clasificación de entrada:</strong> La entrada se clasifica como estructurada, natural o mixta, lo que determina cómo se construye el prompt.</li>
+<li><strong>Advertencias:</strong> El sistema genera advertencias si faltan datos clave, orientando al usuario para mejorar la calidad de la historia.</li>
+</ul>
 </section>
-<section id="desafíos-y-soluciones" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="desafíos-y-soluciones"><span class="header-section-number">1.6</span> 6. Desafíos y Soluciones</h2>
+<section id="construcción-del-prompt" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="construcción-del-prompt"><span class="header-section-number">5.1.2</span> Construcción del Prompt</h3>
+<ul>
+<li><p>Prompt para historias estándar: Se agregan instrucciones sobre género, tono, personajes, escenario, conflicto, extensión y público objetivo, según los datos recibidos.</p></li>
+<li><p>Prompt para historias interactivas: Se incluye una instrucción especial para crear puntos de decisión, estructurando la historia para que el usuario pueda elegir entre opciones relevantes.</p></li>
+</ul>
+</section>
+<section id="reglas-narrativas" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="reglas-narrativas"><span class="header-section-number">5.1.3</span> Reglas narrativas</h3>
+<p>Ambos prompts incluyen reglas explícitas para asegurar:</p>
+<ul>
+<li>Coherencia narrativa y estructural</li>
+<li>Desarrollo adecuado de personajes</li>
+<li>Uso correcto del género y tono</li>
+<li>Adaptación al público objetivo</li>
+<li>Inclusión de elementos de trama y conflicto</li>
+</ul>
+</section>
+<section id="formato-de-respuesta" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="formato-de-respuesta"><span class="header-section-number">5.1.4</span> Formato de respuesta</h3>
+<p>Se instruye al modelo para que responda en formato JSON, con los campos <code>titulo</code> y <code>historia</code>, evitando caracteres extraños y atributos no solicitados.</p>
+</section>
+</section>
+<section id="implementación-en-el-código" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="implementación-en-el-código"><span class="header-section-number">5.2</span> Implementación en el Código</h2>
+<ul>
+<li><p>process_user_input: Función que valida, clasifica y construye el prompt final, agregando advertencias si es necesario.</p></li>
+<li><p>HistoryAI: Utiliza el prompt construido y lo envía al modelo Gemini, manteniendo memoria de la conversación para contexto adicional. sirve para instruir al modelo de lenguaje Gemini sobre cómo debe generar una historia literaria. Específicamente, le indica que actúe como un experto en literatura y siga una serie de reglas narrativas: debe considerar el escenario, extensión, coherencia, personajes, género, conflicto, tono y público objetivo, entre otros aspectos. Además, se le pide que entregue la historia en formato JSON con los campos titulo y historia, sin agregar atributos extra ni caracteres especiales. El objetivo es asegurar que la IA produzca historias estructuradas, coherentes y adaptadas a los requerimientos del usuario.</p></li>
+</ul>
+<p>El prompt para el modulo history_ai es el siguiente:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> ChatPromptTemplate.from_messages([SystemMessagePromptTemplate.from_template(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">Dado que eres un experto en literatura y creación de historias, quiero que crees una historia, para crearla debes  tener en cuenta las siguientes reglas para crear una buena historia:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">1. Con respecto al escenario, comienza a generar la historia a partir del escenario pedido, en caso de no ser pedido usa el escenario que mejor se acomode a la historia.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">2. Ten presente la extensión que se pide para crear la historia, si esta no es especificada, crea la historia con un rango de 300 a 800 palabras.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">3. Asegúrate de mantener coherencia narrativa y estructural entre los hechos de la historia, conversaciones, personajes y demás.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">4. Debes tener en cuenta los personajes que se piden en la historia, recuerda crearlos con respecto a su personalidad, cualidadades y caracteristicas establecidas desde el inicio, estas no deben cambiar a no ser de que la historia lo requiera, por ejemplo, en caso de que un personaje requiera un desarrollo o un cambio debido a los hechos ocurridos. si  no se especifican los personajes o parte de sus caracteristicas, crea personajes coherentes con los demás aspectos de la historia, adicionalmente asegúrate de crear conversaciones coherentes con la historia, características y personalidades de los personajes.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">5. Usa el genero que se te indique en los requerimientos, debes ceñirte muy bien a las características de dicho genero para crear la historia, es decir, los cuentos se caracterizan por tener introducción, nudo y desenlace, por lo que debes estructurar la historia de la manera correcta, si el género no es especificado, debes tener en cuenta los demás requerimientos para escoger un género que se adapte bien con el fin de crear una historia interesante, puedes tener en cuenta aspectos como ambientación, personajes, sentimiento deseado a transmitir, etc.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">6. Ten en cuenta los elementos de la trama pedidos como: Tipo de conflicto, obstáculos, estilo de resolución, ya que esto es importante para que estructures la historia, especialmente con la extensión de esta para que se puedan incluir y desarrollarse todos los elementos de la manera correcta.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">7. Toma en cuenta el tono y el sentimiento que se quiere conseguir con la historia, es decir, si  se pide que la historia tenga tono humorístico, dramático o satírico, debes incluirlo en la historia al igual que el sentimiento que se quiere expresar.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">8. Ten cuenta el publico o audiencia objetivo, ya que esto te ayudara a crear una historia acorde a las expectativas de la audiencia, por ejemplo, si se pide una historia para niños, debes tener en cuenta el lenguaje y los temas que se pueden tratar.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">Solo responde con el título y la historia creada, en caso de que se pida una conclusión o moraleja también puedes darla, solo danos el texto plano sin caracteres extraños como para especificar negritas tipo (** **), dado esto genera un JSON siguiendo la forma descrita abajo. No agregue ningún atributo que no aparezca en el esquema que se muestra a continuación.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="er">\</span><span class="st">```python</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="sc">{{</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">    titulo: string  # Título de la historia</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">    historia: string  # Texto de la historia</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="sc">}}</span><span class="st">.</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="er">\</span><span class="st">```</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">los requerimientos para la historia son los siguientes:</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>El prompt para el modulo de entrada_processor es el siguiente:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_user_input(data: Dict[<span class="bu">str</span>, Any]) <span class="op">-&gt;</span> Tuple[<span class="bu">str</span>, List[<span class="bu">str</span>]]:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Valida y transforma la entrada del usuario en un texto plano para el modelo generador.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Retorna:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - user_input: Prompt limpio y unificado.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - warnings: Lista de sugerencias o advertencias.</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    warnings <span class="op">=</span> []</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Obtener datos</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    genero <span class="op">=</span> data.get(<span class="st">'genero'</span>, <span class="st">''</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    personajes <span class="op">=</span> data.get(<span class="st">'personajes'</span>, <span class="st">''</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    escenario <span class="op">=</span> data.get(<span class="st">'escenario'</span>, <span class="st">''</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    tono <span class="op">=</span> data.get(<span class="st">'tono'</span>, <span class="st">''</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    extension <span class="op">=</span> data.get(<span class="st">'extension'</span>, <span class="st">''</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    conflicto <span class="op">=</span> data.get(<span class="st">'conflicto'</span>, <span class="st">''</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    descripcion <span class="op">=</span> data.get(<span class="st">'descripcion'</span>, <span class="st">''</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    historia_interactiva <span class="op">=</span> data.get(<span class="st">'historia_interactiva'</span>, <span class="st">''</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    publico_objetivo <span class="op">=</span> data.get(<span class="st">'publico_objetivo'</span>, <span class="st">''</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verificar si hay datos de historia interactiva</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> historia_interactiva:</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Usar prompt específico para historia interactiva</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        prompt <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ss">        Dado que eres un experto en literatura y creación de historias, quiero que crees una historia interactiva en la que debes abrir decisiones para el usuario como por ejemplo, llegas a una bosque con dos caminos, uno esta lleno de ruidos de bestias y en el otro se dice que hay bandidos, estas opciones debes ser puestas al final de la historia separadas por literales alfabeticos como A), B), debes dejar la historia a ese punto y permitir que el usuario tome la decisión, la cual debe ser relevante para la historia, algo muy importante a tener en cuenta es que no debes alargar ls historia de manera innecesaria, y cuando la historia ya llegue a su fin entregame toda la historia completa desde el inicio de la generación. Para crear la historia debes  tener en cuenta las siguientes reglas para crear una buena historia:</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="ss">                1. Con respecto al escenario, comienza a generar la historia a partir del escenario pedido, en caso de no ser pedido usa el escenario que mejor se acomode a la historia.</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ss">                2. Ten presente la extensión que se pide para crear la historia, si esta no es especificada, crea la historia con un rango de 300 a 800 palabras.</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ss">                3. Asegúrate de mantener coherencia narrativa y estructural entre los hechos de la historia, conversaciones, personajes y demás.</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="ss">                4. Debes tener en cuenta los personajes que se piden en la historia, recuerda crearlos con respecto a su personalidad, cualidadades y caracteristicas establecidas desde el inicio, estas no deben cambiar a no ser de que la historia lo requiera, por ejemplo, en caso de que un personaje requiera un desarrollo o un cambio debido a los hechos ocurridos. si  no se especifican los personajes o parte de sus caracteristicas, crea personajes coherentes con los demás aspectos de la historia, adicionalmente asegúrate de crear conversaciones coherentes con la historia, características y personalidades de los personajes.</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="ss">                5. Usa el genero que se te indique en los requerimientos, debes ceñirte muy bien a las características de dicho genero para crear la historia, es decir, los cuentos se caracterizan por tener introducción, nudo y desenlace, por lo que debes estructurar la historia de la manera correcta, si el género no es especificado, debes tener en cuenta los demás requerimientos para escoger un género que se adapte bien con el fin de crear una historia interesante, puedes tener en cuenta aspectos como ambientación, personajes, sentimiento deseado a transmitir, etc.</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="ss">                6. Ten en cuenta los elementos de la trama pedidos como: Tipo de conflicto, obstáculos, estilo de resolución, ya que esto es importante para que estructures la historia, especialmente con la extensión de esta para que se puedan incluir y desarrollarse todos los elementos de la manera correcta.</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="ss">                7. Toma en cuenta el tono y el sentimiento que se quiere conseguir con la historia, es decir, si  se pide que la historia tenga tono humorístico, dramático o satírico, debes incluirlo en la historia al igual que el sentimiento que se quiere expresar.</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="ss">                8. Ten cuenta el publico o audiencia objetivo, ya que esto te ayudara a crear una historia acorde a las expectativas de la audiencia, por ejemplo, si se pide una historia para niños, debes tener en cuenta el lenguaje y los temas que se pueden tratar.</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">                Solo responde con el título y la historia creada, en caso de que se pida una conclusión o moraleja también puedes darla, solo danos el texto plano sin caracteres extraños como para especificar negritas tipo (** **), dado esto genera un JSON siguiendo la forma descrita abajo. No agregue ningún atributo que no aparezca en el esquema que se muestra a continuación.</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="ss">                ```python</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">                </span><span class="ch">{{</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">                    titulo: string  # Título de la historia</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="ss">                    historia: string  # Texto de la historia</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="ss">                </span><span class="ch">}}</span><span class="ss">.</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="ss">                ```</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">        Descripción de la historia interactiva: </span><span class="sc">{</span>historia_interactiva<span class="sc">}</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="ss">        """</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        warnings.append(<span class="st">"Historia interactiva detectada - se incluirán puntos de decisión"</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> prompt, warnings</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    has_structured <span class="op">=</span> <span class="bu">any</span>(</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        field <span class="kw">in</span> data <span class="kw">and</span> data.get(field)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> field <span class="kw">in</span> STRUCTURED_FIELDS</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    free_text <span class="op">=</span> (data.get(<span class="st">"descripcion"</span>) <span class="kw">or</span> data.get(<span class="st">"texto"</span>) <span class="kw">or</span> <span class="st">""</span>).strip()</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    has_free_text <span class="op">=</span> <span class="bu">bool</span>(free_text)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> has_structured <span class="kw">and</span> <span class="kw">not</span> has_free_text:</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>        input_type <span class="op">=</span> <span class="st">"estructurada"</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> has_free_text <span class="kw">and</span> <span class="kw">not</span> has_structured:</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        input_type <span class="op">=</span> <span class="st">"natural"</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> has_structured <span class="kw">and</span> has_free_text:</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        input_type <span class="op">=</span> <span class="st">"mixta"</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> HTTPException(</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>            status_code<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>            detail<span class="op">=</span><span class="st">"Falta información para generar la historia."</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    warnings: List[<span class="bu">str</span>] <span class="op">=</span> []</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> input_type <span class="kw">in</span> (<span class="st">"estructurada"</span>, <span class="st">"mixta"</span>):</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> (data.get(<span class="st">"genero"</span>) <span class="kw">or</span> data.get(<span class="st">"tono"</span>)):</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>            warnings.append(<span class="st">"Especifique un género o un tono para orientar la historia."</span>)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> (</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>            data.get(<span class="st">"personajes"</span>) <span class="kw">or</span> data.get(<span class="st">"escenario"</span>) <span class="kw">or</span> data.get(<span class="st">"conflicto"</span>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        ):</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>            warnings.append(<span class="st">"Incluya al menos personajes, escenario o conflicto."</span>)</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>        parts: List[<span class="bu">str</span>] <span class="op">=</span> []</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data.get(<span class="st">"genero"</span>):</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"La historia debe pertenecer al género </span><span class="sc">{</span>data[<span class="st">'genero'</span>]<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data.get(<span class="st">"tono"</span>):</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"Debe tener un tono </span><span class="sc">{</span>data[<span class="st">'tono'</span>]<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data.get(<span class="st">"personajes"</span>):</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"Incluye los siguientes personajes: </span><span class="sc">{</span>data[<span class="st">'personajes'</span>]<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data.get(<span class="st">"escenario"</span>):</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"El escenario principal es: </span><span class="sc">{</span>data[<span class="st">'escenario'</span>]<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data.get(<span class="st">"conflicto"</span>):</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"El conflicto central es: </span><span class="sc">{</span>data[<span class="st">'conflicto'</span>]<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data.get(<span class="st">"extension"</span>):</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"La historia debe tener una extensión aproximada de </span><span class="sc">{</span>data[<span class="st">'extension'</span>]<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data.get(<span class="st">"publico_objetivo"</span>):</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"La historia está dirigida a un público </span><span class="sc">{</span>data[<span class="st">'publico_objetivo'</span>]<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> has_free_text:</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>            parts.append(<span class="ss">f"Descripción adicional: </span><span class="sc">{</span>free_text<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>        user_input <span class="op">=</span> <span class="st">" "</span>.join(parts)</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> free_text</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(text) <span class="op">&lt;</span> <span class="dv">20</span>:</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> HTTPException(</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>                status_code<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>                detail<span class="op">=</span><span class="st">"La descripción libre debe tener al menos 20 caracteres."</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">any</span>(</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>            re.search(<span class="vs">r"</span><span class="dv">\b</span><span class="vs">"</span> <span class="op">+</span> kw <span class="op">+</span> <span class="vs">r"</span><span class="dv">\b</span><span class="vs">"</span>, text, re.IGNORECASE)</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> kw <span class="kw">in</span> NARRATIVE_KEYWORDS</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>        ):</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> HTTPException(</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>                status_code<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>                detail<span class="op">=</span>(</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"La descripción no contiene palabras clave narrativas "</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"(e.g., personajes, escenario, conflicto)."</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>        user_input <span class="op">=</span> text</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> user_input, warnings</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="desafíos-y-soluciones" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Desafíos y Soluciones</h1>
+<p>Durante el desarrollo del agente, se enfrentaron varios desafíos que fueron abordados de la siguiente manera:</p>
 <ul>
 <li><strong>Ambigüedad en entradas libres:</strong> Se implementó validación de palabras clave y longitud mínima para asegurar relevancia narrativa.</li>
 <li><strong>Control de longitud:</strong> Aunque el prompt especifica la extensión, los LLMs pueden desviarse. Se ajustó el prompt y se monitoreó la salida, sugiriendo al usuario modificar la entrada si es necesario.</li>
@@ -322,84 +566,113 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Manejo de errores de API:</strong> Se implementó manejo robusto de excepciones y mensajes claros para el usuario.</li>
 <li><strong>Filtrado de contenido:</strong> Aunque no se implementó un filtro avanzado, el prompt desalienta la generación de contenido inapropiado.</li>
 </ul>
+<section id="manejo-de-memoria-conversacional" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="manejo-de-memoria-conversacional"><span class="header-section-number">6.1</span> Manejo de Memoria Conversacional</h2>
+<p>El manejo de memoria conversacional se realiza mediante el objeto <code>ConversationBufferMemory</code> de LangChain. Esta memoria almacena el historial de mensajes intercambiados entre el usuario y la IA, permitiendo que el modelo tenga contexto sobre la conversación previa. Así, cada vez que se procesa un nuevo mensaje, la IA puede generar respuestas más coherentes y relevantes, considerando lo que ya se ha dicho.</p>
+<p>Además, existe el método <code>reset_memory</code>, que permite limpiar el historial cuando se requiere iniciar una nueva conversación sin contexto anterior. Esto mejora la experiencia del usuario y la calidad narrativa de las historias generadas.</p>
 </section>
-<section id="reflexión-sobre-llms-en-tareas-creativas" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="reflexión-sobre-llms-en-tareas-creativas"><span class="header-section-number">1.7</span> 7. Reflexión sobre LLMs en Tareas Creativas</h2>
-<section id="determinismo-vs.-creatividad" class="level3" data-number="1.7.1">
-<h3 data-number="1.7.1" class="anchored" data-anchor-id="determinismo-vs.-creatividad"><span class="header-section-number">1.7.1</span> 7.1. Determinismo vs.&nbsp;Creatividad</h3>
+</section>
+<section id="ejemplos-de-historias-generadas" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Ejemplos de Historias Generadas</h1>
+<p>A continuación, se presentan ejemplos de historias generadas por el agente en distintos géneros y configuraciones:</p>
+<section id="ejemplo-1" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="ejemplo-1"><span class="header-section-number">7.1</span> Ejemplo 1</h2>
+<p>Historia de aventura y drama para jóvenes adultos (15-25 años): el personaje, una cartógrafa rebelde de 19 años, debe cruzar un escenario de selva flotante en mini-buques de hojas gigantes; el conflicto surge cuando descubre que su mapa ancestral marca un tesoro que podría hundir la selva para siempre. Tono épico-ecologista; palabras clave: historia, personaje, escenario, conflicto, aventura, drama</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ejemplo1.png" class="img-fluid figure-img"></p>
+<figcaption>ejemplo1</figcaption>
+</figure>
+</div>
+</section>
+<section id="ejemplo-2" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="ejemplo-2"><span class="header-section-number">7.2</span> Ejemplo 2</h2>
+<p>Historia de misterio psicológico para adultos (30-45 años): el personaje, un neurocirujano amnésico, despierta en un escenario de hospital abandonado donde cada habitación recrea sus recuerdos rotos; el conflicto es que un “drama interno” cobra forma física y quiere borrarlo por completo. Tono oscuro-introspectivo; palabras clave: historia, personaje, escenario, conflicto, drama, misterio.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ejemplo2.png" class="img-fluid figure-img"></p>
+<figcaption>ejemplo2</figcaption>
+</figure>
+</div>
+</section>
+<section id="ejemplo-3-usando-historia-interactiva" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="ejemplo-3-usando-historia-interactiva"><span class="header-section-number">7.3</span> Ejemplo 3: Usando historia interactiva</h2>
+<p>Historia de aventura cómica para pre-adolescentes (8-12 años): el personaje, un niño inventor de 11 años, viaja en un escenario subterráneo de túneles de caramelo; el conflicto estalla cuando su robot dulce-secuestrador se vuelve adicto al azúcar y pone en riesgo la fábrica de sueños. Tono juguetón y colorido; palabras clave: historia, personaje, escenario, conflicto, aventura.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ejemplo3.png" class="img-fluid figure-img"></p>
+<figcaption>ejemplo3</figcaption>
+</figure>
+</div>
+<p>continuación de la historia al seleccionar la opción B:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ejemplo3b.png" class="img-fluid figure-img"></p>
+<figcaption>ejemplo31</figcaption>
+</figure>
+</div>
+</section>
+<section id="ejemplo-4" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="ejemplo-4"><span class="header-section-number">7.4</span> Ejemplo 4</h2>
+<p>Historia de drama histórico-futurista para adultos (25-55 años): el personaje, una arqueóloga cuántica en 2123, explora un escenario de Pompeya reconstruido por IA; el conflicto es que los hologramas de los antiguos habitantes comienzan a cuestionar su propia existencia y exigen justicia. Tono melancólico-reflexivo; palabras clave: historia, personaje, escenario, conflicto, drama, aventura.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ejemplo4.png" class="img-fluid figure-img"></p>
+<figcaption>ejemplo4</figcaption>
+</figure>
+</div>
+</section>
+<section id="ejemplo-5-usando-historia-interactiva" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="ejemplo-5-usando-historia-interactiva"><span class="header-section-number">7.5</span> Ejemplo 5: Usando historia interactiva</h2>
+<p>Historia de romance y supervivencia para new adults (18-30 años): el personaje, un influencer varado, queda atrapado en un escenario de isla desierta con su ex; el conflicto es que solo hay un bote de escape y los secretos del pasado amenazan con hundirlo antes que la marea. Tono intenso-emotivo; palabras clave: historia, personaje, escenario, conflicto, drama, aventura.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ejemplo5.png" class="img-fluid figure-img"></p>
+<figcaption>ejemplo5</figcaption>
+</figure>
+</div>
+<p>Se seleciona la opción A para continuar la historia:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ejemplo51.png" class="img-fluid figure-img"></p>
+<figcaption>ejemplo51</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="reflexión-sobre-llms-en-tareas-creativas" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Reflexión sobre LLMs en Tareas Creativas</h1>
+<section id="determinismo-vs.-creatividad" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="determinismo-vs.-creatividad"><span class="header-section-number">8.1</span> Determinismo vs.&nbsp;Creatividad</h2>
 <p>La naturaleza probabilística de los LLMs implica que, aunque el código es determinista, las salidas pueden variar. Para equilibrar creatividad y control, se emplean prompts detallados y memoria conversacional, permitiendo cierta variabilidad pero dentro de límites definidos por el usuario.</p>
 </section>
-<section id="ingeniería-de-prompts-para-creatividad" class="level3" data-number="1.7.2">
-<h3 data-number="1.7.2" class="anchored" data-anchor-id="ingeniería-de-prompts-para-creatividad"><span class="header-section-number">1.7.2</span> 7.2. Ingeniería de Prompts para Creatividad</h3>
+<section id="ingeniería-de-prompts-para-creatividad" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="ingeniería-de-prompts-para-creatividad"><span class="header-section-number">8.2</span> Ingeniería de Prompts para Creatividad</h2>
 <p>A diferencia de tareas factuales, la generación creativa requiere prompts más abiertos pero con restricciones claras sobre estructura y tono. Se observó que instrucciones demasiado vagas resultan en historias genéricas, mientras que prompts muy restrictivos limitan la creatividad.</p>
 </section>
-<section id="sesgos-y-consideraciones-éticas" class="level3" data-number="1.7.3">
-<h3 data-number="1.7.3" class="anchored" data-anchor-id="sesgos-y-consideraciones-éticas"><span class="header-section-number">1.7.3</span> 7.3. Sesgos y Consideraciones Éticas</h3>
+<section id="sesgos-y-consideraciones-éticas" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="sesgos-y-consideraciones-éticas"><span class="header-section-number">8.3</span> Sesgos y Consideraciones Éticas</h2>
 <p>Los LLMs pueden reflejar sesgos culturales presentes en sus datos de entrenamiento. Para mitigar esto, se recomienda revisar las historias generadas y, en aplicaciones reales, implementar filtros adicionales.</p>
 </section>
-<section id="rol-del-usuario" class="level3" data-number="1.7.4">
-<h3 data-number="1.7.4" class="anchored" data-anchor-id="rol-del-usuario"><span class="header-section-number">1.7.4</span> 7.4. Rol del Usuario</h3>
+<section id="rol-del-usuario" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="rol-del-usuario"><span class="header-section-number">8.4</span> Rol del Usuario</h2>
 <p>El usuario actúa como co-creador, guiando la dirección de la historia y ajustando parámetros según sus preferencias. Esto difiere de la creación puramente humana o automática, fomentando una colaboración hombre-máquina.</p>
 </section>
 </section>
-<section id="ejemplos-de-historias-generadas" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="ejemplos-de-historias-generadas"><span class="header-section-number">1.8</span> 8. Ejemplos de Historias Generadas</h2>
-<p>A continuación, se presentan ejemplos de historias generadas por el agente en distintos géneros y configuraciones:</p>
-<section id="ejemplo-1-fantasía-tono-humorístico-personajes-definidos" class="level3" data-number="1.8.1">
-<h3 data-number="1.8.1" class="anchored" data-anchor-id="ejemplo-1-fantasía-tono-humorístico-personajes-definidos"><span class="header-section-number">1.8.1</span> Ejemplo 1: Fantasía, tono humorístico, personajes definidos</h3>
-<blockquote class="blockquote">
-<p><strong>Título:</strong> El dragón vegetariano<br>
-<strong>Historia:</strong> En el reino de Eldoria, el dragón Rufus era famoso no por su ferocidad, sino por su amor a las zanahorias…<br>
-<em>(Historia completa de ~350 palabras)</em></p>
-</blockquote>
-</section>
-<section id="ejemplo-2-misterio-tono-oscuro-conflicto-central" class="level3" data-number="1.8.2">
-<h3 data-number="1.8.2" class="anchored" data-anchor-id="ejemplo-2-misterio-tono-oscuro-conflicto-central"><span class="header-section-number">1.8.2</span> Ejemplo 2: Misterio, tono oscuro, conflicto central</h3>
-<blockquote class="blockquote">
-<p><strong>Título:</strong> La sombra en la biblioteca<br>
-<strong>Historia:</strong> La detective Clara llegó a la antigua biblioteca tras recibir una carta anónima…<br>
-<em>(Historia completa de ~400 palabras)</em></p>
-</blockquote>
-</section>
-<section id="ejemplo-3-romance-escenario-futurista" class="level3" data-number="1.8.3">
-<h3 data-number="1.8.3" class="anchored" data-anchor-id="ejemplo-3-romance-escenario-futurista"><span class="header-section-number">1.8.3</span> Ejemplo 3: Romance, escenario futurista</h3>
-<blockquote class="blockquote">
-<p><strong>Título:</strong> Amor entre circuitos<br>
-<strong>Historia:</strong> En el año 2145, los androides y humanos convivían en armonía, pero el amor entre Eva y el ingeniero Marco desafió todas las normas…<br>
-<em>(Historia completa de ~500 palabras)</em></p>
-</blockquote>
-</section>
-<section id="ejemplo-4-terror-conflicto-sobrenatural" class="level3" data-number="1.8.4">
-<h3 data-number="1.8.4" class="anchored" data-anchor-id="ejemplo-4-terror-conflicto-sobrenatural"><span class="header-section-number">1.8.4</span> Ejemplo 4: Terror, conflicto sobrenatural</h3>
-<blockquote class="blockquote">
-<p><strong>Título:</strong> El susurro del bosque<br>
-<strong>Historia:</strong> Nadie se atrevía a cruzar el bosque de noche, pero Lucas necesitaba respuestas…<br>
-<em>(Historia completa de ~600 palabras)</em></p>
-</blockquote>
-</section>
-<section id="ejemplo-5-comedia-aventura-personajes-excéntricos" class="level3" data-number="1.8.5">
-<h3 data-number="1.8.5" class="anchored" data-anchor-id="ejemplo-5-comedia-aventura-personajes-excéntricos"><span class="header-section-number">1.8.5</span> Ejemplo 5: Comedia, aventura, personajes excéntricos</h3>
-<blockquote class="blockquote">
-<p><strong>Título:</strong> Los piratas del café descafeinado<br>
-<strong>Historia:</strong> El capitán Barbaespuma y su tripulación buscaban el tesoro más raro del Caribe: el café descafeinado perfecto…<br>
-<em>(Historia completa de ~350 palabras)</em></p>
-</blockquote>
-</section>
-</section>
-<section id="conclusiones" class="level2" data-number="1.9">
-<h2 data-number="1.9" class="anchored" data-anchor-id="conclusiones"><span class="header-section-number">1.9</span> 9. Conclusiones</h2>
+<section id="conclusiones" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Conclusiones</h1>
 <p>El desarrollo de un agente creativo basado en LLMs demuestra el potencial de estas tecnologías para tareas narrativas, permitiendo la colaboración humano-máquina en la creación de historias personalizadas. La ingeniería de prompts y la validación de entradas son claves para obtener resultados coherentes y satisfactorios. Sin embargo, persisten desafíos en el control de longitud, consistencia y sesgos, lo que sugiere la necesidad de investigación y desarrollo continuo en este campo.</p>
 </section>
-<section id="referencias" class="level2" data-number="1.10">
-<h2 data-number="1.10" class="anchored" data-anchor-id="referencias"><span class="header-section-number">1.10</span> 10. Referencias</h2>
+<section id="referencias" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Referencias</h1>
 <ul>
-<li>Documentación de LangChain y Gemini</li>
-<li>Artículos sobre ingeniería de prompts y generación creativa con LLMs</li>
-<li>Buenas prácticas en validación de entradas y diseño de interfaces para IA</li>
+<li><a href="https://python.langchain.com/docs/">https://python.langchain.com/docs/</a></li>
+<li><a href="https://ai.google.dev/gemini-api/docs">https://ai.google.dev/gemini-api/docs</a></li>
+<li><a href="https://www.datacamp.com/es/blog/what-is-prompt-engineering-the-future-of-ai-communication">https://www.datacamp.com/es/blog/what-is-prompt-engineering-the-future-of-ai-communication</a></li>
+<li><a href="https://www.codemotion.com/magazine/es/inteligencia-artificial/ingenieria-de-prompts-y-el-potencial-oculto-de-los-llms/">https://www.codemotion.com/magazine/es/inteligencia-artificial/ingenieria-de-prompts-y-el-potencial-oculto-de-los-llms/</a></li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
